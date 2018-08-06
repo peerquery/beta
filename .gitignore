@@ -1,0 +1,14 @@
+#sensitive .env file
+.env
+
+#npm modules
+node_modules/
+
+#log folder
+logs/
+
+#local folder containing test files
+local/
+
+#amazon config
+.ebextensions/
