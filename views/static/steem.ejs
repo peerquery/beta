@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+	<meta name="description" content="Discover what's new, trending, and hot on Steem.">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="Steem: Peer Query">
+	<meta property="og:description" content="Discover what's new, trending, and hot on Steem.">
+	<meta property="og:image" content="https://peerquery/assets/images/peerquery.png">
+	<meta property="fb:app_id" content="384491628645652">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="">
+	<meta name="twitter:title" content="#PeerQuery">
+	<meta name="twitter:image" content="https://peerquery/assets/images/peerquery.png">
+	<link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+	<meta name="application-name" content="Peer Query">
+	<title>Steem: Peer Query</title>
+	
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
+  <script src="/assets/scripts/timeago.js"></script>
+  <script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+  <script src="/assets/scripts/sc2.min.js"></script>
+
+
+</head>
+<body>
+
+
+
+
+  
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+
+
+
+
+<div class="ui container">
+	
+	
+	
+	<div class="ui mini three steps">
+	<a class="step" href="/publish">
+		<i class="write icon"></i>
+		<div class="content">
+			<div class="title">Publish</div>
+		</div>
+	</a>
+	<a class="active step" href="/">
+		<i class="handshake icon"></i>
+		<div class="content">
+			<div class="title">Collaborate</div>
+		</div>
+	</a>
+	<a class="step" href="https://steem.io" target="_blank">
+		<i class="chevron circle up icon"></i>
+		<div class="content">
+			<div class="title">Steem</div>
+		</div>
+		</div>
+	</a>
+	
+	
+	
+</div>
+	
+	
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+<div class="ui stackable grid container">
+  
+	
+	
+	<!-- query type menu -->
+		<div class="ui four item menu">
+			<a class="item active" id="trending" onClick="display(this)">
+				<i class="dollar icon"></i>
+				<span class="desktop-only">Trending</span>
+			</a>
+			<a class="item" id="created" onClick="display(this)">
+				<i class="wait icon"></i>
+				<span class="desktop-only">New</span>
+			</a>
+			<a class="item" id="hot" onClick="display(this)">
+				<i class="line chart icon"></i>
+				<span class="desktop-only">Hot</span>
+			</a>
+			<a class="item" id="promoted" onClick="display(this)">
+				<i class="announcement icon"></i>
+				<span class="desktop-only">Promoted</span>
+			</a>
+		</div>
+	<!-- end of query type menu -->
+ 
+ 
+      <div class="row">
+        <div class="ten wide column">
+		  
+		<br/>
+		  
+		  <!-- top questions -->
+		  
+		  <div class="ui container">
+		  
+			<div id="witness-area" style="display:none">
+				<a class="ui right pointing red basic label" title="Current witness" href="https://steemdb.com/witnesses" target="_blank">Witnessed by </a>
+				<a class="ui basic image label" id="witness-href">
+					<img src="" id="witness_img">
+					<span id="witness"></span>
+				</a>
+				
+				
+				<div class="ui mini compact menu">
+					<a class="mini item" href="https://steemdb.com" target="_blank">
+						<span id="block" title="Current block head"></span>
+						<div class="floating mini ui red label" id="version" title="Majority hardfork version"></div>
+					</a>
+				</div>
+				
+				
+				<div class="ui mini compact menu">
+					<a class="mini item">
+						STEEM
+						<div class="floating mini ui red label" id="sbd"></div>
+					</a>
+				</div>
+		
+			</div>
+				
+				
+  <div class="ui active centered inline loader" id="post-loader" style=""></div>
+  
+	<br/>
+  
+  <div class="ui relaxed divided items"  id="item-container">
+  
+  
+	  
+	  </div>
+	  
+	  
+    
+	</div>
+	
+	
+  </div>
+		  
+		  <!-- end of top questions -->
+		  
+		  
+		  
+        <div class="six wide desktop-only right floated column">
+		  
+		  <!-- Top earners -->
+		<br/>
+		  
+		  
+		  <div class="ui container">
+		
+				
+				<div class="ui pointing below label" style="display:none" id="tags-label">Top 40 trending tags on Steem: </div>
+				
+			
+			<div class="ui active centered inline loader" id="tags-loader"></div>
+				
+				<br/>
+				
+				
+				<div class="ui items" id="tags-container">
+	
+				</div>
+		
+		
+		</div>
+		  
+			  <!-- end of top earners -->
+		  
+		  
+        </div>
+		
+      </div>
+	  
+
+  
+</div>  
+  
+  
+  
+  
+  <!-- mounting div -->
+  
+  <div id="temp" style="display:none"></div>
+  
+  <!-- end of mounting div -->
+  
+
+  
+
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+
+  
+
+  <script>
+//
+
+	var converter = new showdown.Converter();
+  	
+	steem.api.setOptions({ url: 'https://api.steemit.com' });
+	
+	
+
+var path = "/trending/";
+
+
+
+function display(element) {
+	
+	
+	path = "/" + element.id + "/";
+	getState(path);
+	
+}
+
+
+
+function getState(path) {
+	
+	document.getElementById('witness-area').style.display = "none";
+	document.getElementById('post-loader').style.display = "block";
+	document.getElementById("item-container").innerHTML = "";
+
+
+steem.api.getState(path, function(err, result) {
+  //console.log(err, result);
+  if (err) { alert(err); return };
+  
+  
+  	document.getElementById("post-loader").style.display = "none";
+
+	
+	document.getElementById("block").innerText = "#" + result.props.head_block_number;
+	document.getElementById("version").innerText = result.witness_schedule.majority_version;
+	
+	
+		document.getElementById('witness-href').href = "/@" + result.props.current_witness;
+		document.getElementById('witness_img').src = "https://img.busy.org/@" + result.props.current_witness;
+		document.getElementById('witness').innerText = result.props.current_witness.toUpperCase();
+		document.getElementById('sbd').innerText = result.feed_price.base;
+		document.getElementById('witness-area').style.display = "block";
+		
+		
+	
+	var process = (result, path) => {
+		
+	contents = result.content;
+	
+	//console.log(contents);
+	//console.log(path);
+	
+	
+		var n = "";
+  
+		if(path == "/trending/") var sort = result.discussion_idx[n].trending;
+		if(path == "/created/") var sort = result.discussion_idx[n].created;
+		if(path == "/hot/") var sort = result.discussion_idx[n].hot;
+		if(path == "/promoted/") var sort = result.discussion_idx[n].promoted;
+	
+		var data = [];
+	
+		for (x in sort) {
+			var i = sort[x];
+			var info = contents[i];
+			data.push(info);
+		}
+  
+		//console.log(data);
+		return data;
+	}
+	
+	var results = process(result, path);
+	
+	//console.log(results);
+	
+
+	
+	
+  for (x in results) {
+	//if (x == result.length -1);
+	create_post_card(results[x]);
+  }
+   timeAgo();
+   
+   
+   	document.getElementById("post-loader").style.display = "none";
+    
+
+});
+
+}
+getState(path);
+
+
+
+
+
+
+function create_post_card(result) {
+	
+	
+	
+	
+	
+	var html = converter.makeHtml(result.body);
+	
+	document.getElementById("temp").innerHTML = html;
+	
+	body_raw = $("#temp").text();	
+	
+	body1 = body_raw.replace(/ *\([^)]*\) */g, "");						//removes () and all content in it
+	body2 = body1.replace(/ *\[[^\]]*\] */g, "");						//removes [] and all content in it
+	body3 = body2.replace(/(?:https?|ftp):\/\/[\S\n]+/g, '');			//removes all links - targetted at image links
+	
+	
+	var summary = body3.substr(0, 150) + " ...";
+	
+	
+	summary = summary.replace(/\n/g, "");
+	
+	var src = "/assets/img/image.png";
+	
+	src = $('#temp img').attr('src');
+	
+	document.getElementById("temp").innerHTML = "";
+	
+	var item = document.createElement("div");
+	item.className = "item";
+	
+	var image_div = document.createElement("div");
+	image_div.className = "ui small image";
+	
+	var post_image = document.createElement("img");
+	post_image.onerror = function() {this.src='/assets/img/image.png'; this.onerror='';};
+	post_image.src = src;
+	
+	image_div.appendChild(post_image);
+	
+	var content_div = document.createElement("div");
+	content_div.className = "content";
+	
+	var header_a = document.createElement("a");
+	header_a.className = "header";
+	header_a.href = "/" + result.parent_permlink + "/@" + result.author + "/" + result.permlink;
+	header_a.innerText = result.title;
+	
+	var extra_div = document.createElement("div");
+	extra_div.className = "extra";
+	
+	var author_a = document.createElement("a");
+	author_a.className = "ui blue image label";
+	author_a.href = "/@" + result.author;
+	
+	var author_img = document.createElement("img");
+	author_img.onerror = function() {this.src='/assets/img/image.png'; this.onerror='';};
+	author_img.src = "https://img.busy.org/@" + result.author;
+	
+	var author_span = document.createElement("span");
+	author_span.innerText = result.author;
+	
+	var author_rep_div = document.createElement("div");
+	author_rep_div.className = "detail";
+	author_rep_div.title = "User's reputation";
+	author_rep_div.innerText = steem.formatter.reputation(result.author_reputation);
+	
+	author_a.appendChild(author_img);
+	author_a.appendChild(author_span);
+	author_a.appendChild(author_rep_div);
+	
+	var time_span = document.createElement("span");
+	
+	var time_span_icon = document.createElement("i");
+	time_span_icon.className = "wait icon";
+	
+	var time = document.createElement("span");
+	time.className = "timeago";
+	time.title = result.created;
+	time.innerText = result.created;
+	
+	time_span.appendChild(time_span_icon);
+	time_span.appendChild(time);
+	
+	extra_div.appendChild(author_a);
+	extra_div.appendChild(time_span);
+	
+	var description_div = document.createElement("div");
+	description_div.className = "description";
+	description_div.innerText = summary;
+	
+	var extra_label_div = document.createElement("div");
+	extra_label_div.className = "extra";
+	
+	
+	var a_category = document.createElement("a");
+	a_category.className = "ui label";
+	a_category.title = "Category";
+	a_category.href = "/issue/" + result.parent_permlink;
+	
+	var i_category = document.createElement("i");
+	i_category.className = "tag icon";
+	
+	var span_category = document.createElement("span");
+	span_category.innerText = result.parent_permlink;
+	
+	a_category.appendChild(i_category);
+	a_category.appendChild(span_category);
+
+
+	
+	var a_earned = document.createElement("a");
+	a_earned.className = "ui label";
+	a_earned.title = "Earned";
+	
+	var i_earned = document.createElement("i");
+	i_earned.className = "dollar icon";
+	
+	var span_earned = document.createElement("span");
+	span_earned.innerText = Math.max(Number(result.pending_payout_value.split(' ')[0]), Number(result.total_payout_value.split(' ')[0]) + Number(result.curator_payout_value.split(' ')[0])).toLocaleString();
+	
+	a_earned.appendChild(i_earned);
+	a_earned.appendChild(span_earned);
+
+
+	
+	var a_votes = document.createElement("a");
+	a_votes.className = "ui label";
+	a_votes.title = "Votes";
+	
+	var i_votes = document.createElement("i");
+	i_votes.className = "heart icon";
+	
+	var span_votes = document.createElement("span");
+	span_votes.innerText = Number(result.active_votes.length).toLocaleString();
+	
+	a_votes.appendChild(i_votes);
+	a_votes.appendChild(span_votes);
+
+
+	
+	var a_responses = document.createElement("a");
+	a_responses.className = "ui label";
+	a_responses.title = "Responses";
+	
+	var i_responses = document.createElement("i");
+	i_responses.className = "comments icon";
+	
+	var span_responses = document.createElement("span");
+	span_responses.innerText = result.children.toLocaleString();
+	
+	a_responses.appendChild(i_responses);
+	a_responses.appendChild(span_responses);
+	
+	
+	
+	extra_label_div.appendChild(a_category);
+	extra_label_div.appendChild(a_earned);
+	extra_label_div.appendChild(a_votes);
+	extra_label_div.appendChild(a_responses);
+	
+	content_div.appendChild(header_a);
+	content_div.appendChild(extra_div);
+	content_div.appendChild(description_div);
+	content_div.appendChild(extra_label_div);
+	
+	item.appendChild(image_div);
+	item.appendChild(content_div);
+	
+	
+	document.getElementById("item-container").appendChild(item);
+	
+	
+}
+
+
+
+	steem.api.getTrendingTags(null, 41, function(err, result) {
+		//console.log(err, result);
+		for (x in result) {
+			if (x == 0) continue;
+			create_tag(result[x], x);
+		}
+			document.getElementById("tags-loader").style.display = "none";
+			document.getElementById("tags-label").style.display = "block";
+	});
+	
+
+	
+function create_tag(tag, num) {
+	
+	var item = document.createElement("a");
+	item.className = "item";
+	item.href = "/issue/" + tag.name;
+	
+	var label1 = document.createElement("div");
+	label1.className = "ui red horizontal right pointing label";
+	label1.innerText = "(" + Number(num) + ") " + tag.name;
+	
+	var label2 = document.createElement("div");
+	label2.className = "ui horizontal label";
+	label2.title = "Earnings";
+	label2.innerText = "$" + Number(tag.total_payouts.split('.')[0]).toLocaleString();
+	
+	var label3 = document.createElement("span");
+	label3.className = "ui horizontal label";
+	label3.title = "Top posts";
+	label3.innerText = "#" + Number(tag.top_posts).toLocaleString();
+	
+	item.appendChild(label1);
+	item.appendChild(label2);
+	item.appendChild(label3);
+	
+	document.getElementById('tags-container').appendChild(item);
+	
+	
+}
+
+	
+	
+	
+	
+	
+	
+	
+   
+  $(document).ready(function() {
+	
+      $('.ui.menu .ui.dropdown').dropdown({
+        on: 'hover'
+      });
+      $('.ui.menu a.item')
+        .on('click', function() {
+          $(this)
+            .addClass('active')
+            .siblings()
+            .removeClass('active')
+          ;
+        });
+  });
+  
+  
+  
+	
+
+
+  </script>
+
+  
+  
+</body>
+
+</html>

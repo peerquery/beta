@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+	<meta name="description" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="Peer Query">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery.png">
+	<meta property="fb:app_id" content="384491628645652">
+	<link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+	<meta name="application-name" content="Peer Query">
+	<title>Wallet - Peer Query</title>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/visibility.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/sidebar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
+  <script src="/assets/scripts/timeago.js"></script>
+  <script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+	<script src="/assets/scripts/sc2.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+<div class="ui container">
+	
+	<div class="ui feed">
+	<div class="event">
+	<div class="label">
+		<img id="account_img" src="/assets/img/avatar.png">
+	</div>
+	<div class="content">
+		<div class="summary">
+			<a id="user_account"></a>
+			<div class="date">
+				Wallet
+			</div>
+			<div class="ui active inline tiny loader" id="spinner"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="ui dropdown">
+		<i class="sidebar icon"></i>
+			<div class="text">View</div>
+		<i class="dropdown icon"></i>
+		<div class="menu">
+			<a class="item" id="account_btn">
+				<i class="user icon"></i>
+				Account
+			</a>
+			<a class="item" id="feed_btn">
+				<i class="rss icon"></i>
+				Feed
+			</a>
+			<a class="item" id="community_btn">
+				<i class="users icon"></i>
+				Community
+			</a>
+		</div>
+	</div>
+	
+	
+		
+</div>
+
+
+
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+<div class="ui stackable grid container">
+  
+	
+ 
+      <div class="row">
+        <div class="ten wide column">
+		 
+		  <!-- top questions -->
+		  
+		  <div class="ui container">
+		    
+	  
+		<div style="" id="overview">
+		<div class="ui raised segment">
+			<a class="ui red ribbon label">Overview</a>
+			
+			<br/>
+			
+			  <div class="ui active centered inline loader" id="content-loader" style="display:block"></div>
+			
+			<div style="display:none" id="content-area">
+			
+			<br/>
+			
+			
+	  
+			<div class="ui indicating progress" data-value="0" data-total="100" id="bd_progress" style="display:none">
+			<div class="bar">
+			<div class="progress"></div>
+			</div>
+			<div class="label" id="bandwidth_usage"></div>
+			</div>
+		
+		
+			
+			<br/>
+			
+			
+			<div class="ui grid">
+  
+    <div class="eight wide column">
+  
+			<table class="ui very basic collapsing celled table">
+  <thead>
+    <tr><th></th>
+    <th></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="history icon"></i>
+          <div class="content">
+            Created
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td class="timeago" id="created">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="microchip icon"></i>
+          <div class="content">
+            Mined
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="mined">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="clone icon"></i>
+          <div class="content">
+            Proxy
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="proxy">..
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="write icon"></i>
+          <div class="content">
+            Last post
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td class="timeago" id="lastpost">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="folder open icon"></i>
+          <div class="content">
+            Total posts
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="postcount">
+      </td>
+    </tr>
+  </tbody>
+			</table>
+			
+			
+    </div>
+	
+    <div class="eight wide column">
+	
+	
+			<table class="ui very basic collapsing celled table">
+  <thead>
+    <tr><th></th>
+    <th></th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="star icon"></i>
+          <div class="content">
+            Reputation
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="reputation">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="emergency icon"></i>
+          <div class="content">
+            Recovery
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="recovery">
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="bomb icon"></i>
+          <div class="content">
+            Challenged
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="challenged">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="fire extinguisher icon"></i>
+          <div class="content">
+            Powered down
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="powerdown">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4 class="ui image header">
+		<i class="money icon"></i>
+          <div class="content">
+            100% Vote
+            <div class="sub header">          </div>
+        </div>
+      </h4></td>
+      <td id="vote">..
+      </td>
+    </tr>
+  </tbody>
+			</table>
+			
+	
+    </div>
+  
+  </div>
+			
+			
+			
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+			
+			<a class="ui blue ribbon label">Apps</a>
+			
+			
+			
+			<div class="ui middle aligned divided list" id="item-container">
+			</div>
+		
+			
+			</div>
+			
+			<br/>
+			
+		</div>
+		</div>
+		
+		
+		
+		
+		
+		
+	
+		
+		
+    
+	</div>
+	
+	
+  </div>
+		  
+		  <!-- end of top questions -->
+		  
+		  
+		  
+        <div class="six wide right floated column">
+		  
+		  <!-- Top earners -->
+		  
+		  <div class="ui container">
+				
+								
+
+		
+    <div class="ui segment">
+      <a class="ui orange right ribbon label">Wealth</a>
+	  
+	  			<div class="ui active centered inline loader" id="spinner2" style=""></div>
+				
+	  <br/>
+	  
+	  <div id="wealth-div" style="display:none">
+	  
+	  <br/>
+	  
+		<div class="ui indicating progress" data-value="0" data-total="100" id="vp_progress">
+		<div class="bar">
+		<div class="progress"></div>
+		</div>
+		<div class="label">Voting Power</div>
+		</div>
+		
+		
+		    <div class="ui segment">
+				<p id="sbd">Steem Backed Dollars</p>
+				<div class="ui bottom attached label">STEEM BACKED DOLLARS</div>
+			</div>
+		    <div class="ui segment">
+				<p id="steem">Steem</p>
+				<div class="ui bottom attached label">STEEM</div>
+			</div>
+		    <div class="ui segment">
+				<p id="steempower">Steem Power</p>
+				<div class="ui bottom attached label">STEEM POWER</div>
+			</div>
+		    <div class="ui segment">
+				<p id="delegated">Delegated Steem Power</p>
+				<div class="ui bottom attached label">DELEGATED STEEM POWER</div>
+			</div>
+		    <div class="ui segment">
+				<p id="worth">Estimated account worth</p>
+				<div class="ui bottom attached label">ESTIMATED ACCOUNT WORTH</div>
+			</div>
+		
+		
+		
+		<div class="ui raised segment" id="bio-area" style="display: none">
+			<p id="bio"></p>
+		</div>
+		
+		
+		</div>
+		
+	</div>
+
+
+
+
+
+		
+		
+		</div>
+		  
+			  <!-- end of top earners -->
+		  
+		  
+        </div>
+		
+      </div>
+	  
+  
+  
+</div>  
+  
+  
+  
+  
+
+	<br/><br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/>
+	
+	
+	
+
+	<div class="ui stackable grid container">
+  
+  		<!-- next area -->
+		  
+      <div class="row"  style="visibility:hidden" id="other">
+        
+		<div class="eight wide column">
+		
+		    <div class="ui pointing below label">Witness votes</div>
+	
+	
+			
+			<div class="ui middle aligned divided list" id="witness-container">
+			</div>
+
+			
+		
+		</div>
+        
+		
+		<div class="eight wide right floated column">
+		
+				    <div class="ui pointing below label">Public keys</div>
+
+		<table class="ui definition celled table segment">
+      <tbody><tr>
+        <td>Owner</td>
+        <td id="o_key">..</td>
+      </tr>
+      <tr>
+        <td>Active</td>
+        <td id="a_key">..</td>
+      </tr>
+      <tr>
+        <td>Posting</td>
+        <td id="p_key">..</td>
+      </tr>
+      <tr>
+        <td>Memo</td>
+        <td id="m_key">..</td>
+      </tr>
+    </tbody></table>
+		</div>
+	  
+	  </div>
+		
+		
+		
+	</div>
+	
+  
+  
+  
+  
+  
+  
+
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+
+  <script>
+//
+
+	var converter = new showdown.Converter();
+  	
+	
+	var pth = window.location.pathname;
+	account = pth.substr(pth.indexOf("@") + 1, pth.indexOf("/wallet") -2);
+	
+	
+	//console.log(account);
+	
+	document.getElementById("feed_btn").href = "/@" + account + "/feed";
+	document.getElementById("account_btn").href = "/@" + account;
+	document.getElementById("community_btn").href = "/@" + account + "/community";
+	
+	
+	
+	document.getElementById("user_account").innerText = account.toUpperCase();
+	document.getElementById("user_account").href = "/@" + account;
+	document.getElementById("account_img").src = "https://img.busy.org/@" + account;
+	document.getElementById('account_img').onerror = function() {this.src='/assets/img/avatar.png'; this.onerror='';};
+	
+	document.getElementById("spinner").style.display = "none";
+	
+	
+	
+	//let account = account;
+    steem.api.getAccounts([account], function(err, response){
+        //console.log(err, response);
+		
+		var response = response[0];
+		
+		document.getElementById("spinner2").style.display = "none";
+		document.getElementById("wealth-div").style.display = "block";
+		document.getElementById("content-loader").style.display = "none";
+		document.getElementById("other").style.visibility = "visible";
+		
+		document.getElementById("content-area").style.display = "block";
+		
+		document.getElementById("steem").innerText = response.balance;
+		document.getElementById("sbd").innerText = response.sbd_balance;
+		
+		
+		
+		document.getElementById("created").title = response.created;
+		document.getElementById("mined").innerText = response.mined;
+		document.getElementById("challenged").innerText = response.owner_challenged;
+		document.getElementById("powerdown").innerText = new Date(response.next_vesting_withdrawal).toDateString();
+		document.getElementById("recovery").innerText = response.recovery_account;
+		document.getElementById("reputation").innerText = steem.formatter.reputation(response.reputation);
+		document.getElementById("lastpost").title = response.last_post;
+		document.getElementById("postcount").innerText = response.post_count.toLocaleString();
+		document.getElementById("proxy").innerText = response.proxy;
+		
+		
+		document.getElementById("o_key").innerText = response.owner.key_auths["0"]["0"];
+		document.getElementById("a_key").innerText = response.active.key_auths["0"]["0"];
+		document.getElementById("p_key").innerText = response.posting.key_auths["0"]["0"];
+		document.getElementById("m_key").innerText = response.memo_key;
+		
+		
+		if (response.json_metadata) {
+			metaData = JSON.parse(response.json_metadata);
+			if(metaData.profile) { 
+				if(metaData.profile.about != undefined || "") { 
+					document.getElementById("bio").innerText = metaData.profile.about;
+					document.getElementById("bio-area").style.display = "block";
+				}
+			}
+		}
+		
+		
+		
+		var secondsago = (new Date - new Date(response.last_vote_time + "Z")) / 1000;
+		var vpow = response.voting_power + (10000 * secondsago / 432000);
+		vpow = Math.min(vpow / 100, 100).toFixed();
+			
+		//console.log(vpow);
+			
+		document.getElementById("vp_progress").dataset.value = vpow;
+		
+		$('#vp_progress').progress();
+		
+		
+		
+		
+		
+		
+			timeAgo();
+			
+			
+			
+			
+		for (x in response.witness_votes) {
+			create_user(response.witness_votes[x]);
+		}
+			
+			
+		
+		
+		
+        var p_apps = response.posting.account_auths;
+		var pApps = p_apps.map(function(p_apps) { return p_apps[0] });
+		for (x in pApps) {
+			create_app(pApps[x], ' POSTING', 'ui teal left pointing label');
+		}
+		
+        var a_apps = response.active.account_auths;
+		var aApps = a_apps.map(function(a_apps) { return a_apps[0] });
+		for (x in aApps) {
+			create_app(aApps[x], ' ACTIVE', 'ui red orange pointing label');
+		}
+		
+        var o_apps = response.owner.account_auths;
+		var oApps = o_apps.map(function(o_apps) { return o_apps[0] });
+		for (x in oApps) {
+			create_app(oApps[x], ' OWNER', 'ui red left pointing label');
+		}
+		
+		
+		
+		steem.formatter.estimateAccountValue(response)
+		.then( aw => {
+			//console.log(aw);
+			document.getElementById("worth").innerText = "$" + Number(aw).toLocaleString();
+		});
+		
+		
+		
+		steem.api.getDynamicGlobalProperties(function(err, gprops) {
+			//console.log(err, gprops);
+			
+			var totalSteem = Number(gprops.total_vesting_fund_steem.split(' ')[0]);
+			var totalVests = Number(gprops.total_vesting_shares.split(' ')[0]);
+			var userVests = Number(response.vesting_shares.split(' ')[0]);
+			
+			var vp = totalSteem * (userVests / totalVests);
+			document.getElementById("steempower").innerText = Number(vp.toFixed(2)).toLocaleString();
+		
+			var del = Number(response.received_vesting_shares.split(' ')[0]) - Number(response.delegated_vesting_shares.split(' ')[0]);
+			var d_vp = totalSteem * (del / totalVests);
+			
+			
+			
+			document.getElementById("delegated").innerText = Number(d_vp.toFixed(2)).toLocaleString();
+			
+		
+			
+			
+			
+			const STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS = 60 * 60 * 24 * 7;
+			let vestingShares = parseFloat(response.vesting_shares.replace(" VESTS", ""));
+			let receivedVestingShares = parseFloat(response.received_vesting_shares.replace(" VESTS", ""));
+			let totalVestingShares = parseFloat(gprops.total_vesting_shares.replace(" VESTS", ""));
+			let max_virtual_bandwidth = parseInt(gprops.max_virtual_bandwidth, 10);
+			let average_bandwidth = parseInt(response.average_bandwidth, 10);
+		
+			let delta_time = (new Date - new Date(response.last_bandwidth_update + "Z")) / 1000;
+		
+			let bandwidthAllocated = (max_virtual_bandwidth  * (vestingShares + receivedVestingShares) / totalVestingShares);
+			bandwidthAllocated = Math.round(bandwidthAllocated / 1000000);
+        
+			let new_bandwidth = 0
+			if (delta_time < STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS) {
+				new_bandwidth = (((STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS - delta_time)*average_bandwidth)/STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS);
+			}
+			new_bandwidth = Math.round(new_bandwidth / 1000000);
+			
+			var c_b = new_bandwidth/(1024*1024);
+			var a_bd = bandwidthAllocated/(1024*1024);
+			var b_used_percent = 100 * new_bandwidth / bandwidthAllocated;
+			var b_remaining_percent =  100 - (100 * new_bandwidth / bandwidthAllocated);
+			
+			//console.log("current bandwidth used", new_bandwidth/(1024*1024) + "MB");
+			//console.log("current bandwidth allocated", bandwidthAllocated/(1024*1024) + "MB");
+			//console.log("bandwidth % used", 100 * new_bandwidth / bandwidthAllocated);
+			//console.log("bandwidth % remaining", 100 - (100 * new_bandwidth / bandwidthAllocated));
+			
+			
+			document.getElementById("bd_progress").style.display = "block";
+			
+			document.getElementById("bd_progress").dataset.value = b_remaining_percent;
+			document.getElementById("bandwidth_usage").innerText = b_used_percent.toFixed(3) + "% of " + a_bd.toFixed(2).toLocaleString() + " MB Bandwidth";
+		
+			$('#bd_progress').progress();
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		const STEEMIT_VOTE_REGENERATION_SECONDS = 5 * 60 * 60 * 24; // it takes 5 days to regenerate 100% voting power
+		const STEEMIT_100_PERCENT = 10000
+
+		// Adjust these values to use something other than 100% for voting power and vote weight. 
+		// Note: Value = percentage * 100, so 100% = 10000, 25.33% = 2533, etc.
+		const current_voting_power = STEEMIT_100_PERCENT;
+		const vote_pct_weight = STEEMIT_100_PERCENT;
+		
+		
+		const acct_vesting_shares = parseFloat(		response.vesting_shares.replace(" VESTS", "")		);
+		
+		const acct_delegated_vesting_shares = parseFloat(		response.delegated_vesting_shares.replace(" VESTS", "")		);
+		
+		const acct_received_vesting_shares = parseFloat(		response.received_vesting_shares.replace(" VESTS", "")		);
+
+		const effective_vesting_shares = acct_vesting_shares - acct_delegated_vesting_shares + acct_received_vesting_shares;
+
+		//console.log("acct_vesting_shares", acct_vesting_shares);
+		//console.log("acct_delegated_vesting_shares", acct_delegated_vesting_shares);
+		//console.log("acct_received_vesting_shares", acct_received_vesting_shares);
+		//console.log("effective_vesting_shares", effective_vesting_shares); 
+
+		steem.api.getRewardFundAsync("post").then(function(fund) {
+			
+			const pot = parseFloat(fund.reward_balance.replace(" STEEM", ""));
+			const total_r2 = parseInt(fund.recent_claims, 10);
+
+			//console.log("pot", pot)
+			//console.log("total_r2", total_r2) 
+    
+			const max_vote_denom = gprops.vote_power_reserve_rate * STEEMIT_VOTE_REGENERATION_SECONDS / (60*60*24);
+      
+			let used_power = (current_voting_power * vote_pct_weight) / STEEMIT_100_PERCENT;
+			used_power = (used_power + max_vote_denom - 1) / max_vote_denom;
+
+			let rshares = effective_vesting_shares * used_power / STEEMIT_100_PERCENT;
+			rshares = Math.floor(rshares * 1000000)
+
+			//console.log("max_vote_denom", max_vote_denom);
+			//console.log("used_power", used_power);
+			//console.log("rshares", rshares);
+			//console.log("STEEM value", rshares * pot / total_r2); 
+			
+			
+			steem.api.getCurrentMedianHistoryPrice(function(err, rlt) {
+				//console.log(err, rlt);
+				//console.log(Number(rlt.base.split(' ')[0]) * (rshares * pot / total_r2));
+				var vw = Number(rlt.base.split(' ')[0]) * (rshares * pot / total_r2);
+				
+				document.getElementById("vote").innerText = "$" + Number(vw.toFixed(2)).toLocaleString();
+			});
+			
+			
+			
+		});
+			
+			
+			
+			
+		});
+		
+		
+		
+	});
+		
+		
+		
+		
+		
+	
+//get the Cookie: SC2A
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+	 
+		
+	var l_display = "none";
+		 
+	 if (readCookie("SC2A") != null) {
+	 
+	 
+        var aInfo = readCookie("SC2A");
+        aInfo = window.atob(aInfo);
+        aInfo = JSON.parse(aInfo);
+		
+		
+		//console.log(authInfo);
+		
+		var aToken = aInfo.access_token;
+	
+		if (aInfo.username == account) l_display = "inline-block";
+		
+	 }
+  
+function create_app(account, details, clss) {
+  
+  var item = document.createElement("div");
+  item.className = "item";
+  
+  var content1 = document.createElement("div");
+  content1.className = "right floated content";
+  
+  
+  var view_btn = document.createElement("a");
+  view_btn.className = "ui teal button";
+  view_btn.href = "/@" + account;
+  view_btn.title = "View";
+  
+  var view_i = document.createElement("i");
+  view_i.className = "unhide icon";
+  
+  var view_span = document.createElement("span");
+  view_span.className = "desktop-only";
+  view_span.innerText = "View";
+  
+  view_btn.appendChild(view_i);
+  view_btn.appendChild(view_span);
+  
+  
+  var revoke_btn = document.createElement("a");
+  revoke_btn.className = "ui red button";
+  revoke_btn.style.display = l_display;
+  revoke_btn.target = "_blank";
+  revoke_btn.href = "https://v2.steemconnect.com/revoke/@" + account;
+  revoke_btn.title = "Revoke";
+  
+  var revoke_i = document.createElement("i");
+  revoke_i.className = "remove circle icon";
+  
+  var revoke_span = document.createElement("span");
+  revoke_span.className = "desktop-only";
+  revoke_span.innerText = "Revoke";
+  
+  revoke_btn.appendChild(revoke_i);
+  revoke_btn.appendChild(revoke_span);
+  
+  
+  content1.appendChild(view_btn);
+  content1.appendChild(revoke_btn);
+  
+  var img = document.createElement("img");
+  img.className = "ui avatar image";
+  img.src = "https://img.busy.org/@" + account;
+  img.onerror = function() {this.src='/assets/img/avatar.png'; this.onerror='';};
+  
+  var content2 = document.createElement("div");
+  content2.className = "content";
+  
+  var span_account = document.createElement("span");
+  span_account.innerText = account.toUpperCase();
+  
+  var span_details = document.createElement("span");
+  span_details.className = clss;
+  span_details.innerText = details;
+  
+  content2.appendChild(span_account);
+  content2.appendChild(span_details);
+  
+  item.appendChild(content1);
+  item.appendChild(img);
+  item.appendChild(content2);
+  
+  document.getElementById("item-container").appendChild(item);
+  
+  
+}
+  
+  
+
+  
+  
+  
+  
+  
+  
+function create_user(account) {
+  
+  var item = document.createElement("div");
+  item.className = "item";
+  
+  var content1 = document.createElement("div");
+  content1.className = "right floated content";
+  
+  var btn = document.createElement("a");
+  btn.className = "ui button";
+  btn.innerText = "View";
+  btn.href = "/@" + account;
+  
+  content1.appendChild(btn);
+  
+  var img = document.createElement("img");
+  img.className = "ui avatar image";
+  img.src = "https://img.busy.org/@" + account;
+  img.onerror = function() {this.src='/assets/img/avatar.png'; this.onerror='';};
+  
+  var content2 = document.createElement("div");
+  content2.className = "content";
+  
+  var span_account = document.createElement("span");
+  span_account.innerText = account.toUpperCase();
+  
+  content2.appendChild(span_account);
+  
+  item.appendChild(content1);
+  item.appendChild(img);
+  item.appendChild(content2);
+  
+  document.getElementById("witness-container").appendChild(item);
+  
+  
+}
+  
+		
+  </script>
+
+  
+  
+</body>
+
+</html>

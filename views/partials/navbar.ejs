@@ -1,0 +1,473 @@
+
+
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+	  
+	  
+	  
+		<div class="ui tiny-view item" style="display:none">
+			<div class="content">
+		<div class="ui inline dropdown">
+			<div class="text">
+				<i class="sidebar icon"></i>
+			</div>
+		<i class="dropdown icon"></i>
+			<div class="menu">
+				<a class="active item" href="/" >
+					<img class="ui avatar image" src="/assets/img/logo.png">
+					beta
+				</a>
+				<a class="item" href="/reports" >
+					<i class="coffee icon"></i>
+					Reports
+				</a>
+			</div>
+		</div>
+		
+		</div>
+		</div>
+		
+		
+	
+		<a href="/" id="home-page" class="header hide-on-tiny item" title="Home">
+			<img class="logo" src="/assets/img/logo.png">
+			<span class="desktop-only">beta</span>
+		</a>
+		
+		<a href="/reports" id="reports-page" class="hide-on-tiny item" title="Reports">
+			<i class="coffee icon" id=""></i>
+			<span class="desktop-only">Reports</span>
+		</a>
+		
+		<a href="/steem" id="steem-page" class="hide-on-tiny item" title="Steem">
+			<i class="chevron circle up icon icon" id=""></i>
+			<span class="desktop-only">Steem</span>
+		</a>
+		
+	  
+        <div class="right item">
+			
+			
+			<a class="hide-on-tiny ui inverted button" id="signin-desktop">
+				<i class="" id="write-icon"></i>
+				<span class="desktop-only" id="signin_state">Login</span>
+			</a>
+			<a class="ui inverted button" href="https://signup.steemit.com/" target="_blank" id="signup-desktop">
+				<i class="add user icon" id="write-icon"></i>
+				<span class="desktop-only">Sign Up</span>
+			</a>
+			
+			
+			
+		
+			<span class="leftspace" id="loggedin-desktop-options" style="display:none">
+			<div class="ui inline dropdown">
+		
+				<div class="text">
+					<img class="ui avatar image" id="logged_in_user_img" src="/assets/img/avatar.png">
+				</div>
+		
+				<i class="dropdown icon"></i>
+		
+				<div class="menu">
+					<a class="item" id="logged_in_user_href">
+						<i class="user icon"></i>
+						Account
+					</a>
+					<a class="item" id="logged_in_user_feed">
+						<i class="rss icon"></i>
+						Feed
+						</a>
+					<a class="item" id="logged_in_user_community">
+						<i class="users icon"></i>
+						Community
+					</a>
+					<a class="item" id="logged_in_user_wallet">
+						<i class="dollar icon"></i>
+						Wallet
+					</a>
+					<a class="item" onClick="logOut()">
+						<i class="sign out icon"></i>
+						Logout
+					</a>
+				</div>
+			</div>
+			</span>
+		
+		
+        </div>
+		
+		
+    </div>
+  </div>
+
+  
+    
+<script>
+	//
+	
+	
+	//------- Set the "active" class to the active page
+	
+	var path = window.location.pathname;
+	//var page = path.substr(path.indexOf("/") + 1);
+	
+	//console.log(path);
+	
+	
+
+	if (path == "/") document.getElementById("home-page").classList.add("active");
+	if (path == "/reports") document.getElementById("reports-page").classList.add("active");
+	if (path == "/steem") document.getElementById("steem-page").classList.add("active");
+	
+	
+	
+//general authentication system for all pages
+
+	steem.api.setOptions({ url: 'https://api.steemit.com' });
+	
+	
+	
+	
+	
+
+/*
+
+Set-Cookie: mycookie=somevalue; path=/securesite/; Expires=12/12/2010; secure; httpOnly;
+
+
+  setcookie( name, value, expire, path, domain, secure, httponly);
+
+// Open
+setcookie( 'UserName', 'Bob', 0, '/', '.example', false, false);
+
+// Locked Down
+setcookie( 'UserName', 'Bob', 0, '/forums', 'www.example.com', isset($_SERVER["HTTPS"]), true);
+
+*/
+	
+	
+	
+	
+	
+
+
+
+
+/*
+function newCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+	
+	
+function setCookie(nom, str, sec) {
+    var d = new Date();
+    d.setTime(d.getTime() + (sec*1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = nom + "=" + str + " ; " + expires + "; secure; httpOnly";
+    if(readCookie("SC2A") != null)
+        return true;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+	
+//general authentication system for all pages
+
+	steem.api.setOptions({ url: 'https://api.steemit.com' });
+	
+	
+	
+	
+var urlParams = "";
+var state = window.location.href;
+var cook = false;
+var isAuth;
+var returned_state = "";
+	
+	
+	
+sc2.init({
+  
+  //baseURL: 'https://v2.steemconnect.com',
+  app: 'peerquery.app',
+  callbackURL: window.location.protocol + "//" + window.location.hostname + "/me",
+  accessToken: '',
+  scope: ['vote', 'comment', 'custom_json']
+  
+});
+
+
+
+  
+	let activeUser = "";
+	var authLink = sc2.getLoginURL(state);
+	var account = "";
+	////console.log(authLink);
+	
+
+
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+
+
+function deleteCookie() {
+	////console.log("current cookie is: " + document.cookie.substring(15));
+	
+    var exp= 1;
+    
+    var d = new Date();
+    d.setTime(d.getTime() - (exp*24*60*60*1000));
+    var expT = "expires="+d.toUTCString();
+    document.cookie = "SC2A" + "=" + ";" + expT + "; path=/;";
+	////console.log("done");
+	////console.log(document.cookie);
+	
+	return true;
+}
+  
+
+function newCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+	
+	
+function setCookie(nom, str, sec) {
+    var d = new Date();
+    d.setTime(d.getTime() + (sec*1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = nom + "=" + str + " ; " + expires;
+    if(readCookie("SC2A") != null)
+        return true;
+}
+  
+	
+	
+	
+	
+	
+	//set auth
+	
+function setAuth() {
+	
+		var urlParams;
+		
+		var match,
+			pl     = /\+/g,  // Regex for replacing addition symbol with a space
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
+
+			var urlParams = {};
+		while (match = search.exec(query))
+			urlParams[decode(match[1])] = decode(match[2]);
+			
+			
+			
+			
+	
+    var authObject = {access_token : urlParams.access_token, username : urlParams.username};
+    var authString = JSON.stringify(authObject);
+    authString = window.btoa(authString);	//only to obstruct the auth token from literal rendering - hackers please keep your hands off!!!
+	returned_state = urlParams.state;
+	var cookieName = "SC2A";
+    
+    if(setCookie(cookieName, authString, urlParams.expires_in)) return true;
+	
+}
+	
+	
+	
+	
+	
+  
+	//get auth
+	
+	
+function getAuth() {
+
+    if(readCookie("SC2A") != null) {
+		
+		
+        var authInfo = readCookie("SC2A");
+        authInfo = window.atob(authInfo);
+        authInfo = JSON.parse(authInfo);
+		
+		accessToken = authInfo.access_token;
+		sc2.setAccessToken(accessToken);
+		account = authInfo.username;
+		
+		//console.log("authInfo is: " + account);
+		
+		
+		//document.getElementById('signin-desktop').onclick = function write();
+		document.getElementById('signin-desktop').href = "/publish";
+		document.getElementById('signin_state').innerText = "Post";
+		document.getElementById('write-icon').className = "write icon";
+	
+	
+		document.getElementById('loggedin-desktop-options').style.display = "block";
+		document.getElementById('signup-desktop').style.display = "none";
+	
+		document.getElementById("logged_in_user_href").href = "/@" + account;
+		document.getElementById("logged_in_user_feed").href = "/@" + account + "/feed";
+		document.getElementById("logged_in_user_community").href = "/@" + account + "/community";
+		document.getElementById("logged_in_user_wallet").href = "/@" + account + "/wallet";
+		document.getElementById("logged_in_user_img").src = "https://img.busy.org/@" + account;
+		document.getElementById('logged_in_user_img').onerror = function() {this.src='/assets/img/avatar.png'; this.onerror='';};
+	
+		return authInfo;
+
+	}
+	
+	
+	//document.getElementById('signin-desktop').onclick = "";
+	document.getElementById('signin-desktop').href = authLink;
+	document.getElementById('signin_state').innerText = "Sign in";
+	document.getElementById('write-icon').className = "sign in icon";
+	
+
+}
+
+
+
+	
+	
+	
+function logOut() {
+	
+    sc2.revokeToken(function (err, result) {
+	
+		if (err) window.location.reload();
+	
+        ////console.log('You successfully logged out', err, result);
+	
+		deleteCookie(); //delete cookie to remove old token
+	
+		//console.log("out");
+	
+		window.location.reload();
+		
+    });
+	
+	
+};
+
+
+
+
+
+	console.log('%cSTOP! PROCEED WITH CAUTION!', 'color: red; font-size: 30px; font-weight: bold;');
+	console.log('%cThis is the developer console!!!', 'color: red; font-size: 20px; font-weight: bold;');
+	console.log('%cANY ACTIVITY HERE COULD POTENTIALLY COMPROMISE YOUR ACCOUNT!!!', 'color: red; font-size: 20px; font-weight: bold;');
+
+
+
+
+  
+
+  $(document).ready(function() {
+  
+  
+  
+      $('.ui.menu .ui.dropdown').dropdown({
+        on: 'hover'
+      });
+      $('.ui.menu a.item')
+        .on('click', function() {
+          $(this)
+            .addClass('active')
+            .siblings()
+            .removeClass('active')
+          ;
+        });
+		
+		
+		$('.ui.dropdown')
+			.dropdown()
+		;
+
+		
+		
+		
+	
+	if(window.location.pathname != "/me") { getAuth(); return; };
+	
+	if(window.location.pathname == "/me" && window.location.search != "") {
+	
+		if(setAuth() == true) {
+			//console.log("done");
+			window.location.href = returned_state;
+		}
+		
+	} else if(window.location.pathname == "/me" && window.location.search == "") {
+		
+		//window.location.href = "/";
+		
+	}
+	
+	//if(readCookie("SC2A") != null) getAuth();
+	
+  });
+	
+	
+  
+ 
+ 
+
+   
+
+			
+				
+	
+
+	function search() {
+	
+		var query = document.getElementById('search_box').value;
+		query = query.replace(/ /g, '+');
+		location.href = "/search/" + query;
+	
+	}
+
+				
+				
+//register new user
+
+
+
+</script>
+
+

@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Site Properties -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- Standard meta -->
+	<title>Publish new query</title>
+	<meta name="application-name" content="Peer Query">
+	<meta name="description" content="Outsource your queries to the Peer Query community. Collaborators await you!" />
+
+	<!--  Open graph/social mata tags -->
+	<meta property="og:title" content="Publish new query">
+	<meta property="og:description" content="Outsource your queries to the Peer Query community. Collaborators await you!">
+	<meta property="og:image" content="https://www.peerquery.com/assets/img/peerquery.png">
+	<meta property="og:url" content="https://www.peerquery.com/publish">
+	<meta property="og:type" content="article" /> 
+	<meta property="og:site_name" content="Peer Query">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- Inform original content incase of duplicate
+		<link rel="canonical" href="">
+	-->
+
+	<!-- Required for social analytics -->
+	<meta property="fb:app_id" content="384491628645652" />
+	<meta name="twitter:site" content="@peer_query">
+
+	
+	<!-- CSS files -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+	<link href="https://cdn.quilljs.com/1.3.5/quill.snow.css" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/custom.css" />
+	
+	<!-- JS files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
+	<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+	<script src="https://cdn.quilljs.com/1.3.5/quill.js"></script>
+	<script src="/assets/scripts/sc2.min.js"></script>
+	<script src="/assets/scripts/timeago.js"></script>
+	
+</head>
+
+<body>
+
+
+
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+<div class="ui container">
+	
+	<div class="ui feed">
+	<div class="event">
+	<div class="label">
+		<img id="account_img" src="/assets/img/image.png">
+	</div>
+	<div class="content">
+		<div class="summary">
+			<a id="user_account"></a>
+			<div class="date">
+				Publish
+			</div>
+			<div class="ui active inline tiny loader" id="spinner"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="ui dropdown">
+		<i class="sidebar icon"></i>
+			<div class="text">View</div>
+		<i class="dropdown icon"></i>
+		<div class="menu">
+			<a class="item" id="account_btn">
+				<i class="user icon"></i>
+				Account
+			</a>
+			<a class="item" id="wallet_btn">
+				<i class="dollar icon"></i>
+				Wallet
+			</a>
+			<a class="item" id="feed_btn">
+				<i class="dollar icon"></i>
+				Feed
+			</a>
+			<a class="item" id="community_btn">
+				<i class="dollar icon"></i>
+				Community
+			</a>
+		</div>
+	</div>
+	
+		
+</div>
+
+
+
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+<div class="ui stackable grid container">
+  
+	
+ 
+      <div class="row">
+        <div class="thirteen wide column">
+		 
+		  
+		  
+		  <div class="ui container">
+		    
+	  
+		<div style="" id="overview">
+		<div class="ui raised segment">
+			<a class="ui red ribbon label">Prepare your post</a>
+			
+			<br/>
+			<br/>
+			
+			
+			
+	
+	
+	<form id="form" class="ui form">
+		
+		<div class="field">
+			<label>Enter title of your post</label>
+			<input type="text" id="post-title" placeholder="Enter title of post">
+		</div>
+	    
+		<div class="field">
+			<div id="editor">
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<h1> Just another awesome post...</h1>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+			</div>
+		</div>
+		
+		
+		<div class="two fields">
+		
+		<div class="four wide field">
+		<div class="field">
+		<label>Default category</label>
+		<input placeholder="peerquery" readonly="" type="text">
+		</div>
+		</div>
+  
+		<div class="twelve wide field">
+		<div class="field">
+			<label>Relevant tags(only alpha-numeric characters)</label>
+			<input type="text" id="post-tags" placeholder="proposal contest question quiz gig">
+		</div>
+	    </div>
+		
+		</div>
+		
+		
+		
+		<div class="ui button" tabindex="0" onClick="publish()">Publish</div>
+  
+		
+		
+  </form>
+
+
+
+  
+  
+  
+			
+			<br/>
+			
+		</div>
+		</div>
+		
+		
+		
+		
+		
+		
+	
+		
+		
+    
+	</div>
+	
+	
+  </div>
+		  
+		 
+		  
+		  
+		  
+        <div class="three wide right floated column">
+		  
+		  
+		  
+		  <div class="ui container">
+				
+		</div>
+		  
+			  
+		  
+		  
+        </div>
+		
+      </div>
+	  
+  
+  
+</div>  
+  
+  
+  
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+  <script>
+//
+   
+	var converter = new showdown.Converter();
+  	
+	
+	
+	var toolbarOptions = [
+		['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+		['blockquote', 'code-block', 'link', 'image'],
+
+		[{ 'header': 1 }, { 'header': 2 }],               // custom button values
+		[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+		[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+		[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+		[{ 'direction': 'rtl' }],                         // text direction
+
+		[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+		[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+		[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+		[{ 'font': [] }],
+		[{ 'align': [] }],
+
+		['clean']                                         // remove formatting button
+	];
+
+
+	
+	
+	
+	var quill = new Quill('#editor', {
+		modules: {
+			toolbar: toolbarOptions
+			},
+		placeholder: 'Prepare your post here...',
+		theme: 'snow'
+	});
+	
+
+	var toolbar = quill.getModule('toolbar');
+	toolbar.addHandler('image', function() {
+
+		var range = this.quill.getSelection();
+		var value = prompt('What is the image URL');
+		this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+	
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+//get the Cookie: SC2A
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+	 
+	 
+	 
+	 if (readCookie("SC2A") == null)  window.location.href = "/";
+	
+	//var authString = document.cookie.substring(15);
+	
+	//if (authString.indexOf(';') > -1) authString = authString.substr(0, authString.indexOf(';'));
+	
+        var aInfo = readCookie("SC2A");
+        aInfo = window.atob(aInfo);
+        aInfo = JSON.parse(aInfo);
+		
+		
+		//console.log(authInfo);
+		
+	var aToken = aInfo.access_token;
+	sc2.setAccessToken(aToken);
+	//expiresIn = authInfo.expires_in;
+	
+	var author = aInfo.username;
+	
+	 
+	
+	
+	
+	$(document).ready(function(){
+	
+	//console.log(author);
+		
+		author = author;
+		
+		document.getElementById("account_btn").href = "/@" + author;
+	
+	
+		document.getElementById("wallet_btn").href = "/@" + author + "/wallet";
+		
+		document.getElementById("feed_btn").href = "/@" + author + "/feed";
+		
+		document.getElementById("community_btn").href = "/@" + author + "/community";
+		
+		document.getElementById("user_account").innerText = author.toUpperCase();
+		document.getElementById("user_account").href = "/@" + author;
+		document.getElementById("account_img").src = "https://img.busy.org/@" + author;
+		document.getElementById('account_img').onerror = function() {this.src='/assets/img/avatar.png'; this.onerror='';};
+	
+		document.getElementById("spinner").style.display = "none";
+	
+	
+	
+	});
+	
+	
+function publish() {
+		
+		//alert(quill.root.innerHTML);
+		//publish function goes here
+		
+	
+	var qTitle = document.getElementById('post-title').value;
+	if (qTitle == "") { alert('Enter title'); document.getElementById('post-title').focus(); return };
+	var qBody = quill.root.innerHTML;
+	if (qBody == "<p><br></p>") { alert('Enter post body'); return; };
+	var qAuthor = author;
+	var qCategory = "peerquery";
+	var qlink = qTitle.replace(/\W+/g, " ");
+	var qPermlk = qlink.replace(/\s+/g, '-');
+	var qPlink = qPermlk.toLowerCase();
+	var qPermlink = qPlink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+	var tagStr = document.getElementById('post-tags').value;
+	if (tagStr == "") { alert("Enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
+	var tagStrg = tagStr.toLowerCase();
+	//var tagStrng = tagStrg.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+	var tagString = tagStrg.replace(/\W+/g, " ");
+	var tags = tagString.split(" ", 3);
+	tags.unshift(qCategory);
+	
+	
+	document.getElementById('form').className = "ui loading form";
+		
+		var n = qTitle.length;
+		
+		if(n == 1) { alert("Please enter a longer title!"); document.getElementById('form').className = "ui form"; return; };
+		
+	function test_permlink() {
+		
+			//console.log("working");
+			
+			steem.api.getContent(author, qPermlink, function(err, result) {
+				//console.log(err, result);
+				
+				n = n -1;
+				
+				//console.log(n);
+				
+				if (result.author != "")  {
+				
+				//if(n == 1) { alert("Please change the title"); document.getElementById('form').className = "ui form"; return; };
+				
+						var qTtle= qTitle.substr(0, n);
+						qlink = qTtle.replace(/\W+/g, " ");
+						qPermlk = qlink.replace(/\s+/g, '-');
+						qPlink = qPermlk.toLowerCase();
+						qPermlink = qPlink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+						
+						test_permlink();
+						return;
+						
+				} else {
+					//console.log(qCategory, qAuthor, qPermlink, qTitle, qBody, tags);
+					do_publish(qCategory, qAuthor, qPermlink, qTitle, qBody, tags);
+				}
+			});
+	
+	}	
+	
+	test_permlink();
+	
+	
+}
+	
+	
+	
+	/*
+function check_permlink(author, permlink) {
+	
+	steem.api.getContent(author, permlink, function(err, result) {
+		//console.log(err, result);
+		if (result.author == "")  {
+			return false;
+		} else {
+			return true;
+		}
+	});
+	
+}
+	*/
+	
+	
+	
+function do_publish(qCategory, qAuthor, qPermlink, qTitle, qBody, tags) {
+
+	
+	sc2.comment(
+
+    '', // author, leave blank for new post
+    qCategory, // first tag
+    qAuthor, // username
+    qPermlink, // permlink
+    qTitle, // Title
+    qBody, // Body of post
+    // json metadata (additional tags, app name, etc)
+	
+    { tags: tags, app: 'peerquery' },
+	
+    
+	function (err, result) {
+		
+		if (err) {
+			nErr = JSON.stringify(err.error_description);
+			
+			
+			//console.log(nErr);
+			
+				if (nErr.indexOf("The comment is archived") > -1)
+					return alert("Post with the same permlink already exists and is archived, please change your permlink.");
+					
+					
+				if (nErr.indexOf("You may only post once every 5") > -1)
+					return alert("You may only post once every five minutes!");
+					
+					
+		
+					return;
+				
+						
+			//throw err;
+			alert('Failure! ' + err);
+	document.getElementById('form').className = "ui form";
+			
+		}  else {
+		
+			console.log('Success!');
+				
+			window.location.href = qCategory + "/@" + author + "/" + qPermlink;
+			
+		}
+		
+	
+	});
+	
+}
+	
+	
+	
+	
+  </script>
+
+  
+  
+</body>
+
+</html>
