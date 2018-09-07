@@ -1,0 +1,167 @@
+
+
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+	  
+	  
+	  
+		<div class="ui tiny-view item" style="display:none">
+			<div class="content">
+		<div class="ui inline dropdown">
+			<div class="text">
+				<i class="sidebar icon"></i>
+			</div>
+		<i class="dropdown icon"></i>
+			<div class="menu">
+				<a class="active item" href="/" >
+					<img class="ui avatar image" src="/assets/images/logo.png">
+					beta
+				</a>
+				<a class="item" href="/projects" >
+					<i class="coffee icon"></i>
+					Projects
+				</a>
+				<a class="item" href="/reports" >
+					<i class="clipboard icon"></i>
+					Reports
+				</a>
+				<a class="item" href="/peers" >
+					<i class="users icon"></i>
+					Peers
+				</a>
+				<a class="item" href="/steem" >
+					<i class="chevron circle up icon"></i>
+					Steem
+				</a>
+			</div>
+		</div>
+		
+		</div>
+		</div>
+		
+		
+	
+		<a href="/" id="home-page" class="header hide-on-tiny item" title="Home">
+			<img class="logo" src="/assets/images/logo.png" style="margin-right:0em">
+		</a>
+		
+		<a href="/projects" id="projects-page" class="hide-on-tiny item" title="Projects">
+			<i class="coffee icon" id=""></i>
+			<span class="desktop-only">Projects</span>
+		</a>
+		
+		<a href="/reports" id="reports-page" class="hide-on-tiny item" title="Reports">
+			<i class="clipboard icon" id=""></i>
+			<span class="desktop-only">Reports</span>
+		</a>
+		
+		<a href="/peers" id="peers-page" class="hide-on-tiny item" title="Peers">
+			<i class="users icon" id=""></i>
+			<span class="desktop-only">Peers</span>
+		</a>
+		
+		<a href="/steem" id="steem-page" class="hide-on-tiny item" title="Steem">
+			<i class="chevron circle up icon" id=""></i>
+			<span class="desktop-only">Steem</span>
+		</a>
+				
+		<a id="content">
+		</a>
+		
+	  
+        <div class="right item">
+			
+			
+			<a id="navbarLoginButton" class="ui left attached button" style="display:none">
+				<i class="sign in icon" id="write-icon"></i>
+				<span class="desktop-only" id="signin_state">Log in</span>
+			</a>
+			<a id="signupButton" class="right attached ui button" href="https://signup.steemit.com/" target="_blank" style="display:none">
+				<i class="add user icon" id="write-icon"></i>
+				<span class="desktop-only">Sign Up</span>
+			</a>
+			
+			
+			
+			
+			
+			<span class="leftspace" id="loggedin-desktop-create" style="display:none">
+			<div class="ui inline top right pointing dropdown">
+		
+				<div class="text">
+					<i class="large plus icon"></i>
+				</div>
+		
+				<i class="dropdown icon"></i>
+		
+				<div class="menu">
+					<a class="item" href="/create/report">
+						<i class="clipboard icon"></i>
+						Report
+					</a>
+					<a class="item" href="/create/project">
+						<i class="coffee icon"></i>
+						Project
+					</a>
+				</div>
+				
+			</div>
+			</span>
+		
+		
+		
+			<span class="leftspace" id="loggedin-desktop-options" style="display:none">
+			<div class="ui inline top right pointing dropdown">
+			
+				<div class="text">
+					<img class="ui avatar image" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>" >
+				</div>
+		
+				<i class="dropdown icon"></i>
+		
+				<div class="menu">
+					<a class="item" id="logged_in_user_href">
+						<i class="user icon"></i>
+						Account
+					</a>
+					<a class="item" href="/logout">
+						<i class="sign out icon"></i>
+						Logout
+					</a>
+				</div>
+				
+			</div>
+			</span>
+		
+		
+        </div>
+		
+		
+    </div>
+  </div>
+
+  
+  
+	<script>
+	//
+		const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim();
+		if(active_user !== "") {//logged in
+			$('#loggedin-desktop-options').show();
+			$('#loggedin-desktop-create').show();
+			$('#logged_in_user_href').attr("href", "/@" + active_user);
+		} else { //not logged in
+			$('#loggedin-desktop-options').hide();
+			$('#navbarLoginButton').show();
+			$('#signupButton').show();
+		}
+		
+		
+		var path = window.location.pathname;
+		if (path == "/projects") document.getElementById("projects-page").classList.add("navbar-active");
+		if (path == "/reports") document.getElementById("reports-page").classList.add("navbar-active");
+		if (path == "/peers") document.getElementById("peers-page").classList.add("navbar-active");
+		if (path == "/steem") document.getElementById("steem-page").classList.add("navbar-active");
+	
+	</script>
+	
+  

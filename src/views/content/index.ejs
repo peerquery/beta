@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Standard Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- SEO Properties -->
+	<title>Peer to Peer Collaboration powered by Steem!</title>
+	<meta name="description" content="Peer Query is an open source project collaborations platform built on the Steem Blockchain.">
+	<meta name="application-name" content="Peer Query">
+	
+	<!-- Open graph properties -->
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="Peer Query: Ask, Contribute & Earn!">
+	<meta property="og:image" content="https://www.peerquery.com/images/peerquery.png"/>
+	<meta property="og:description" content="Peer Query is an open source project collaborations platform built on the Steem Blockchain.">
+	<meta property="fb:app_id" content="384491628645652">
+	
+	<!-- SEO robots -->
+	<meta name="robots" content="index, follow" />
+	
+	<script src="/build/dist/ui.js"></script>
+	
+</head>
+<body>
+
+	
+<!-- Page Contents -->
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+<div class="pusher" <% if(typeof username == 'string' && username) { %> style = "display:none" <% } %>>
+
+  <div class="ui inverted vertical masthead center aligned segment" style="margin-top: -7%; margin-bottom: 2%; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/background.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
+	
+    <div class="ui text container" >
+      <h1 class="ui inverted header">
+        Imagine a World
+      </h1>
+      <h2>Where we could collaborate and reward seamlessly.</h2>
+	  <a class="ui scroll huge right labeled primary icon button">
+            <i class="chevron down icon"></i>
+            It's possible with Steem
+      </a>
+    </div>
+	
+	<small>
+		Photo by <a href="https://unsplash.com/photos/Kj2SaNHG-hg" target="_blank">Christopher Burns</a>
+	</small>
+	
+  </div>
+  
+  </div>
+  
+
+
+<div class="ui container">
+	
+	<div class="ui three steps">
+    <div class="step">
+		<i class="dollar icon"></i>
+      <div class="content">
+        <div class="title">Beyound free</div>
+        <div class="description">Earn real cash for contributing!</div>
+      </div>
+    </div>
+    <div class="active step">
+		<i class="sitemap icon"></i>
+      <div class="content">
+        <div class="title">Open source</div>
+        <div class="description">No hidden daemon in the details.</div>
+      </div>
+    </div>
+    <div class="step">
+		<i class="bomb icon"></i>
+      <div class="content">
+        <div class="title">Uncensored community</div>
+        <div class="description">Built atop the Steem Blockchain.</div>
+      </div>
+    </div>
+  </div>
+	
+</div>
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+ 
+ 
+    <div class="ui stackable grid container">
+	
+	
+	<div class="ui five item menu">
+			<a class="item active" id="featured">
+				<i class="star icon"></i>
+				<span class="desktop-only">Featured</span>
+			</a>
+			<a class="item" id="popular">
+				<i class="eye icon"></i>
+				<span class="desktop-only">Popular</span>
+			</a>
+			<a class="item" id="trending">
+				<i class="dollar icon"></i>
+				<span class="desktop-only">Trending</span>
+			</a>
+			<a class="item" id="discussed">
+				<i class="discussions icon"></i>
+				<span class="desktop-only">Discussed</span>
+			</a>
+			<a class="item" id="created">
+				<i class="history icon"></i>
+				<span class="desktop-only">Created</span>
+			</a>
+		</div>
+	
+ 
+      <div class="row">
+        <div class="ten wide column">
+		  
+		  <div class="ui container">
+		  
+  <div class="ui active centered inline loader" id="post-loader" style="display:none"></div>
+  
+  
+  <div class="ui relaxed divided items"  id="item-container">
+  
+  
+	  
+	  </div>
+	  
+	  
+    
+	</div>
+	
+	
+  </div>
+		  
+		  
+		  
+        <div class="six wide right floated column">
+		  
+		  
+		  <div class="ui container">
+		
+			
+			<div class="ui active centered inline loader" id="responses-loader" style="display:none"></div>
+				
+				<br/>
+				
+					<div class="ui left pointing label grid" style="visibility:hidden" id="responses-label">
+						<div class="ui grid" style="width:100%">
+							
+							<div class="two wide column"><i class="big comments icon"></i></div>
+							<div class="fourteen wide column" id="responses-title"></div>
+							
+						</div>
+					</div>
+				
+				
+				<div class="ui comments" id="responses-container">
+	
+				</div>
+		
+		
+		</div>
+		  
+		  
+        </div>
+      </div>
+      
+	  
+	  <div class="row">
+        <div class="center aligned column">
+	  <br/><br/>
+	  
+	  
+		  
+		<div class="ui buttons" id="more-button" style="visibility:hidden">
+			<a class="ui yellow button" href="/reports">
+				<i class="clipboard icon"></i>
+				All reports
+			</a>
+			
+				<div class="or"></div>
+				
+			<a class="ui blue button" href="/projects">
+				<i class="coffee icon"></i>
+				All projects
+			</a>
+		</div>
+		  
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  
+  
+
+ 
+	
+
+  <div class="ui vertical stripe segment">
+  
+  
+		  
+		  
+		  <h3 class="ui center aligned header">What's the secret sauce?</h3>
+		  
+		  <br/><br/>
+		  
+		  <div class="ui last container">
+  <div class="ui three steps">
+    <div class="step">
+      <div class="content">
+        <div class="title"><i class="cubes icon"></i>Steem Blockchain</div>
+        <div class="description">
+			<p>The world's most powerful Blockchain, with the most processed transactions, instant transfers, conventional account names and feeless transfers.</p>
+		</div>
+      </div>
+    </div>
+    <div class="active step">
+      <div class="content">
+        <div class="title"><i class="power icon"></i>Computer intelligence</div>
+        <div class="description">
+			<p>The Steem Blockchain permanently stores user generated content - including your queries and their replies, while rewarding us for using it.</p>
+		</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="content">
+        <div class="title"><i class="world icon"></i>Uncensored community</div>
+        <div class="description">
+			<p>Blockchain-grade security means no-censorship of your earnings, no censoring of your account, no censoring or corruption of your content.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+		  
+  
+  
+  
+  </div>
+  
+  
+  
+  
+  
+  
+  <div class="ui vertical stripe no-bottom-strip segment">
+    <div class="ui text container">
+	
+	
+      <h3 class="ui header">Meet the Query interface of the Blockchain</h3>
+        <p>Peer Query is an open source collaboration platform built on the Steem Blockchain. Securely initiate a community projects with like minded-peers, collaborate and reward effort.</p>
+		
+		<a class="ui large button" href="/@peerquery" target="_blank">See what's new</a>
+		<a class="ui large button" href="https://steem.io" target="_blank">Explore Steem</a>
+		<a class="ui large button" href="https://github.com/peerquery/beta" target="_blank">Contribute</a>
+		<a class="ui large button" href="/faqs" target="_blank">Read FAQs</a>
+		
+		
+		<br/>
+		<br/>
+		<br/>
+		
+		
+		<h4 class="ui horizontal header divider">
+			<a>Follow on social media!</a>
+		</h4>
+		
+		
+	
+		<br/>
+		
+		<div class="ui center aligned header">
+			<a href="http://steemit.com/@peerquery" target="_blank"><i class="circular inverted teal rss icon"></i> Steemit</a>
+			<a href="http://facebook.com/peerquery" target="_blank"><i class="circular inverted blue facebook f icon"></i> Facebook</a>
+			<a href="http://twitter.com/peer_query" target="_blank"><i class="circular inverted teal twitter icon"></i> Twitter</a>
+			<a href="http://linkedin.com/company/peerquery" target="_blank"><i class="circular inverted violet linkedin icon"></i> LinkedIn</a>
+		</div>
+		
+		
+		
+    </div>
+  </div>
+
+  
+  
+	
+	
+	
+<section name="modal for viewing posts">
+
+<div class="ui modal">
+	<i class="close icon"></i>
+	
+	<div class="header"><span id="modal_title"></span> <em> by <span id="modal_author"></span></em></div>
+	
+	
+	<div class="post_content scrolling content">
+		
+		<div class="description" id="modal_content">
+	
+		</div>
+	
+	</div>
+	
+	<div class="actions">
+		<a class="ui positive right positive labeled icon button" id="modal_href" >
+			View
+			<i class="window maximize outline icon"></i>
+		</a>
+		<div class="ui black right negative labeled icon button">
+			Close
+			<i class="window close icon"></i>
+		</div>
+	</div>
+</div>
+
+</section>
+
+
+	<script src="/build/dist/index_p.js"></script>
+  
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+
+
+</body>
+
+</html>

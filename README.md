@@ -1,9 +1,23 @@
-# beta
-Peer Query is a Steem-powered peer-to-peer collaboration site.
+
+# Peer Query beta
+[Peer Query](https://www.peerquery.com) is a peer-to-peer collaboration platform powered by the [Steem Blockchain](https://steem.io).
+
+# Tech stack
+* Node.js, Express.js & EJS
+* MongoDb & Mongoose.js
+* Semantic UI & JQuery frontend
+* Steem & DSteem
+* Webpack
+* See `package.json` for full dependencies list
 
 # How to start the server
 * Create your dev folder
 * Git clone this repo into it: `git@github.com:peerquery/beta.git` or `https://github.com/peerquery/beta.git`
+* Setup `.env` file using the `sample.env` as guide. Customize `/src/configs/config.js`
 * `npm install` to install dependencies
-* `node init.js` or `npm start` in the command prompt(while in the root dev folder)
-* Visit `http://localhost` or `http://localhost:80` to see Peer Query running
+* `npm run build` in the command prompt(while in the root dev folder) to build assets
+* `npm start` in the command prompt(while in the root dev folder)
+* Visit `http://localhost` or `http://localhost` to see Peer Query running
+
+# Warning
+This repo and its content are still in active development and will see lots of breaking updates.
