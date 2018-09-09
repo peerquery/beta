@@ -30,7 +30,7 @@
 			data.title = $('#projectTitle').val().substring(0, 100);
 			data.mission = $('#projectMission').val().substring(0, 160);
 			data.story = $('#projectStory').val();
-			data.state = $('#projectState').find(":selected").val();
+			data.state = $('#projectState').find(":selected").val().toLowerCase();
 			data.tag = $('#projectTag').val();
 			data.website = $('#projectWebsite').val();
 			data.website = (data.website.indexOf('://') === -1) ? 'http://' + data.website : data.website;
