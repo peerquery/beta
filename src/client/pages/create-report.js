@@ -181,10 +181,10 @@ $( window ).on( "load", function() {
 							} catch(err) {
 								console.log(err);
 								alert('Sorry, an error occured updating the server. However, the report has been successfully published to your Steem account.');
-								window.location.href = "/@" + author + "/" + permlink;
+								window.location.href = "/report/" + permlink;
 							}
 							
-							window.location.href = "/@" + author + "/" + permlink;
+							window.location.href = "/report/" + permlink;
 					
 						}
 					
