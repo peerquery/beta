@@ -5,17 +5,20 @@ var address = {};
 address.content = {};
 address.content.index = "content/index";
 address.content.steem = "content/steem";
+address.content.peers = "content/peers";
 address.content.peer = "content/peer";
 address.content.projects = "content/projects";
 address.content.project = "content/project";
+address.content.queries = "content/queries";
+address.content.query = "content/query";
 address.content.reports = "content/reports";
-address.content.peers = "content/peers";
-address.content.report_view = "content/report";
+address.content.report = "content/report";
 
 //client views
 address.client = {};
 address.client.login = "client/login";
 address.client.new_report = "client/new-report";
+address.client.new_query = "client/new-query";
 address.client.new_project = "client/new-project";
 
 //static views

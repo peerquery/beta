@@ -7,10 +7,174 @@ var shortid = require('shortid'),
 	activity = require('../models/activity'),
 	peer = require('../models/peer'),
 	report = require('../models/report'),
+	query = require('../models/query'),
 	project = require('../models/project');
 	//do not worry about sanitizing req.body; already done in the server!
     
 module.exports = function (app) {
+	
+	app.post('/api/private/create/report', async function (req, res) {
+		
+		try {
+			
+			var project_title = req.body.project_title;
+			var project_slug_id = req.body.project_slug_id;
+			
+			var newReport = report({
+				
+				steemid: req.body.steemid,
+				author: req.active_user.account,
+				title: req.body.title,
+				category: req.body.category,
+				summary: parser.summary(req.body.body, 300),
+				body: req.body.body,
+				permlink: req.body.permlink,
+				project_title: project_title,
+				project_slug_id: project_slug_id,
+				url: req.active_user.account + "/" + req.body.permlink,
+				view_count: 1,
+				created: new Date(),
+				update_at: new Date()
+				
+			});
+		
+			var newActivity = activity({
+				
+				title: req.body.title,
+				slug_id: '/@' + req.active_user.account + '/' + req.body.permlink,
+				action: 'create',
+				type: 'report',
+				source: 'user',
+				account: req.active_user.account,
+				description: '@' + req.active_user.account + ' just published a new report: ' + req.body.title,
+				created: Date.now()
+				
+			});
+            
+			var updatePeer = {
+				
+				$inc : {'report_count' : 1},
+				badge: 'reporter',
+				last_update: Date.now(),
+				last_report: req.body.permlink
+				
+			};
+		
+			await newReport.save();
+			await newActivity.save();
+			await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );	//returns query though
+			
+			if(project_slug_id !== null && project_slug_id !== undefined && project_title !== null && project_title !== undefined) {
+			
+				var updateProject = {
+				
+					$inc : {'report_count' : 1},
+					last_update: Date.now()
+				
+				};
+				
+				var newQuery = {slug_id: project_slug_id, title: project_title, owner: req.active_user.account};
+				await project.findOneAndUpdate( newQuery, updateProject, {upsert: true} );//returns query!?
+			
+			}
+		
+			res.status(200).send('success');
+		
+		} catch(err){
+			
+			res.status(500).send('sorry, could not create project. please try again');
+			console.log(err);
+			
+		}
+		
+	});
+	
+	app.post('/api/private/create/query', async function (req, res) {
+		
+		try {
+			
+			var project_title = req.body.project_title;
+			var project_slug_id = req.body.project_slug_id;
+			
+			var newQuery = query({
+				
+				steemid: req.body.steemid,
+				author: req.active_user.account,
+				title: req.body.title,
+				category: req.body.category,
+				summary: parser.summary(req.body.body, 300),
+				body: req.body.body,
+				permlink: req.body.permlink,
+				project_title: project_title,
+				project_slug_id: project_slug_id,
+				url: req.active_user.account + "/" + req.body.permlink,
+				view_count: 1,
+				terms: req.body.terms,
+				email: req.body.email,
+				telephone: req.body.telephone,
+				website: req.body.website,
+				reward: req.body.reward,
+				reward_form: req.body.reward_form,
+				label: req.body.label,
+				type: req.body.type,
+				deadline: req.body.deadline,
+				image: req.body.image,
+				description: req.body.description,
+				created: new Date(),
+				update_at: new Date()
+				
+			});
+		
+			var newActivity = activity({
+				
+				title: req.body.title,
+				slug_id: '/@' + req.active_user.account + '/' + req.body.permlink,
+				action: 'create',
+				type: 'query',
+				source: 'user',
+				account: req.active_user.account,
+				description: '@' + req.active_user.account + ' just published a new query: ' + req.body.title,
+				created: Date.now()
+				
+			});
+            
+			var updatePeer = {
+				
+				$inc : {'query_count' : 1},
+				badge: 'querant',
+				last_update: Date.now(),
+				last_report: req.body.permlink
+				
+			};
+			
+			await newQuery.save();
+			await newActivity.save();
+			await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );	//returns query though
+			
+			if(project_slug_id !== null && project_slug_id !== undefined && project_title !== null && project_title !== undefined) {
+			
+				var updateProject = {
+				
+					$inc : {'query_count' : 1},
+					last_update: Date.now()
+				
+				};
+				
+				var newQuery = {slug_id: project_slug_id, title: project_title, owner: req.active_user.account};
+				await project.findOneAndUpdate( newQuery, updateProject, {upsert: true} );//returns query!?
+			
+			}
+		
+			res.status(200).send('success');
+		
+		} catch(err){
+			
+			res.status(500).send('sorry, could not create project. please try again');
+			console.log(err);
+			
+		}
+		
+	});
 	
 	app.post('/api/private/create/project', async function (req, res) {
 		
@@ -105,90 +269,6 @@ module.exports = function (app) {
 			
 		}
 		
-		
-	});
-	
-	app.post('/api/private/create/report', async function (req, res) {
-		
-		try {
-			
-			var project_title = req.body.project_title;
-			var project_slug_id = req.body.project_slug_id;
-			
-			var newReport = report({
-				
-				steemid: req.body.steemid,
-				author: req.active_user.account,
-				title: req.body.title,
-				category: req.body.category,
-				summary: parser.summary(req.body.body, 300),
-				body: req.body.body,
-				permlink: req.body.permlink,
-				project_title: project_title,
-				project_slug_id: project_slug_id,
-				url: req.active_user.account + "/" + req.body.permlink,
-				view_count: 1,
-				created_at: new Date(),
-				update_at: new Date()
-				
-			});
-		
-			var newActivity = activity({
-				
-				title: req.body.title,
-				slug_id: '/@' + req.active_user.account + '/' + req.body.permlink,
-				action: 'create',
-				type: 'report',
-				source: 'user',
-				account: req.active_user.account,
-				description: '@' + req.active_user.account + ' just published a new report: ' + req.body.title,
-				created: Date.now()
-				
-			});
-            
-			var updatePeer = {
-				
-				$inc : {'report_count' : 1},
-				badge: 'reporter',
-				last_update: Date.now(),
-				last_report: req.body.permlink
-				
-			};
-		
-			await newReport.save();
-			await newActivity.save();
-			await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );	//returns query though
-			
-			if(project_slug_id !== null && project_slug_id !== undefined && project_title !== null && project_title !== undefined) {
-			
-				var updateProject = {
-				
-					$inc : {'report_count' : 1},
-					last_update: Date.now(),
-					$push: {reports: 
-						{
-							title: req.body.title,
-							account: req.active_user.account,
-							permlink: req.body.permlink,
-							created: new Date()
-						}
-					}
-				
-				};
-				
-				var newQuery = {slug_id: project_slug_id, title: project_title, owner: req.active_user.account};
-				await project.findOneAndUpdate( newQuery, updateProject, {upsert: true} );//returns query!?
-			
-			}
-		
-			res.status(200).send('success');
-		
-		} catch(err){
-			
-			res.status(500).send('sorry, could not create project. please try again');
-			console.log(err);
-			
-		}
 		
 	});
 	

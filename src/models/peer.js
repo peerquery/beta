@@ -43,6 +43,9 @@ var peerSchema = new Schema({
 	
 	//stats
 	view_count: { type: Number },
+	query_count: { type: Number },
+	report_count: { type: Number },
+	project_count: { type: Number },
 	
 	//social
 	facebook: { type: String },

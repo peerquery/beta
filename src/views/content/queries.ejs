@@ -9,15 +9,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<!-- SEO Properties -->
-	<title>Projects on Peer Query</title>
-	<meta name="description" content="Discover the most new, exciting, and the most promising projects and collaborations by your peers.">
+	<title>Queries on Peer Query</title>
+	<meta name="description" content="Discover new, exciting, and intriguing queries from your peers.">
 	<meta name="application-name" content="Peer Query">
 	
 	<!-- Open graph properties -->
 	<meta property="og:site_name" content="Peer Query">
-	<meta property="og:title" content="Projects on Peer Query">
-	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-projects.png"/>
-	<meta property="og:description" content="Discover the most new, exciting, and the most promising projects and collaborations by your peers.">
+	<meta property="og:title" content="Queries on Peer Query">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-queries.png"/>
+	<meta property="og:description" content="Discover new, exciting, and intriguing queries from your peers.">
 	<meta property="fb:app_id" content="384491628645652">
 	
 	<!-- SEO robots -->
@@ -40,24 +40,24 @@
 
 	<div class="ui three steps">
     <div class="step">
-		<i class="idea icon"></i>
+		<i class="hand point up outline icon"></i>
       <div class="content">
-        <div class="title">Got an idea?</div>
-        <div class="description">Want to make the world better?</div>
+        <div class="title">Need help?</div>
+        <div class="description">There is no need doing it all by yourself.</div>
       </div>
     </div>
     <div class="active step">
-		<i class="coffee icon"></i>
+		<i class="question icon"></i>
       <div class="content">
-        <div class="title">Start an project</div>
-        <div class="description">Connect with like-minded people!</div>
+        <div class="title">Publish a query</div>
+        <div class="description">Outsource your task to the community!</div>
       </div>
     </div>
     <div class="step">
-		<i class="users icon"></i>
+		<i class="handshake outlines icon"></i>
       <div class="content">
-        <div class="title">Command & conquer</div>
-        <div class="description">Unleash your potential together.</div>
+        <div class="title">Complement each other</div>
+        <div class="description">Sometimes two hands are better than one.</div>
       </div>
     </div>
   </div>
@@ -82,13 +82,13 @@
 				<i class="star icon"></i>
 				<span class="desktop-only">Featured</span>
 			</a>
-			<a class="item" id="active" >
-				<i class="chart bar icon"></i>
-				<span class="desktop-only">Active</span>
+			<a class="item" id="voted" >
+				<i class="chevron circle up icon"></i>
+				<span class="desktop-only">Voted</span>
 			</a>
-			<a class="item" id="hibernation" >
-				<i class="power icon"></i>
-				<span class="desktop-only">Hibernation</span>
+			<a class="item" id="viewed" >
+				<i class="eye icon"></i>
+				<span class="desktop-only">Viewed</span>
 			</a>
 			<a class="item" id="created" >
 				<i class="clock icon"></i>
@@ -105,7 +105,7 @@
 		
 		<div class="ui active centered inline loader" id="loader"></div>
 		
-		<div class="ui three stackable link cards" style="margin-top:5rem; margin-bottom:3rem; width: 100%; margin: auto" id="item-container">	 </div>
+		<div class="ui four stackable link cards" style="margin-top:5rem; margin-bottom:3rem; width: 100%; margin: auto" id="item-container">	 </div>
 	
 		<button class="ui right floated button" id="moreBtn" style="display:none; margin-top: 3rem">Load more</button>
 	
@@ -115,10 +115,14 @@
 </div>  
   
   
-  
-
-  
-	<script src="/build/dist/projects_p.js"></script>
+	<script src="/build/dist/queries.js"></script>
+	
+	<script>
+	//
+	function ready() {
+		$('.popupDescription').popup();
+	}
+	</script>
   
   
 	<section class="footerSection">

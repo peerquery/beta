@@ -7,6 +7,7 @@
 	
 	$('#home').attr('href' , '/project/' + project_slug);
 	$('#reports').attr('href' , '/project/' + project_slug + '/reports');
+	$('#queries').attr('href' , '/project/' + project_slug + '/queries');
 	$('#members').attr('href' , '/project/' + project_slug + '/members');
 	$('#settings').attr('href' , '/project/' + project_slug + '/settings');
 			

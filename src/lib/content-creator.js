@@ -530,6 +530,144 @@ module.exports = {
 		item.appendChild(content);
 	
 		return item;
+	},
+	
+	query: async function (data) {
+		
+		
+		var divCard = document.createElement("div");
+		divCard.className = "ui card";
+		
+		var divHeader = document.createElement("div");
+		divHeader.className = "ui image";
+		divCard.appendChild(divHeader);
+		
+		var divImg = document.createElement("img");
+		divImg.className = "ui image";
+		divImg.style.height = "80px";
+		divImg.src = "https://steemitimages.com/0x0/https://cdn.steemitimages.com/DQmWWKC7DTZsHSLCGiAi8rqkqpBfuv9xCewqzjMvpQUqcsH/pq%20core%20open%20source.png";
+		divHeader.appendChild(divImg);
+		
+		var divPrimaryContent = document.createElement("div");
+		divPrimaryContent.className = "content";
+		
+		var authorImg = document.createElement("img");
+		authorImg.className = "ui avatar image";
+		authorImg.src = "https://steemitimages.com/128x128/https://cdn.steemitimages.com/DQmXK14D1vgJ7SEKgvrJvdRzLrML1U1rfPnhqGzTHeoZAMF/a.jpg";
+		
+		var authorSpan = document.createElement("a");
+		authorSpan.href = "/@" + data.author;
+		authorSpan.innerText = data.author;
+		
+		divPrimaryContent.appendChild(authorImg);
+		divPrimaryContent.appendChild(authorSpan);
+		
+		
+		var subHeader = document.createElement("a");
+		subHeader.href = "/query/" + data.permlink;
+		subHeader.className = "ui popupDescription link sub header";
+		subHeader.innerText = data.title;
+		subHeader.style.color = "#4183C4";
+		subHeader.setAttribute("data-content", data.description);
+		subHeader.setAttribute("data-variation", "wide");
+		subHeader.setAttribute("data-position", "top left");
+		
+		
+		var divFeedArea = document.createElement("div");
+		divFeedArea.className = "ui small feed";
+		
+		
+		var divHistory = document.createElement("div");
+		divHistory.className = "event";
+		
+		var divHistoryContent = document.createElement("div");
+		divHistoryContent.className = "content";
+		
+		var divHistorySummary = document.createElement("div");
+		divHistorySummary.className = "summary";
+		
+		var iHistory = document.createElement("i");
+		iHistory.className = "history icon";
+		divHistorySummary.appendChild(iHistory);
+		
+		var spanHistory = document.createElement("span");
+		spanHistory.innerHTML = "<a>" + data.type + "</a> <em>expires on</em> " + new Date(data.deadline).toDateString();
+		divHistorySummary.appendChild(spanHistory);
+		
+		divHistoryContent.appendChild(divHistorySummary);
+		divHistory.appendChild(divHistoryContent);
+		
+		divFeedArea.appendChild(divHistory);
+		
+		
+		
+		var divStats = document.createElement("div");
+		divStats.className = "event";
+		
+		var divStatsContent = document.createElement("div");
+		divStatsContent.className = "content";
+		
+		var divStatsSummary = document.createElement("div");
+		divStatsSummary.className = "summary";
+		
+		var iStats = document.createElement("i");
+		iStats.className = "money icon";
+		divStatsSummary.appendChild(iStats);
+		
+		var spanStats = document.createElement("span");
+		spanStats.innerHTML = "<a>$" + data.reward + "</a> <a>" + data.reward_form + "</a> rewards";
+		divStatsSummary.appendChild(spanStats);
+		
+		divStatsContent.appendChild(divStatsSummary);
+		divStats.appendChild(divStatsContent);
+		
+		divFeedArea.appendChild(divStats);
+		
+		
+		
+		var divLast = document.createElement("div");
+		divLast.className = "event";
+		
+		var divLastContent = document.createElement("div");
+		divLastContent.className = "content";
+		
+		var divLastSummary = document.createElement("div");
+		divLastSummary.className = "summary";
+		
+		var iLast = document.createElement("i");
+		iLast.className = "write icon";
+		divLastSummary.appendChild(iLast);
+		
+		var spanLast = document.createElement("span");
+		if(data.project_slug_id) {
+			spanLast.innerHTML = "Affiliation: <a href='/project/" + data.project_slug_id + "'>" + data.project_title + "</a>";
+		} else {
+			spanLast.innerHTML = "Affiliation: <a>None</a>";
+		}
+		divLastSummary.appendChild(spanLast);
+		
+		divLastContent.appendChild(divLastSummary);
+		divLast.appendChild(divLastContent);
+		
+		divFeedArea.appendChild(divLast);
+		
+		
+		
+		
+		divPrimaryContent.appendChild(subHeader);
+		divPrimaryContent.appendChild(divFeedArea);
+		
+		
+		
+		var divExtra = document.createElement("div");
+		divExtra.className = "extra content";
+		
+		divCard.appendChild(divPrimaryContent);
+		divCard.appendChild(divExtra);
+		
+		
+		return divCard;
+	
 	}
 	
 	

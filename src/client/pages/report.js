@@ -16,21 +16,19 @@ var dsteem = require('dsteem'),
 (async () => {
 	
 	try {
-   
-		let articleURL = window.location.pathname;	
-		let str = articleURL.substr(articleURL.indexOf("@") + 1);
-		let permlink = str.substr(str.indexOf("/") + 1);
-		let category = articleURL.substring((articleURL.indexOf("/") + 1),  articleURL.indexOf("@") -1);
-		let author = str.substring((str.indexOf("@") + 1), str.indexOf("/"));
-	
+		
+		var permlink = window.location.pathname.split('/')[2];
+		var author = permlink.split('-')[0];
+		
 		var type = "writes in";
 		
+		/*
 		if (category == "proposal") type = "proposes in";
 		if (category == "question") type = "questions in";
 		if (category == "contest") type = "contests in";
 		if (category == "quiz") type = "quizzes in";
 		if (category == "gig") type = "outsources in";
-		
+		*/
 		
 		const report = await client.database.call('get_content', [author, permlink]);
 		

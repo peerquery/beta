@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.google.com/schemas/sitemap/0.84">
+
+	<sitemap>
+		<loc>SITE_URI/site-sitemap.xml</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+		<lastmod>LAST_UPDATED_SITE</lastmod>	
+	</sitemap>
+	
+	<sitemap>
+		<loc>SITE_URI/peer-sitemap.xml</loc>
+        <changefreq>always</changefreq>
+        <priority>1</priority>
+		<lastmod>LAST_UPDATED_PEERS</lastmod>	
+	</sitemap>
+	
+	<sitemap>
+		<loc>SITE_URI/project-sitemap.xml</loc>
+        <changefreq>always</changefreq>
+        <priority>1</priority>
+		<lastmod>LAST_UPDATED_PROJECTS</lastmod>	
+	</sitemap>
+	
+	<sitemap>
+		<loc>SITE_URI/report-sitemap.xml</loc>
+        <changefreq>always</changefreq>
+        <priority>1</priority>
+		<lastmod>LAST_UPDATED_REPORTS</lastmod>	
+	</sitemap>
+	
+	<sitemap>
+		<loc>SITE_URI/query-sitemap.xml</loc>
+        <changefreq>always</changefreq>
+        <priority>1</priority>
+		<lastmod>LAST_UPDATED_QUERIES</lastmod>
+	</sitemap>
+
+</sitemapindex>

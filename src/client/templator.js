@@ -32,6 +32,18 @@ module.exports = {
 		return div;
 	},
 	
+	report: async function(data) {
+		
+		var template = await templater(report_view_template);
+		
+		var div = document.createElement("div");
+		div.className = "";
+	
+		div.innerHTML = await template( data );
+		
+		return div;
+	},
+	
 	report_view: async function(data) {
 		
 		var template = await templater(report_view_template);

@@ -38,6 +38,7 @@ var projectSchema = new Schema({
 	//stats
 	view_count: { type: Number },
 	report_count: { type: Number},
+	query_count: { type: Number},
 	
 	//ratings
 	ratings_count: { type: Number },
@@ -49,14 +50,6 @@ var projectSchema = new Schema({
 	github: { type: String },
 	chat: { type: String },
 	
-	//reports
-	reports: [{
-					title: { type: String, required: true  },
-					account: { type: String, required: true  },
-					permlink: { type: String, required: true  },
-					created: { type: Date, default: Date.now }
-				}],
-				
 	//community
 	sponsors: [{
 					account: { type: String, required: true, unique: true },
@@ -89,6 +82,6 @@ var projectSchema = new Schema({
 })
 
 
-projectSchema.index({name: 1, owner: 1, state:1, type: 1, tag: 1, verified: 1, title: 1, slug: 1, slug_id: 1 });
+projectSchema.index({name: 1, founder: 1, owner: 1, state:1, type: 1, tag: 1, verified: 1, title: 1, slug: 1, slug_id: 1, query_count: 1, view_count: 1, member_count: 1 });
 
 module.exports = mongoose.model('projectSchema', projectSchema);

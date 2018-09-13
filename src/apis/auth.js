@@ -92,6 +92,7 @@ module.exports = function (app) {
 					var newestPeer = {
                         created: now,
                         project_count: 0,
+                        query_count: 0,
                         report_count: 0,
                         badge: 'observer',
                         last_project_slug_id: '#',

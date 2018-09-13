@@ -6,10 +6,12 @@ var path = require('path'),
 
 module.exports = {
 	entry: {
+		
 		ui: paths.ui,
 		login: paths.login,
 		index_p: paths.index_p,
 		projects_p: paths.projects_p,
+		queries: paths.queries,
 		project_page: paths.project_p,
 		project_home: paths.project_home,
 		project_reports: paths.project_reports,
@@ -19,9 +21,12 @@ module.exports = {
 		peers_p: paths.peers_p,
 		peer_p: paths.peer_p,
 		steem_p: paths.steem_p,
-		report_view: paths.report_view,
+		report: paths.report,
 		create_report: paths.create_report,
-		create_project: paths.create_project
+		create_query: paths.create_query,
+		create_project: paths.create_project,
+		
+		project_queries: paths.project_queries,
 	},
 	//target: 'node',
 	output: {
@@ -59,7 +64,7 @@ module.exports = {
 	stats: {
         colors: true
     },
-    devtool: 'source-map',
+    //devtool: 'source-map',
 	mode: 'production'
 	//mode: 'development'
 }

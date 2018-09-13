@@ -18,6 +18,10 @@ module.exports = function(app) {
         return router(address.client.new_report, req, res);
 	})
 	
+	app.get('/create/query', function (req, res) {
+        return router(address.client.new_query, req, res);
+	})
+	
 	app.get('/create/project', function (req, res) {
         return router(address.client.new_project, req, res);
 	})

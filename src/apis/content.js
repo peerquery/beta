@@ -3,9 +3,109 @@
 
 var projects = require('../models/project'),
 	reports = require('../models/report'),
+	queries = require('../models/query'),
 	users = require('../models/peer');
 	
 module.exports = async function (app) {
+	
+	app.get('/api/fetch/queries/featured/:last_id', async function(req, res){
+		
+		try {
+			if(req.params.last_id == 0) {
+				var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+				var options1  = { project_slug_id: { "$nin": [ null, "" ] } };
+				var results = await queries.find(options1).select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			} else {
+				var query = 'name owner slug description logo location report_count member_count created state tag';
+				var options2  = { project_slug_id: { "$nin": [ null, "" ] }, '_id': {'$gt': req.params.last_id} };
+				var results = await queries.find(options2).select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			}
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	app.get('/api/fetch/queries/voted/:last_id', async function(req, res){
+		
+		try {
+			if(req.params.last_id == 0) {
+				var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+				var results = await queries.find().select(query).limit(20).sort({ vote_count: -1 });
+				res.status(200).json(results);
+			} else {
+				var query = 'name owner slug description logo location report_count member_count created state tag';
+				var results = await queries.find().select(query).limit(20).sort({ vote_count: -1 });
+				res.status(200).json(results);
+			}
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	app.get('/api/fetch/queries/viewed/:last_id', async function(req, res){
+		
+		try {
+			if(req.params.last_id == 0) {
+				var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+				var results = await queries.find().select(query).limit(20).sort({ view_count: -1 });
+				res.status(200).json(results);
+			} else {
+				var query = 'name owner slug description logo location report_count member_count created state tag';
+				var results = await queries.find().select(query).limit(20).sort({ view_count: -1 });
+				res.status(200).json(results);
+			}
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	app.get('/api/fetch/queries/created/:last_id', async function(req, res){
+		
+		try {
+			if(req.params.last_id == 0) {
+				var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+				var results = await queries.find().select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			} else {
+				var query = 'name owner slug description logo location report_count member_count created state tag';
+				var results = await queries.find().select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			}
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	app.get('/api/fetch/queries/random/:last_id', async function(req, res){
+		
+		try {
+				var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+				var results = await queries.aggregate([ { $sample: { size: 20 } } ]);
+				res.status(200).json(results);
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	
+	
 	
 	app.get('/api/fetch/projects/featured/:last_id', async function(req, res){
 		
@@ -230,15 +330,15 @@ module.exports = async function (app) {
 		
 		try {
 			var start = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));	//seven days ago
-			var find = { "created_at": { "$gte": start }, project_slug_id: { "$nin": [ null, "" ]} };
+			var find = { "created": { "$gte": start }, project_slug_id: { "$nin": [ null, "" ]} };
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			} else {
-				find = { "created_at": { "$gte": start }, project_slug_id: { "$nin": [ null, "" ]}, '_id': {'$gt': req.params.last_id} };
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				find = { "created": { "$gte": start }, project_slug_id: { "$nin": [ null, "" ]}, '_id': {'$gt': req.params.last_id} };
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			}
 		}
@@ -253,15 +353,15 @@ module.exports = async function (app) {
 		
 		try {
 			var start = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));	//seven days ago
-			var find = { "created_at": { "$gte": start } };
+			var find = { "created": { "$gte": start } };
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			} else {
-				find = { "created_at": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				find = { "created": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			}
 		}
@@ -276,14 +376,14 @@ module.exports = async function (app) {
 		
 		try {
 			var start = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));	//seven days ago
-			var find = { "created_at": { "$gte": start } };
+			var find = { "created": { "$gte": start } };
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
 				var results = await reports.find(find).select(query).limit(20).sort({ view_count: 1 });
 				res.status(200).json(results);
 			} else {
-				find = { "created_at": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
+				find = { "created": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
 				var results = await reports.find(find).select(query).limit(20).sort({ view_count: 1 });
 				res.status(200).json(results);
 			}
@@ -299,14 +399,14 @@ module.exports = async function (app) {
 		
 		try {
 			var start = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));	//seven days ago
-			var find = { "created_at": { "$gte": start } };
+			var find = { "created": { "$gte": start } };
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
 				var results = await reports.find(find).select(query).limit(20).sort({ vote_count: 1 });
 				res.status(200).json(results);
 			} else {
-				find = { "created_at": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
+				find = { "created": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
 				var results = await reports.find(find).select(query).limit(20).sort({ vote_count: 1 });
 				res.status(200).json(results);
 			}
@@ -322,14 +422,14 @@ module.exports = async function (app) {
 		
 		try {
 			var start = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));	//seven days ago
-			var find = { "created_at": { "$gte": start } };
+			var find = { "created": { "$gte": start } };
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
 				var results = await reports.find(find).select(query).limit(20).sort({ comment_count: 1 });
 				res.status(200).json(results);
 			} else {
-				find = { "created_at": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
+				find = { "created": { "$gte": start }, '_id': {'$gt': req.params.last_id} };
 				var results = await reports.find(find).select(query).limit(20).sort({ comment_count: 1 });
 				res.status(200).json(results);
 			}
@@ -349,11 +449,11 @@ module.exports = async function (app) {
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			} else {
 				find = { "author": req.params.username, '_id': {'$gt': req.params.last_id} };
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			}
 		}
@@ -372,11 +472,34 @@ module.exports = async function (app) {
 			
 			var query = 'author permlink id';
 			if(req.params.last_id == 0) {
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			} else {
 				find = { "project_slug_id": req.params.project_slug_id, '_id': {'$gt': req.params.last_id} };
-				var results = await reports.find(find).select(query).limit(20).sort({ created_at: -1 });
+				var results = await reports.find(find).select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			}
+		}
+		catch(err) {
+			console.log(err.message);
+			res.sendStatus(500);
+		}
+		
+	});
+	
+	//queries by project
+	app.get('/api/queries/project/:project_slug_id/:last_id', async function(req, res){
+		
+		try {
+			var find = { "project_slug_id": req.params.project_slug_id };
+			
+			var query = 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
+			if(req.params.last_id == 0) {
+				var results = await queries.find(find).select(query).limit(20).sort({ created: -1 });
+				res.status(200).json(results);
+			} else {
+				find = { "project_slug_id": req.params.project_slug_id, '_id': {'$gt': req.params.last_id} };
+				var results = await queries.find(find).select(query).limit(20).sort({ created: -1 });
 				res.status(200).json(results);
 			}
 		}

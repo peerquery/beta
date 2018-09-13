@@ -6,10 +6,7 @@ var dsteem = require('dsteem'),
 	config = require('./../../../src/configs/config'),
 	client = new dsteem.Client(config.steem_api);
 	
-	let p_URL = window.location.pathname;
-	let str = p_URL.substr(p_URL.indexOf("@") + 1);
-	let peer = str.substring((str.indexOf("@") + 1));
-	//console.log(peer);
+	var peer = window.location.pathname.split('/')[2];
 	var last_id = 0;
 	var metaData;
 	

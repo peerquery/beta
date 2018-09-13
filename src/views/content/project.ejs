@@ -16,7 +16,7 @@
 	<!-- Open graph properties -->
 	<meta property="og:site_name" content="Peer Query">
 	<meta property="og:title" content="<%= data.name %>">
-	<meta property="og:image" content="https://www.peerquery.com/images/peerquery.png"/>
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-home.png"/>
 	<meta property="og:description" content="<%= data.description %>">
 	<meta property="fb:app_id" content="384491628645652">
 	
@@ -64,8 +64,8 @@
 						<div class="five ui buttons">
 							<a id="home" class="ui button">Overview</a>
 							<a id="reports" class="ui button">Reports</a>
+							<a id="queries" class="ui button">Queries</a>
 							<a id="members"  class="ui button">Members</a>
-							<a class="ui button">Queries</a>
 							<a id="settings" class="ui button <%if (data.owner !== username) { %> disabled <% } %> ">Settings</a>
 						</div>
 				
@@ -173,6 +173,8 @@
 				<% include ../partials/project-home.ejs %>
 			<% } else if (data.path == '/reports') { %>
 				<% include ../partials/project-reports.ejs %>
+			<% } else if (data.path == '/queries') { %>
+				<% include ../partials/project-queries.ejs %>
 			<% } else if (data.path == '/members') { %>
 				<% include ../partials/project-members.ejs %>
 			<% } else if (data.path == '/settings') { %>

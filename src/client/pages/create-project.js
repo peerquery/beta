@@ -3,7 +3,7 @@
 	
 	//jquery is already universal through the `ui.js` global file
 		
-		$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
+		//$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
 		$('#projectFounder').val(active_user);
 	
 		$('#createBtn').on('click', function() {

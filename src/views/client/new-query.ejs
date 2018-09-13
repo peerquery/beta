@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Standard Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- SEO Properties -->
+	<title>Publish a query - Peer Query</title>
+	<meta name="description" content="Outsource a task to the Peer Query community.">
+	<meta name="application-name" content="Peer Query">
+	
+	<!-- Open graph properties -->
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="Publish a query - Peer Query">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-home.png"/>
+	<meta property="og:description" content="Outsource a task to the Peer Query community.">
+	<meta property="fb:app_id" content="384491628645652">
+	
+	<!-- SEO robots -->
+	<meta name="robots" content="index, follow" />
+	
+	<script src="/build/dist/ui.js"></script>
+	<link href="/assets/css/quill.css" rel="stylesheet">
+	
+	<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+	
+</head>
+
+<body>
+
+
+
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+<div class="ui container">
+	
+	<div class="ui feed">
+	<div class="event">
+	<div class="label">
+		<img id="account_img" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>">
+	</div>
+	<div class="content">
+		<div class="summary">
+			<a id="user_account"></a>
+			<div class="date">
+				Task
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	
+	<div class="ui dropdown">
+		<i class="sidebar icon"></i>
+			<div class="text">More</div>
+		<i class="dropdown icon"></i>
+		<div class="menu">
+			<a class="item" id="" href="/create/report">
+				<i class="clipboard icon"></i>
+				Report
+			</a>
+			<a class="item" id="" href="/create/project">
+				<i class="coffee icon"></i>
+				Project
+			</a>
+		</div>
+	</div>
+	
+</div>
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+<div class="ui stackable grid container">
+  
+	
+ 
+      <div class="row">
+        <div class="twelve wide column">
+		 
+		  
+		  
+		  <div class="ui container">
+		    
+	  
+		<div style="" id="overview">
+	
+	<form id="form" class="ui form">
+		
+		
+			<h4 class="ui dividing header">General</h4>
+		
+		<div class="field">
+			<label>Enter title of your query</label>
+			<input type="text" id="query-title" placeholder="Enter title of query">
+		</div>
+		
+		
+		<div class="field">
+			<label>Enter URL to featured image for your query</label>
+			<input type="text" id="queryImage" placeholder="">
+		</div>
+		
+		
+		<div class="field">
+			<label>Description[Text only 160 characters max]</label>
+			<textarea id="queryDescription" class="limitedText" maxlength="160" rows="2"></textarea>
+		</div>
+		
+		
+		<br/>
+		
+			<h4 class="ui dividing header">Details</h4>
+		
+		
+		<div class="field">
+			<label>Details[This content is to Steem]</label>
+			<div id="editor">
+			
+				<h1><i>Sample template</i></h1>
+				<p>Please update or delete and use your own.</p>
+				<br/>
+				<br/>
+			
+			</div>
+		</div>
+		
+		
+		<div class="three fields">
+	
+				<div class="field" id="stateField">
+					<label>Type</label>
+					<select id="queryType" class="ui fluid dropdown">
+						<option value="gig">Gig</option>
+						<option value="job">Job</option>
+						<option value="partnership">Partnership</option>
+					</select>
+				</div>
+	
+	
+				<div class="field" id="labelField"><label>Label</label>
+					<input type="text" id="queryLabel" name="" placeholder="dev, marketing, authoring, ...">
+				</div>
+				
+			
+				<div class="field">
+				
+						<label>Deadline</label>
+						<div class="ui calendar" id="queryDeadline">
+							<div class="ui input left icon">
+							<i class="calendar icon"></i>
+							<input type="text" placeholder="Date/Time">
+						</div>
+					
+					</div>
+			
+				</div>
+			
+		</div>
+		
+		
+		<div class="three fields">
+	
+				<div class="field" id="telephoneField"><label>Telephone</label>
+					<input type="text" id="queryTelephone" name="" placeholder="+233 555, 65..">
+				</div>
+				
+				<div class="field" id="emailField"><label>Email</label>
+					<input type="text" id="queryEmail" name="" placeholder="bounty@bounty..">
+				</div>
+				
+				<div class="field" id="websiteField"><label>Website</label>
+					<input type="text" id="queryWebsite" name="" placeholder="https://my-first..">
+				</div>
+				
+		</div>
+		
+  
+		<br/>
+		
+			<h4 class="ui dividing header">Terms</h4>
+		
+  	
+		<div class="field">
+			<label>Terms[Text only]</label>
+			<textarea id="queryTerms" rows="2"></textarea>
+		</div>
+		
+		<div class="two fields">
+	
+				<div class="field" id="rewardField"><label>Reward worth[in $$$]</label>
+					<input type="text" id="queryReward" name="" placeholder="$$$/TBD">
+				</div>
+				
+			
+				<div class="field" id="rewardFormField">
+					<label>Reward form</label>
+					<select id="queryRewardForm" class="ui fluid dropdown">
+						<option value="upvote">Upvote</option>
+						<option value="payout">Post payout</option>
+						<option value="tokens">Tokens</option>
+						<option value="saflt">SAFLT</option>
+						<option value="tbd">To be Decided</option>
+					</select>
+				</div>
+			
+			
+		</div>
+  
+  
+		
+		
+		<div class="three fields">
+		
+			<div class="two wide field">
+				<div class="field">
+					<label>Category</label>
+					<input placeholder="peerquery" readonly="" type="text">
+				</div>
+			</div>
+  
+		
+			<div class="eight wide field">
+				<div class="field">
+					<label>Relevant tags(only alpha-numeric characters)</label>
+					<input type="text" id="query-tags" placeholder="">
+				</div>
+			</div>
+			
+			
+			<div class="six wide field">
+				<div class="field disabled" id="projectField">
+					<label>Attach new query to your project</label>
+					<select class="ui fluid search dropdown" id="projectSelect">
+						<option value="">Select a project for this query</option>
+					</select>
+				</div>
+			</div>
+		
+		
+		</div>
+		
+		
+		
+		
+  <br/>
+  <br/>
+		
+		
+		
+  </form>
+
+
+		<div class="ui right floated button" tabindex="0" id="publish">Publish</div>
+  
+	
+			<br/>
+			
+		</div>
+		
+		
+		
+    
+	</div>
+	
+	
+  </div>
+		  
+		 
+		  
+		  
+		  
+        <div class="four wide right floated column">
+		  
+		  
+			<div class="ui pointing below label">
+				<i class="info circle icon"></i>
+				Tips to remember
+			</div>
+		  
+		  <div class="ui message">
+		  
+			<div class="ui bulleted list">
+				<div class="item">All fields are required</div>
+				<div class="item">A copy of this report is published to your Steem account</div>
+				<div class="item">Be original and concise</div>
+				<div class="item">Avoid using trademarked and copyrighted content and names</div>
+				<div class="item">Avoid writing content which is against our community standards</div>
+				<div class="item">By using Peer Query you certify that you agree to our terms and policies</div>
+				<div class="item">Stuck? See our FAQs and Support for help. Join our live chat community on Discord</div>
+				<div class="item">Be creative and positive; there is no harm in trying</div>
+			</div>
+		  
+		  </div>
+		  
+		  
+		  
+        </div>
+		
+      </div>
+	  
+  
+  
+</div>  
+  
+  
+	<script src="/build/dist/create_query.js"></script>
+	
+	<script>
+		
+		$('#queryDeadline').calendar();
+	
+		var deadline = '';
+	
+		$('.ui.calendar').calendar({
+			onChange: function (date, text) {
+				deadline = text;
+			},
+		});
+		
+	</script>
+	
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+  
+</body>
+
+</html>

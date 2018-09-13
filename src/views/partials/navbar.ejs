@@ -21,6 +21,10 @@
 					<i class="coffee icon"></i>
 					Projects
 				</a>
+				<a class="item" href="/queries" >
+					<i class="question icon"></i>
+					Queries
+				</a>
 				<a class="item" href="/reports" >
 					<i class="clipboard icon"></i>
 					Reports
@@ -48,6 +52,11 @@
 		<a href="/projects" id="projects-page" class="hide-on-tiny item" title="Projects">
 			<i class="coffee icon" id=""></i>
 			<span class="desktop-only">Projects</span>
+		</a>
+		
+		<a href="/queries" id="queries-page" class="hide-on-tiny item" title="Queries">
+			<i class="question icon" id=""></i>
+			<span class="desktop-only">Queries</span>
 		</a>
 		
 		<a href="/reports" id="reports-page" class="hide-on-tiny item" title="Reports">
@@ -99,6 +108,10 @@
 						<i class="clipboard icon"></i>
 						Report
 					</a>
+					<a class="item" href="/create/query">
+						<i class="question icon"></i>
+						Query
+					</a>
 					<a class="item" href="/create/project">
 						<i class="coffee icon"></i>
 						Project
@@ -114,7 +127,7 @@
 			<div class="ui inline top right pointing dropdown">
 			
 				<div class="text">
-					<img class="ui avatar image" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>" >
+					<img class="ui avatar image" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>" />
 				</div>
 		
 				<i class="dropdown icon"></i>
@@ -158,6 +171,7 @@
 		
 		var path = window.location.pathname;
 		if (path == "/projects") document.getElementById("projects-page").classList.add("navbar-active");
+		if (path == "/queries") document.getElementById("queries-page").classList.add("navbar-active");
 		if (path == "/reports") document.getElementById("reports-page").classList.add("navbar-active");
 		if (path == "/peers") document.getElementById("peers-page").classList.add("navbar-active");
 		if (path == "/steem") document.getElementById("steem-page").classList.add("navbar-active");

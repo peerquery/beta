@@ -8,14 +8,14 @@ var sc2 = require('sc2-sdk'),
 	Quill = require('quill');
 	
 	//jquery is already universal through the `ui.js` global file
-
+	
 $( window ).on( "load", function() {
 	
 	var user_projects;
 	
 	(async () => {
 		try {
-		
+			
 			const access_token = await Promise.resolve(sessionStorage.access_token);
 		
 			if(!access_token || access_token == '') { alert('Sorry, no auth tokens. Please login and try again.'); window.location.href = '/login' };
@@ -54,7 +54,7 @@ $( window ).on( "load", function() {
 				modules: {
 					toolbar: toolbarOptions
 					},
-				placeholder: 'Prepare your post here...',
+				placeholder: 'Prepare your query here...',
 				theme: 'snow'
 			});
 		
@@ -76,8 +76,7 @@ $( window ).on( "load", function() {
 			})
 		
 		
-		
-			function publish() {
+			async function publish() {
 		
 				//console.log(quill.root.innerHTML)
 				//publish function goes here
@@ -92,22 +91,58 @@ $( window ).on( "load", function() {
 					project_title = '';
 				}
 				
-				const title = document.getElementById('post-title').value;
-				if (title == "") { alert('Enter title'); document.getElementById('post-title').focus(); return };
-			
+				const title = document.getElementById('query-title').value;
+				if (title == "") { alert('Please enter title'); document.getElementById('query-title').focus(); return };
+				
+				const image = document.getElementById('queryImage').value;
+				if (image == "") { alert('Please enter image'); document.getElementById('queryImage').focus(); return };
+				
+				const description = document.getElementById('queryDescription').value;
+				if (description == "") { alert('Please enter description'); document.getElementById('queryDescription').focus(); return };
+				
 				const body = quill.root.innerHTML;
-				if (body == "<p><br></p>") { alert('Enter post body'); return; };
+				if (body == "<p><br></p>") { alert('Please enter query body'); return; };
+			
+			
+				const telephone = document.getElementById('queryTelephone').value;
+				if (telephone == "") { alert('Please telephone'); document.getElementById('queryTelephone').focus(); return };
+			
+				const email = document.getElementById('queryEmail').value;
+				if (email == "") { alert('Please enter email'); document.getElementById('queryEmail').focus(); return };
+			
+				var website = document.getElementById('queryWebsite').value;
+				if (website == "") { alert('Please enter website'); document.getElementById('queryWebsite').focus(); return };
+				website = (website.indexOf('://') === -1) ? 'http://' + website : website;
+			
+				const terms = document.getElementById('queryTerms').value;
+				if (terms == "") { alert('Please enter terms'); document.getElementById('queryTerms').focus(); return };
+			
+				const type = document.getElementById('queryType').value;
+				if (type == "") { alert('Please enter type'); document.getElementById('queryType').focus(); return };
+			
+				const label = document.getElementById('queryLabel').value;
+				if (label == "") { alert('Please enter label'); document.getElementById('queryLabel').focus(); return };
+			
+				//const deadline = document.getElementById('queryDeadline').value;		//deadline is assigned from the script on the page itself
+				if (deadline == "") { alert('Please enter deadline'); document.getElementById('queryDeadline').focus(); return };
+			
+				const reward = Number(document.getElementById('queryReward').value) || 0;
+				if (reward == "") { alert('Please enter reward in numeric form'); document.getElementById('queryReward').focus(); return };
+			
+				const reward_form = document.getElementById('queryRewardForm').value;
+				if (reward_form == "") { alert('Please enter reward form'); document.getElementById('queryRewardForm').focus(); return };
+			
 			
 				const author = active_user;
-				const category = $('#reportCategory').find(":selected").val();
+				const category = "peerquery";
 				var link = title.replace(/\W+/g, " ");
 				var permlk = link.replace(/\s+/g, '-');
 				var plink = permlk.toLowerCase();
-				var permlink = plink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '')
-				permlink = author + "-" + permlink + "-" + String(new Date().getTime()).substr(-8);
+				var permlink = plink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+				permlink = permlink + "-0" + String(new Date().getTime()).substr(-8);
 			
-				var tagStr = document.getElementById('post-tags').value;
-				if (tagStr == "") { alert("Enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
+				var tagStr = document.getElementById('query-tags').value;
+				if (tagStr == "") { alert("Please enter atleast one tag"); document.getElementById('query-tags').focus(); return;} ;
 			
 				var tagStrg = tagStr.toLowerCase();
 				//var tagStrng = tagStrg.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
@@ -119,24 +154,23 @@ $( window ).on( "load", function() {
 				
 				document.getElementById('form').className = "ui loading form";
 				$('#publish').addClass("disabled");
-				
 			
-				do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title);
+				do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title, terms, email, telephone, website, reward, reward_form, label, type, deadline, image, description);
 				
 			
 			}
 		
 		
-			function do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title) {
+			function do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title, terms, email, telephone, website, reward, reward_form, label, type, deadline, image, description) {
 			
 				steem_api.comment(
 			
-					'', // author, leave blank for new post
+					'', // author, leave blank for new query
 					category, // first tag
 					author, // username
 					permlink, // permlink
 					title, // Title
-					body, // Body of post
+					body, // Body of query
 					{ tags: tags, app: 'peerquery' },// json metadata (additional tags, app name, etc)
 					
 					
@@ -163,28 +197,42 @@ $( window ).on( "load", function() {
 						
 							//console.log('Success!', results);
 							//now ping the server with update
-						
+							
 							try{
 							
 								var data = {};
-								data.steemid = results.result.id;
+								//data.steemid = results.result.id;
+								data.steemid = 6768679;
 								if(project_slug_id !== '') data.project_slug_id = project_slug_id;
 								if(project_title !== '') data.project_title = project_title;
 								data.title = title;
 								data.category = category;
 								data.body = body;
 								data.permlink = permlink;
+								
+								data.terms = terms;
+								data.telephone = telephone;
+								data.email = email;
+								data.website = website;
+								data.reward = reward;
+								data.reward_form = reward_form;
+								data.label = label;
+								data.type = type;
+								data.deadline = deadline;
+								data.image = image;
+								data.description = description;
+								
 							
-								var status = await Promise.resolve($.post("/api/private/create/report", data ));
+								var status = await Promise.resolve($.post("/api/private/create/query", data ));
 								//console.log(status);
 							
 							} catch(err) {
 								console.log(err);
-								alert('Sorry, an error occured updating the server. However, the report has been successfully published to your Steem account.');
-								window.location.href = "/@" + author + "/" + permlink;
+								alert('Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.');
+								window.location.href = "/query/" + permlink;
 							}
 							
-							window.location.href = "/@" + author + "/" + permlink;
+							window.location.href = "/query/" + permlink;
 					
 						}
 					
@@ -229,5 +277,15 @@ $( window ).on( "load", function() {
 	
 	})()
 
+	
+		$(".limitedText").on("keyup",function() {
+			var maxLength = $(this).attr("maxlength");
+			if(maxLength == $(this).val().length) {
+				alert("You can't write more than " + maxLength +" characters")
+			}
+		});
+		
+		
+	
 })
 
