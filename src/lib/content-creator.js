@@ -34,7 +34,7 @@ module.exports = {
 	
 		var header_a = document.createElement("a");
 		header_a.className = "header";
-		header_a.href = "/@" + text.author + "/" + text.permlink;
+		header_a.href = "/report/" + text.permlink;
 		header_a.innerText = text.title;
 		
 		var extra_div = document.createElement("div");
@@ -42,7 +42,7 @@ module.exports = {
 		
 		var author_a = document.createElement("a");
 		author_a.className = "ui blue image label";
-		author_a.href = "/@" + text.author;
+		author_a.href = "/peer/" + text.author;
 		
 		var author_img = document.createElement("img");
 		author_img.onerror = function() {this.src='/assets/images/placeholder.png'; this.onerror='';};
@@ -194,7 +194,7 @@ module.exports = {
 	
 		var a_author = document.createElement("a");
 		a_author.className = "author";
-		a_author.href = "/@" + cmt.author;
+		a_author.href = "/peer/" + cmt.author;
 		a_author.innerText = "@" + cmt.author + "(" + await utils.reputation(cmt.author_reputation) + ")";
 	
 		var div_meta = document.createElement("div");
@@ -351,7 +351,7 @@ module.exports = {
 		div_author.className = "meta";
 	
 		var au_author = document.createElement("a");
-		au_author.href = "/@" + response.author;
+		au_author.href = "/peer/" + response.author;
 		au_author.innerText = "@" + response.author.toUpperCase() + "(" + utils.reputation(response.author_reputation) + ")";
 	
 		div_author.appendChild(au_author);
@@ -515,7 +515,7 @@ module.exports = {
 	
 		var a = document.createElement("a");
 		a.className = "header";
-		a.href = "/@" + data.account;
+		a.href = "/peer/" + data.account;
 		a.target = "_blank";
 		a.innerText = data.account;
 		
@@ -556,7 +556,7 @@ module.exports = {
 		authorImg.src = "https://steemitimages.com/128x128/https://cdn.steemitimages.com/DQmXK14D1vgJ7SEKgvrJvdRzLrML1U1rfPnhqGzTHeoZAMF/a.jpg";
 		
 		var authorSpan = document.createElement("a");
-		authorSpan.href = "/@" + data.author;
+		authorSpan.href = "/peer/" + data.author;
 		authorSpan.innerText = data.author;
 		
 		divPrimaryContent.appendChild(authorImg);

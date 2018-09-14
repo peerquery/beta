@@ -54,8 +54,8 @@ module.exports = function (app) {
 					//var json_metadata = JSON.parse(sc2_user.account.json_metadata);
 					var json_metadata = await asyncParser(sc2_user.account.json_metadata);
 					
-					if( typeof json_metadata.profile.about === 'string') about = json_metadata.profile.about;
-					if( typeof json_metadata.profile.location === 'string') user_location = json_metadata.profile.location;
+					if( typeof json_metadata.profile  !== 'undefined' && typeof json_metadata.profile.about === 'string') about = json_metadata.profile.about;
+					if( typeof json_metadata.profile  !== 'undefined' && typeof json_metadata.profile.location === 'string') user_location = json_metadata.profile.location;
 					
 				}
 				

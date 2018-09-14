@@ -49,7 +49,7 @@ const config = require('../../configs/config');
             
 			//redirect user to their previous page after successful log in
 			if(redirect_uri == window.location.pathname.substring(1)) {
-				window.location.href = '/@' + active_user;
+				window.location.href = '/peer/' + active_user;
 			} else {
 				window.location.href = redirect_uri;
 			}

@@ -4,6 +4,9 @@
 #npm modules
 node_modules/
 
+#archive files
+*.zip
+
 #build files
 /public/build/
 
