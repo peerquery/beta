@@ -24,7 +24,7 @@
 	<meta name="robots" content="index, follow" />
 	
 	<script src="/build/dist/ui.js"></script>
-	
+    
 </head>
 <body>
 
@@ -42,31 +42,29 @@
 		<div class="ui grid">
 			<div class="three wide column">
 			
-				<div class="" style="padding-top:9rem">
-				
-					<div class="ui red card" style="">
-						<div class="image" id="project-logo-div" style="display: block; margin: auto; max-height: 180px; height:  100%; max-width: 100%; width:100%">
-							<img style="height: 180px; width: 100%" src="<%= data.logo %>">
-						</div>
-					</div>
-				
+				<div style="margin-top:10rem">
+                    
+                    <div class="image" id="project-logo-div" style="">
+                        <img style="background: #fff; margin: 0; border: 1px solid #fff; border-radius: 50%;  width: 12vw; height:12vw; box-shadow: 0 2px 2px 0 rgba(34,36,38,.15)" src="<%= data.logo %>">
+                    </div>
+                    
 				</div>
 			
 			</div>
 			
 			<div class="thirteen wide column">
 			
-				<div style="padding-top:17rem">
+				<div style="margin-top:17rem">
 				
 					
 					<div class="ui yellow segment">
 					
 						<div class="five ui buttons">
-							<a id="home" class="ui button">Overview</a>
-							<a id="reports" class="ui button">Reports</a>
-							<a id="queries" class="ui button">Queries</a>
-							<a id="members"  class="ui button">Members</a>
-							<a id="settings" class="ui button <%if (data.owner !== username) { %> disabled <% } %> ">Settings</a>
+							<a id="home" class="ui button"><i class="home icon"></i><span class="desktop-only">Overview</span></a>
+							<a id="reports" class="ui button"><i class="clipboard icon"></i><span class="desktop-only">Reports</span></a>
+							<a id="queries" class="ui button"><i class="question icon"></i><span class="desktop-only">Queries</span></a>
+							<a id="members"  class="ui button"><i class="users icon"></i><span class="desktop-only">Members</span></a>
+							<a id="settings" class="ui button <%if (data.owner !== username) { %> disabled <% } %> "><i class="cog icon"></i><span class="desktop-only">Settings</span></a>
 						</div>
 				
 					</div>
@@ -88,7 +86,7 @@
 
 <div class="ui container">
 	
-	<div class="ui grid">
+	<div class="ui stackable  grid">
 		
 		<div class="three wide column">
 			
@@ -193,7 +191,8 @@
 			
 			<a class="fluid ui button" href="/create/project">Create new project</a>
 		
-			<div class="ui card">
+        
+			<div class="ui fluid card">
 				<div class="content">
 					<div class="header">Project Details</div>
 				</div>
@@ -225,7 +224,6 @@
 					<button class="ui disabled button">Join Project</button>
 				</div>
 			</div>
-			
 			
 			
 		</div>

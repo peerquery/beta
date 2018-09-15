@@ -13,7 +13,7 @@
 			
 	if(!project_logo) {
 	
-		var size = 150,
+		var size = 50,
 		value = project_slug,
 		svg = jdenticon.toSvg(value, size);
 		
