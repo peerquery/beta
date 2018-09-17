@@ -4,20 +4,20 @@ node_js:
 before_install: if [[ `npm -v` != 6* ]]; then npm i -g npm@6; fi
 before_script:
   - npm install
-  - npm run build
 script:
+  - npm run build
 cache:
   directories:
     - "node_modules"
-before_script:
- script:
-  before_deploy:
-   - rm -rf .tmp
-   - rm -rf node_modules
-   - export ELASTIC_BEANSTALK_ENV=peerquery-travis-build-${TRAVIS_BRANCH}
-   - zip -r --exclude=\*.git\* --exclude=\*test\  peerquery-travis-build.zip
-   - export ELASTIC_BEANSTALK_LABEL=git-$(git rev-parse --verify HEAD --short)
-   - export ELASTIC_BEANSTALK_DESCRIPTION=https://github.com/peerquery/beta/tree/$(gitrev-parse HEAD)
+before_deploy:
+ - rm -rf .tmp
+ - rm -rf node_modules
+ - export ELASTIC_BEANSTALK_ENV=peerquery-travis-build-${TRAVIS_BRANCH}
+ - zip -r --exclude=\*.git\* --exclude=\*test\  peerquery-travis-build.zip
+ - export ELASTIC_BEANSTALK_LABEL=git-$(git rev-parse --verify HEAD --short)
+ - export ELASTIC_BEANSTALK_DESCRIPTION=https://github.com/peerquery/beta/tree/$(git rev-parse HEAD)
+after_deploy:
+ - rm peerquery-travis-build.zip
 deploy:
   provider: elasticbeanstalk
   zip-file: peerquery-travis-build.zip
@@ -29,5 +29,3 @@ deploy:
   app: "$app"
   env: "$env"
   bucket_name: "$bucket_name"
-after_deploy:
- - rm peerquery-travis-build.zip
