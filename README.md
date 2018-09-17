@@ -1,5 +1,6 @@
 [![Pull request](https://img.shields.io/badge/PR-Welcome-green.svg)](https://github.com/peerquery)
 [![Travis ci build status](https://travis-ci.org/peerquery/beta.svg?branch=master)](https://travis-ci.org/peerquery/beta)
+[![David dependency tracker](https://david-dm.org/peerquery/beta.svg)](https://david-dm.org/peerquery/beta)
 
 # Peer Query beta
 [Peer Query](https://www.peerquery.com) is a peer-to-peer collaboration platform powered by the [Steem Blockchain](https://steem.io).
