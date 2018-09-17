@@ -40,7 +40,7 @@ module.exports = function(app) {
 	app.use(hpp());
 	
 	app.use(limiter);
-	app.use(cache);
+	//app.use(cache);
 	app.use(express.static(__dirname + '/../../public'));     //could comment out for the sake of Elastic BeanStalk proxy server for serving static files
 	
 	//sanitize user inputs against possibly dangerous DB expressions among user inputs
