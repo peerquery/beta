@@ -1,7 +1,6 @@
 // webpack.config.js
 var path = require('path'),
 	webpack_entry = require('./src/configs/webpack-entries'),
-	nodeExternals = require('webpack-node-externals'),
 	paths =  require('./src/configs/paths'),
 	webpack = require('webpack');
 
@@ -45,7 +44,6 @@ module.exports = {
             */
 		]
 	},
-    externals: [nodeExternals()],
 	stats: {
         colors: true
     },
