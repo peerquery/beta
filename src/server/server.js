@@ -8,6 +8,7 @@ var express = require('express'),
 	cookie = require('cookie-parser'),
 	csrf = require('csurf'),
 	hpp = require('hpp'),
+	cache = require('./cache'),
 	csrf_config = require('./csrf'),
 	limiter = require('./limiter'),
 	compression = require('compression'),
@@ -39,6 +40,7 @@ module.exports = function(app) {
 	app.use(hpp());
 	
 	app.use(limiter);
+	app.use(cache);
 	app.use(express.static(__dirname + '/../../public'));     //could comment out for the sake of Elastic BeanStalk proxy server for serving static files
 	
 	//sanitize user inputs against possibly dangerous DB expressions among user inputs
