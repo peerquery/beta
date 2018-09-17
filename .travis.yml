@@ -1,9 +1,8 @@
 language: node_js
 node_js: 
   - "8.6.0"
+install: true
 before_install: if [[ `npm -v` != 6* ]]; then npm i -g npm@6; fi
-script:
-- echo "skipping tests"
 before_script:
   - npm install
 script:
