@@ -11,10 +11,10 @@ cache:
     - "node_modules"
 deploy:
   provider: elasticbeanstalk
-  access_key_id: access_key_id
+  access_key_id: "$access_key_id"
   secret_access_key:
-    secure: secret_access_key
-  region: region
-  app: app
-  env: env
-  bucket_name: bucket_name
+    secure: "$secret_access_key"
+  region: "$region"
+  app: "$app"
+  env: "$env"
+  bucket_name: "$bucket_name"
