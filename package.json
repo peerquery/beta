@@ -4,6 +4,7 @@
   "description": "peer to peer collaboration powered by steem",
   "main": "server.js",
   "scripts": {
+    "precommit": "npm test",
     "test": "echo \"skipping tests\"",
     "build": "webpack",
     "dev": "webpack && nodemon ./src/app.js",
