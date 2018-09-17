@@ -14,6 +14,7 @@ before_deploy:
  - rm -rf node_modules
  - export ELASTIC_BEANSTALK_ENV=peerquery-travis-build-${TRAVIS_BRANCH}
  - zip -r --exclude=\*.git\* --exclude=\*test\  peerquery-travis-build.zip
+  .
  - export ELASTIC_BEANSTALK_LABEL=git-$(git rev-parse --verify HEAD --short)
  - export ELASTIC_BEANSTALK_DESCRIPTION=https://github.com/peerquery/beta/tree/$(git rev-parse HEAD)
 after_deploy:
