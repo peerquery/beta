@@ -10,19 +10,15 @@ cache:
   directories:
     - "node_modules"
 before_script:
-script:
-before_deploy:
-- rm -rf .tmp
-- rm -rf .DS_Store
-- rm -rf node_modules
-- export ELASTIC_BEANSTALK_ENV=peerquery-travis-build-${TRAVIS_BRANCH}
-- zip -r --exclude=\*.git\* --exclude=\*.DS_Store\* --exclude=\*test\  peerquery-travis-build.zip
-  .
-- export ELASTIC_BEANSTALK_LABEL=git-$(git rev-parse --verify HEAD --short)
-- export ELASTIC_BEANSTALK_DESCRIPTION=https://github.com/peerquery/beta/tree/$(git
-  rev-parse HEAD)
-after_deploy:
-- rm peerquery-travis-build.zip
+ script:
+  before_deploy:
+   - rm -rf .tmp
+   - rm -rf .DS_Store
+   - rm -rf node_modules
+   - export ELASTIC_BEANSTALK_ENV=peerquery-travis-build-${TRAVIS_BRANCH}
+   - zip -r --exclude=\*.git\* --exclude=\*.DS_Store\* --exclude=\*test\  peerquery-travis-build.zip
+   - export ELASTIC_BEANSTALK_LABEL=git-$(git rev-parse --verify HEAD --short)
+   - export ELASTIC_BEANSTALK_DESCRIPTION=https://github.com/peerquery/beta/tree/$(gitrev-parse HEAD)
 deploy:
   provider: elasticbeanstalk
   zip-file: peerquery-travis-build.zip
@@ -34,3 +30,5 @@ deploy:
   app: "$app"
   env: "$env"
   bucket_name: "$bucket_name"
+after_deploy:
+ - rm peerquery-travis-build.zip
