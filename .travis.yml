@@ -5,7 +5,7 @@ before_install: if [[ `npm -v` != 6* ]]; then npm i -g npm@6; fi
 before_script:
   - npm install
 script:
-  - node run build
+  - npm run build
 cache:
   directories:
     - "node_modules"
