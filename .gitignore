@@ -23,7 +23,7 @@ local/
 public/dist/
 
 #amazon config, if available
-.ebextensions/
+#.ebextensions/
 
 # Logs
 logs
