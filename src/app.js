@@ -12,27 +12,25 @@ const init = async () => {
 		//start = require('./server/init')();
     
 	try {
-		var db = mongoose(),
-			server = express();
+		var db = mongoose();
+			var server = express();
 	} catch(err){
 		console.log(err);
 	}	
 	
 	server.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
-	server.listen(8081);
+    
+    const node_env = process.env.NODE_ENV,
+        server_port = Number(process.env.SERVER_PORT) || 80,
+        port = (node_env == 'production') ? server_port + 8001 : server_port;
+        
+	server.listen(port);
 	//start();
 	
-	console.log('\n\n\nServer running at port: 8081');
+	console.log('\n\n\nServer running at port: ' + port);
 	
 }
 
 init();
 
-process.on('unhandledRejection', (reason, promise) => {
-	console.log('\n\n\nUnhandled Rejection at:', reason.stack || reason);
-	// log crash report if you want
-	
-	//uncomment below only in 'production'!?
-	//console.log('  ** re-initializing the server\n\n\n');
-	//init();
-})
+module.exports = init;
