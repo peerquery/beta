@@ -2,6 +2,7 @@
 var path = require('path'),
 	webpack_entry = require('./src/configs/webpack-entries'),
 	paths =  require('./src/configs/paths'),
+    extractTextPlugin = require("extract-text-webpack-plugin"),
 	webpack = require('webpack');
 
 module.exports = {
@@ -15,16 +16,17 @@ module.exports = {
         new webpack.ProvidePlugin({
 			$: "jquery",
 			jQuery: "jquery"
-		})
+		}),
+        new extractTextPlugin("styles.css"),
 	],
 	module: {
 		rules: [
 			{
 			test: /\.css$/,
-				use: [
-					{ loader: "style-loader" },
-					{ loader: "css-loader" }
-				]
+                use: extractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
 			},
 			{
 				test: /\.(png|woff|woff2|eot|ttf|svg)$/,
