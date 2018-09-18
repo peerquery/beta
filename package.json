@@ -5,7 +5,7 @@
   "main": "./src/app.js",
   "private": true,
   "scripts": {
-    "precommit": "npm version minor",
+    "prepush": "npm version minor",
     "test": "echo \"skipping tests\"",
     "build": "webpack",
     "dev": "webpack && nodemon ./src/app.js",
