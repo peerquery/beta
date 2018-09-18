@@ -2,7 +2,7 @@
   "name": "peerquery-beta",
   "version": "1.2.0",
   "description": "peer to peer collaboration powered by steem",
-  "main": "server.js",
+  "main": "./src/app.js",
   "private": true,
   "scripts": {
     "precommit": "npm test",
