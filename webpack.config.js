@@ -3,11 +3,11 @@ var path = require('path'),
 	webpack_entry = require('./src/configs/webpack-entries'),
 	paths =  require('./src/configs/paths'),
     extractTextPlugin = require("extract-text-webpack-plugin"),
-	webpack = require('webpack');
+	webpack = require('webpack'),
+	env = require('dotenv').config();
 
 module.exports = {
 	entry: webpack_entry,
-	//target: 'node',
 	output: {
 		path: path.join(__dirname, 'public', 'build', 'dist'),
 		filename: '[name].js'
@@ -49,7 +49,6 @@ module.exports = {
 	stats: {
         colors: true
     },
-    //devtool: 'source-map',
-	mode: 'production'
-	//mode: 'development'
+    devtool: (process.env.NODE_ENV == 'development') ? 'source-map' : false,
+	mode: (process.env.NODE_ENV == 'development') ? 'development' : 'production'
 }
