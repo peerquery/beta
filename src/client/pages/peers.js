@@ -42,7 +42,10 @@ async function display(type) {
 			
 			users[x].created = timeago.format(users[x].created);
 			
+			if(!users[x].badge) users[x].badge_div = '<div class="ui red horizontal label">observer</div>'; //incase users do not have badge
+            
 			if(users[x].badge == 'observer') users[x].badge_div = '<div class="ui red horizontal label">observer</div>';
+			if(users[x].badge == 'querant') users[x].badge_div = '<div class="ui purple horizontal label">querant</div>';
 			if(users[x].badge == 'reporter') users[x].badge_div = '<div class="ui blue horizontal label">reporter</div>';
 			if(users[x].badge == 'builder') users[x].badge_div = '<div class="ui yellow horizontal label">builder</div>';
 			
