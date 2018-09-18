@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "peer to peer collaboration powered by steem",
   "main": "server.js",
+  "private": true,
   "scripts": {
     "precommit": "npm test",
     "test": "echo \"skipping tests\"",
