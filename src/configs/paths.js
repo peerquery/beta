@@ -8,7 +8,7 @@ module.exports = {
 	dir: resolveApp('.'),
 	app: resolveApp('./src/app.js'),
 	styles: [ resolveApp('./node_modules/semantic-ui-css/semantic.min.css'), resolveApp('./src/configs/global.css') ],
-	scripts: resolveApp('./src/client/ui/js.js'),
+	scripts: resolveApp('./src/client/ui/scripts.js'),
 	login: resolveApp('./src/client/pages/login.js'),
 	config: resolveApp('./configs/config.js'),
 	index: resolveApp('./src/client/pages/index.js'),
@@ -27,7 +27,7 @@ module.exports = {
 	queries: resolveApp('./src/client/pages/queries.js'),
 	create_report: resolveApp('./src/client/pages/create-report.js'),
 	create_query: resolveApp('./src/client/pages/create-query.js'),
-	create_project: resolveApp('./src/client/pages/create-project.js'),\
+	create_project: resolveApp('./src/client/pages/create-project.js'),
 	public: resolveApp('./public'),
 	server: resolveApp('./src/server/server.js'),
 	client: resolveApp('./src/client/index.js'),
