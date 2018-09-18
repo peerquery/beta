@@ -36,11 +36,9 @@ module.exports = {
             {	//requires a dependency, not devDepency: babel-polyfill
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
                 query: {
                     plugins: ['transform-runtime'],
-                    presets: ['env'],
-                    //"presets": ["env"]
+                    presets: ['env']
                 }
             }
             */
@@ -49,6 +47,6 @@ module.exports = {
 	stats: {
         colors: true
     },
-    devtool: (process.env.NODE_ENV == 'development') ? 'source-map' : false,
-	mode: (process.env.NODE_ENV == 'development') ? 'development' : 'production'
+    devtool: (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') ? false : 'source-map',
+	mode: (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') ? 'production' : 'development'
 }
