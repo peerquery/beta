@@ -318,20 +318,12 @@
 </div>  
   
   
+	<script src="/build/dist/scripts.js"></script>
 	<script src="/build/dist/create_query.js"></script>
-	
-	<script>
-		
-		$('#queryDeadline').calendar();
-	
-		var deadline = '';
-	
-		$('.ui.calendar').calendar({
-			onChange: function (date, text) {
-				deadline = text;
-			},
-		});
-		
+	<script>window.onload = function() {
+            $('#queryDeadline').calendar(); var deadline = '';
+            $('.ui.calendar').calendar({ onChange: function (date, text) {deadline = text;},});
+            }
 	</script>
 	
   

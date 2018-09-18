@@ -155,27 +155,6 @@
 
   
   
-	<script>
-	//
-		const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim();
-		if(active_user !== "") {//logged in
-			$('#loggedin-desktop-options').show();
-			$('#loggedin-desktop-create').show();
-			$('#logged_in_user_href').attr("href", "/peer/" + active_user);
-		} else { //not logged in
-			$('#loggedin-desktop-options').hide();
-			$('#navbarLoginButton').show();
-			$('#signupButton').show();
-		}
-		
-		
-		var path = window.location.pathname;
-		if (path == "/projects") document.getElementById("projects-page").classList.add("navbar-active");
-		if (path == "/queries") document.getElementById("queries-page").classList.add("navbar-active");
-		if (path == "/reports") document.getElementById("reports-page").classList.add("navbar-active");
-		if (path == "/peers") document.getElementById("peers-page").classList.add("navbar-active");
-		if (path == "/steem") document.getElementById("steem-page").classList.add("navbar-active");
-	
-	</script>
+	<script> const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim(); </script>
 	
   
