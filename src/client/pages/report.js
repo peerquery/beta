@@ -309,9 +309,9 @@ var sc2 = require('sc2-sdk'),
 			addresponse();
 		});        
         
-		$(".vote_toggle").on('click', function(){
+		$("#comments-container, #report_view").on('click', '.vote_toggle', function(){
 			votePanelBtn(this.id);
-		});        
+		});   
         
 		$(".vote_btn").on('click', function(){
 			vote(this.id);
