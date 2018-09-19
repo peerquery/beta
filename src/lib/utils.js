@@ -35,6 +35,70 @@ module.exports = {
 		//console.log("Number of votes removed is: " + unVotes);
 		return votes.length - unVotes;
 	},
+    
+    
+    check_vote: async function(resp, voteArray) {
+    
+        for (var x in voteArray) {
+	
+            if (voteArray[x].voter == active_user && voteArray[x].percent > 0) {
+                document.getElementById(resp.id + "-percent").innerHTML = "<span class='desktop-only'> Voted at: </span>" + voteArray[x].percent/100 + "%";
+                document.getElementById(resp.id + "-btn").dataset.votestate = "true";
+                document.getElementById(resp.id + "-btn").dataset.value = "0";
+                document.getElementById(resp.id + "-range").value = voteArray[x].percent;
+                document.getElementById(resp.id + "-range").disabled = true;
+                document.getElementById(resp.id + "-btn").innerText = " Unvote";
+            } else {
+                //document.getElementById(resp.id + "-range").value = "500";
+            }
+        }
+	
+        //console.log(resp, voteArray);
+	
+        document.getElementById(resp.id + "-voterlist").dataset.html = "<div>" + await this.list_voters(voteArray) + "</div>";
+    
+    },
+	
+    
+    
+    check_response_votes: async function(response, netVotes, activeVotes) {
+	
+        if (netVotes > 0) { 
+            document.getElementById(response.id + "-rescount").innerText = " +" + this.count_votes(activeVotes);
+        } else if (netVotes < 0) {
+            document.getElementById(response.id + "-rescount").innerText = " -" + this.count_votes(activeVotes);
+        } else if  (netVotes == 0) {
+            document.getElementById(response.id + "-rescount").innerText = " 0";
+        }
+	
+        this.check_vote(response, activeVotes);
+	
+    },
+    
+    
+	list_voters: async function(votes) {
+	
+        if(votes.length == 0) return "No votes yet.";
+	
+        var voter_list = await votes.sort(function(a, b) { 
+            return Math.abs(b.rshares) - Math.abs(a.rshares);
+        });
+	
+        //voter_list.sort((a, b) => parseFloat(a.rshares) - parseFloat(b.rshares));
+	
+        voter_list = voter_list.slice(0, 10);
+	
+        var v_list = voter_list.map(function(voter_list) { 
+            if(Number(voter_list.rshares) < 0) return "-" + voter_list.voter;
+            return "+" + voter_list.voter;
+        });
+	
+        v_list = v_list.join(" <br/> ");
+        if(votes.length > 10) v_list = v_list + " <br/> and more.";
+        
+        return v_list;
+	
+    },
 	
 	check_cash: function(pst) {
 		return Math.max(Number(pst.pending_payout_value.split(' ')[0]), Number(pst.total_payout_value.split(' ')[0]) + Number(pst.curator_payout_value.split(' ')[0])).toLocaleString();
