@@ -311,9 +311,6 @@ module.exports = {
 		div_votes.className = "value";
 	
 		var span_votes = document.createElement("span");
-		//
-		//NOT ACCUTATE AT ALL. CONTAINS BOTH UPVOTES AND DOWNVOTES. WE NEED TO GET ALL VOTES FROM STEEM THEN GET ONLY UPVOTES THROUGH UTILS.COUNT_VOTES()...
-		//
 		span_votes.innerText = response.net_votes.toLocaleString();
 		span_votes.id= response.id + "-rescount";
 	
@@ -400,18 +397,14 @@ module.exports = {
 		a_icon.appendChild(i_vote_icon);
 	
 	
-	
-	
 		var div_vote_percent = document.createElement("div");
-		div_vote_percent.className = "ui mini button";
+		div_vote_percent.className = "ui mini vote_btn button";
 		div_vote_percent.id = response.id + "-btn";
 		div_vote_percent.innerText = "+5%";
 		div_vote_percent.dataset.votestate = "false";
 		div_vote_percent.dataset.value = "500";
 		div_vote_percent.dataset.href = response.permlink;
 		div_vote_percent.dataset.author = response.author;
-		div_vote_percent.onclick = function() { vote(this.id) };
-	
 	
 	
 		vote_btn_div.appendChild(a_icon);
@@ -423,9 +416,6 @@ module.exports = {
 	
 	
 		vote_div.appendChild(vote_col_div);
-	
-	
-	
 	
 	
 		var div_extra = document.createElement("div");
@@ -447,10 +437,9 @@ module.exports = {
 	
 	
 		var div_vote_toggle = document.createElement("div");
-		div_vote_toggle.className = "ui left labeled right floated tiny button";
+		div_vote_toggle.className = "ui left labeled vote_toggle right floated tiny button";
 		div_vote_toggle.setAttribute("tabindex", "0");
 		div_vote_toggle.id = response.id;
-		div_vote_toggle.onclick = function(e) {e.preventDefault(); votePanelBtn(this.id) };
 	
 	
 		var comment_earned = Math.max(Number(response.pending_payout_value.split(' ')[0]), Number(response.total_payout_value.split(' ')[0]) + Number(response.curator_payout_value.split(' ')[0])).toLocaleString();
@@ -459,10 +448,6 @@ module.exports = {
 		var a_earned = document.createElement("div");
 		a_earned.className = "ui basic right pointing label";
 		a_earned.innerText = "$" + comment_earned;
-	
-	
-		//responders_earned = responders_earned + Number(comment_earned);
-	
 	
 		var earned_icon_div = document.createElement("div");
 		earned_icon_div.className = "ui tiny button";
