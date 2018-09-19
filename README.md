@@ -1,9 +1,10 @@
 [![Pull requests](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/peerquery/beta/pulls)
-[![Travis ci build status](https://travis-ci.org/peerquery/beta.svg?branch=master)](https://travis-ci.org/peerquery/beta)
-[![David dependency tracker](https://david-dm.org/peerquery/beta.svg)](https://david-dm.org/peerquery/beta)
+[![Build status](https://travis-ci.org/peerquery/beta.svg?branch=master)](https://travis-ci.org/peerquery/beta)
+[![Dep tracker](https://david-dm.org/peerquery/beta.svg)](https://david-dm.org/peerquery/beta)
 [![Codebase license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/peerquery/beta/blob/master/LICENSE)
+[![Chat](https://img.shields.io/badge/Chat-Discord-ff69b4.svg)](https://discord.gg/rz9GwAa)
 
-# Peer Query beta
+# Peer Query BETA
 
 [Peer Query](https://www.peerquery.com) is a peer-to-peer collaboration platform powered by the [Steem Blockchain](https://steem.io).
 
