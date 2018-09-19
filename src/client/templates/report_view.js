@@ -106,7 +106,7 @@ var report_view = '     '  +
  '   	  '  + 
  '   	<div style="margin-bottom:10px;">  '  + 
  '   	  '  + 
- '   	<button id="follow-btn" class="ui button" title="Follow">  '  + 
+ '   	<button id="follow-btn" class="{{follow_btn_class}}" title="Follow">  '  + 
  '   		<i class="user icon"></i>  '  + 
  '   		<span class="desktop-only">Follow</span>  '  + 
  '   	</button>  '  + 
@@ -116,7 +116,7 @@ var report_view = '     '  +
  '   		<span class="desktop-only">Share</span>  '  + 
  '   	</button>  '  + 
  '   	  '  + 
- '   	<button id="resteem" data-author="{{author}}" data-href="{{href}}" class="ui right floated button" title="Re Steem">  '  + 
+ '   	<button id="resteem" data-author="{{author}}" data-href="{{href}}" class="{{resteem_class}}" title="Re Steem">  '  + 
  '   		<i class="retweet icon"></i>  '  + 
  '   		<span class="desktop-only">Re Steem</span>  '  + 
  '   	</button>  '  + 
