@@ -77,10 +77,10 @@ var report_view = '     '  +
  '         Earned  '  + 
  '       </div>  '  + 
  '     </div>  '  + 
- '     <div class="ui tiny statistic voter-popup" id="post-voter-main">  '  + 
+ '     <div class="ui tiny statistic voter-popup" id="{{post_voter_main_id}}">  '  + 
  '       <div class="value">  '  + 
  '         <i class="angle up icon" id="netvotes"></i>  '  + 
- '   	  <span id="votes">{{active_votes}}</span>  '  + 
+ '   	  <span id="{{votes_id}}">{{active_votes}}</span>  '  + 
  '       </div>  '  + 
  '       <div class="label">  '  + 
  '         Votes  '  + 
@@ -106,7 +106,7 @@ var report_view = '     '  +
  '   	  '  + 
  '   	<div style="margin-bottom:10px;">  '  + 
  '   	  '  + 
- '   	<button id="follow-btn" class="ui disabled button" title="Follow">  '  + 
+ '   	<button id="follow-btn" class="ui button" title="Follow">  '  + 
  '   		<i class="user icon"></i>  '  + 
  '   		<span class="desktop-only">Follow</span>  '  + 
  '   	</button>  '  + 
@@ -116,18 +116,18 @@ var report_view = '     '  +
  '   		<span class="desktop-only">Share</span>  '  + 
  '   	</button>  '  + 
  '   	  '  + 
- '   	<button id="resteem" class="ui right disabled floated button" title="Re Steem">  '  + 
+ '   	<button id="resteem" data-author="{{author}}" data-href="{{href}}" class="ui right floated button" title="Re Steem">  '  + 
  '   		<i class="retweet icon"></i>  '  + 
  '   		<span class="desktop-only">Re Steem</span>  '  + 
  '   	</button>  '  + 
  '   	  '  + 
- '   	<button id="response-toggle" class="ui right disabled floated button" title="Respond">  '  + 
+ '   	<button id="response-toggle" class="ui right floated button" title="Respond">  '  + 
  '   		<i class="reply icon"></i>  '  + 
  '   		<span class="desktop-only">Respond</span>  '  + 
  '   	</button>  '  + 
  '   	  '  + 
- '   	<button id="vote-toggle" class="ui right disabled floated button" onClick="votePanelBtn(this.id);" title="Upvote">  '  + 
- '   		<span id="qvotespan">  '  + 
+ '   	<button id="{{vote_toggle}}" class="ui right vote_toggle floated button" title="Upvote">  '  + 
+ '   		<span id="{{votespan_id}}">  '  + 
  '   			<i class="thumbs up icon"></i>  '  + 
  '   			<span class="desktop-only">Upvote</span>  '  + 
  '   		</span>  '  + 
@@ -141,10 +141,10 @@ var report_view = '     '  +
  '   	<br/>  '  + 
  '   	  '  + 
  '   	  '  + 
- '   	<div class="ui clearing segment middle aligned stackable grid" id="slider-area" style="display:none">  '  + 
+ '   	<div class="ui clearing segment middle aligned stackable grid" id="{{slider_area}}" style="display:none">  '  + 
  '   	  '  + 
  '   	<div class="ui slidercontainer twelve wide column">  '  + 
- '   		<input type="range" min="100" max="10000" value="500" class="slider" id="qRange">  '  + 
+ '   		<input type="range" min="100" max="10000" value="500" class="slider" id="{{range_id}}">  '  + 
  '   	</div>  '  + 
  '   	  '  + 
  '   	  '  + 
@@ -154,7 +154,7 @@ var report_view = '     '  +
  '   		<a class="ui basic right pointing label">  '  + 
  '   			<i class="heart icon"></i>  '  + 
  '   		</a>  '  + 
- '   		<div class="ui mini button" id="vote-btn" data-value="500" data-href="" data-votestate="false" data-author="" tabindex="0" onClick="vote(this.id)">  '  + 
+ '   		<div class="ui mini vote_btn button" id="{{vote_btn_id}}" data-value="500" data-href="{{vote_btn_href}}" data-votestate="{{vote_btn_state}}" data-author="{{vote_btn_author}}" tabindex="0">  '  + 
  '   			+5%  '  + 
  '   		</div>  '  + 
  '   	</div>  '  + 
