@@ -36,6 +36,9 @@ module.exports = {
 		return votes.length - unVotes;
 	},
     
+    comment_permlink_formatter: function(parent_author, user, parent_permlink) {
+        return "re-" + user + "-" + parent_permlink + "-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);  
+    },
     
     check_vote: async function(resp, voteArray) {
     
