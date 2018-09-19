@@ -12,8 +12,8 @@ var sc2 = require('sc2-sdk'),
 	client = new dsteem.Client(config.steem_api),
 	timeago = require("timeago.js")();
 	//jquery is already universal through the `ui.js` global file
-	
-	
+    
+    
 (async () => {
 	
 	try {
@@ -51,6 +51,7 @@ var sc2 = require('sc2-sdk'),
 		document.getElementById('report_created').innerText = timeago.format(report.created);
         
         
+        
         if (report.children > 0) document.getElementById('comment-sort').style.visibility = "visible";
         
         
@@ -63,6 +64,17 @@ var sc2 = require('sc2-sdk'),
         
 		data.vote_toggle = report.id;
 		data.slider_area = report.id + "-div";
+        
+        
+        
+    
+        data.follow_btn_following = author;
+   
+        data.follow_btn_class = "ui button";
+        data.resteem_class = "ui right floated button";
+		
+        if (author == active_user) data.follow_btn_class = data.follow_btn_class + " disabled";
+        if (author == active_user) data.resteem_class = data.resteem_class + " disabled";
 		
 		data.vote_btn_author = report.author;
 		data.vote_btn_href = report.permlink;
@@ -211,8 +223,6 @@ var sc2 = require('sc2-sdk'),
         
         }
 
-
-
         
         //event listeners
         
@@ -234,8 +244,6 @@ var sc2 = require('sc2-sdk'),
         });
 	
     
-    
-
         $(".comment_sort").click(async function(){
             
             var sort = this.id;
@@ -256,8 +264,6 @@ var sc2 = require('sc2-sdk'),
             }
             
             var comment_active_votes = [];
-            
-            
             
             
             var contributors_earnings = comments.reduce(function(prev, cur) {
@@ -291,11 +297,41 @@ var sc2 = require('sc2-sdk'),
         
         
         document.getElementById('voted').click();
+        
+        
+
+        $("#resteem").click(function(){
+        
+            if (!active_user || active_user === '') { window.location.href = "/login"; return ; };
+            
+            document.getElementById('resteem').className = "ui disabled right floated button";
+            
+            steem_api.reblog(active_user, this.dataset.author, this.dataset.href, function (err, rRes) {
+		
+            if (err) {
+	
+                 nErr = JSON.stringify(err);
+			
+				if (nErr.indexOf("Account has already re-blogged this post") > -1) {
+					console.log("Already re-blogged");
+				};
+			
+			} else {
+                console.log("Resteemed!");
+            }
+	
+            });
+        
+        });
+
+        
 		
         
 	} catch(err){
 		console.log(err);
 	}
-	
-
+    
+    
 })();
+
+
