@@ -325,7 +325,31 @@ var sc2 = require('sc2-sdk'),
         });
 
         
+        
+        $("#follow-btn").click(function(){	
 		
+             if (!active_user || active_user === '') { window.location.href = "/login"; return ; };
+		
+            document.getElementById("follow-btn").className = "ui disabled button";
+		
+            var following = document.getElementById("follow-btn").dataset.following;
+            var follower = active_user;
+		
+            if (follower == following) { alert("You cannot follow yourself!"); return };
+		
+            steem_api.follow(follower, following, function (err, res) {
+                //console.log(err, res);
+                if (err) { console.log(err); return };
+                console.log('Successfully followed');
+            });
+	
+        });
+        
+        
+        
+        
+        
+        
         
 	} catch(err){
 		console.log(err);
