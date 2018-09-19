@@ -224,10 +224,89 @@ var sc2 = require('sc2-sdk'),
         }
 
         
+        
+        
+        
+        
+        
+        
+        function addresponse() {
+        
+            document.getElementById('comment_btn').className = "ui disabled blue labeled submit icon button";
+            document.getElementById('response').disabled = true;
+            var message = document.getElementById('response').value;
+		
+            //----toggle close the button, empty its contents and reload the comments area only then enable the disabled onces
+		
+		
+            var tags = post_category;
+        
+            var comment_permlink = utils.comment_permlink_formatter(parent_author, active_user, parent_permlink);
+            
+            
+            steem_api.comment(parent_author, parent_permlink, active_user, comment_permlink, '', message, '', async function(err, reslt) {
+                
+                //console.log(err, reslt)
+                
+                if (err !== null) {
+                    
+                    //var nErr = JSON.stringify(err.error_description);
+                    
+                    document.getElementById('response').disabled = false;
+                    document.getElementById('comment_btn').className = "ui blue labeled submit icon button";
+					
+                    //if (nErr.indexOf("The comment is archived") > -1) return alert("Post with the same permlink already exists and is archived, please change your permlink.");
+					
+                    //if (nErr.indexOf("You may only post once every 5") > -1) return alert("You may only post once every five minutes!");
+                    
+                }  else {
+                
+                    console.log('Success!');
+                    //use this function to reload the comments instead of reloading the whole page
+                    
+                    var result = await client.database.call('get_content', [active_user, comment_permlink]);
+                    
+                    $("#response-form").slideToggle("slow");
+                    document.getElementById('comment_btn').className = "ui blue labeled submit icon button";
+                    document.getElementById('response').disabled = false;
+                    document.getElementById('response').value = "";
+                    
+                    
+                    var comment_active_votes = [];
+                    
+                    
+                    //comment_active_votes.push( await client.database.call('get_active_votes', [result[0].author, result[0].permlink]) );
+                
+                    var comment = await creator.comment(result);
+                    $("#comments-container").append(comment);
+                    
+                    //utils.check_response_votes(result[0], result[0].net_votes, comment_active_votes[x]);
+                    
+                    responsesReady();
+                    
+                    var tAnchor = "#" +  result.id;
+					
+                    $('html, body').animate({ scrollTop: $(tAnchor).offset().top }, 1000);
+					
+                    
+                    //$('#item-' + result.id).animate({backgroundColor: '#CD3333'}, 'slow'); 			//NOT working!!!
+					
+                }
+	
+            });
+	
+        }
+        
+        
+        
         //event listeners
         
 		$("#share-toggle").on('click', function(){
 			$("#share-area").slideToggle("slow");
+		});        
+        
+		$("#comment_btn").on('click', function(){
+			addresponse();
 		});        
         
 		$(".vote_toggle").on('click', function(){
@@ -344,9 +423,6 @@ var sc2 = require('sc2-sdk'),
             });
 	
         });
-        
-        
-        
         
         
         
