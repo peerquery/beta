@@ -18,7 +18,7 @@ $( window ).on( "load", function() {
 		
 			const access_token = await Promise.resolve(sessionStorage.access_token);
 		
-			if(!access_token || access_token == '') { alert('Sorry, no auth tokens. Please login and try again.'); window.location.href = '/login' };
+			if(!active_user || active_user === '') { alert('Sorry not logged in. Please login and try again.'); window.location.href = '/login' };
 			
 			let steem_api = sc2.Initialize({
 				app: config.sc2_app_name,
