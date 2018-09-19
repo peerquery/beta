@@ -49,4 +49,5 @@ module.exports = {
     },
     devtool: (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') ? false : 'source-map',
 	mode: (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') ? 'production' : 'development'
+    //travis ci uses NODE_ENV='staging', if set to 'production' it will not install devDependencies - which are required for building including 'webpack'
 }
