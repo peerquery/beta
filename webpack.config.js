@@ -17,7 +17,7 @@ module.exports = {
 			$: "jquery",
 			jQuery: "jquery"
 		}),
-        new extractTextPlugin("styles.css"),
+        new extractTextPlugin("[name].css"),
 	],
 	module: {
 		rules: [
