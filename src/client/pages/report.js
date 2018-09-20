@@ -293,7 +293,7 @@ var sc2 = require('sc2-sdk'),
                     $('html, body').animate({ scrollTop: $(tAnchor).offset().top }, 1000);
 					
                     
-                    //$('#item-' + result.id).animate({backgroundColor: '#CD3333'}, 'slow'); 			//NOT working!!!
+                    $('#item-' + result.id).addClass("background_highlighted");
 					
                 }
 	

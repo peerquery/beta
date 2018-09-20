@@ -290,6 +290,25 @@ iframe {
       padding: 5em 0em;
     }
 
+    
+    
+    @-o-keyframes fadeIt {
+        0%   { background-color: #FFFFFF; }
+        50%  { background-color: #f3e904; }
+        100% { background-color: #FFFFFF; }
+    }
+    
+    @keyframes fadeIt {
+        0%   { background-color: #FFFFFF; }
+        50%  { background-color: #f3e904; }
+        100% { background-color: #FFFFFF; }
+    }
+
+    .background_highlighted{    
+        background-image:none !important; 
+            -o-animation: fadeIt 1s ease-in-out; 
+                animation: fadeIt 5s ease-in-out; 
+    }
 	
 	
 
