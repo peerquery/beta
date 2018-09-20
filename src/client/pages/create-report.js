@@ -56,18 +56,13 @@ $( window ).on( "load", function() {
 			
 				const author = active_user;
 				const category = $('#reportCategory').find(":selected").val();
-				var link = title.replace(/\W+/g, " ");
-				var permlk = link.replace(/\s+/g, '-');
-				var plink = permlk.toLowerCase();
-				var permlink = plink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '')
-				permlink = author + "-" + permlink + "-" + String(new Date().getTime()).substr(-8);
+                
+                var tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '').toLowerCase();
+				permlink = author + "-" + tlink + "-" + String(new Date().getTime()).substr(-8);
 			
-				var tagStr = document.getElementById('post-tags').value;
-				if (tagStr == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
+				var tagString = document.getElementById('post-tags').value.replace(/\W+/g, " ").toLowerCase();
+				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
 			
-				var tagStrg = tagStr.toLowerCase();
-				//var tagStrng = tagStrg.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
-				var tagString = tagStrg.replace(/\W+/g, " ");
 				var tags = tagString.split(" ", 3);
 				tags.unshift(category);
 			
