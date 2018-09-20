@@ -59,7 +59,7 @@
     <div class="field">
       <textarea id="response"></textarea>
     </div>
-    <div class="ui blue labeled submit icon button" id="responsebtn" onClick="addresponse()">
+    <div class="ui blue labeled submit icon button" id="comment_btn">
       <i class="icon edit"></i> Add Response
     </div>
   </form>
@@ -84,25 +84,25 @@
 			<i class="find icon"></i>
 			<span class="text">Sort by</span>
 			<div class="menu">
-			<div class="item" id="mostvoted-tab">
-			<i class="star icon"></i>
-			Votes
-			</div>
-			<div class="divider"></div>
-			<div class="item" id="trending-tab">
-			<i class="dollar icon"></i>
-			Trending
-			</div>
-			<div class="divider"></div>
-			<div class="item" id="newest-tab">
-			<i class="wait icon"></i>
-			Newest
-			</div>
-			<div class="divider"></div>
-			<div class="item" id="oldest-tab">
-			<i class="history icon"></i>
-			Oldest
-			</div>
+                <div class="item comment_sort" id="voted">
+                    <i class="star icon"></i>
+                    Votes
+                </div>
+                <div class="divider"></div>
+                <div class="item comment_sort" id="trending">
+                    <i class="dollar icon"></i>
+                    Trending
+                </div>
+                <div class="divider"></div>
+                <div class="item comment_sort" id="newest">
+                    <i class="wait icon"></i>
+                    Newest
+                </div>
+                <div class="divider"></div>
+                <div class="item comment_sort" id="oldest">
+                    <i class="history icon"></i>
+                    Oldest
+                </div>
 			</div>
 		</div>
 
@@ -139,6 +139,32 @@
 
 	<script src="/build/dist/scripts.js"></script>
 	<script src="/build/dist/report.js"></script>
+	<script>
+        function responsesReady() {
+        
+            var slidd = document.getElementsByClassName("slider");    
+            for (var i in slidd) {
+                
+                slidd[i].oninput = function() {
+                
+                    activeSlidd = document.getElementById(this.id);
+                    activeBtn = document.getElementById(parseInt(this.id) + "-btn");
+                    
+                    if (activeBtn.dataset.votestate == 'false') {
+                        activeBtn.dataset.value = this.value;
+                        activeBtn.innerText = " + " + this.value/100 + "%";
+                    } else if (activeBtn.dataset.votestate == 'true') {		//no code in this section will work since if the voted state is true, then slider is disabled!
+                        //activeBtn.innerHTML = " " + -(this.value/100) + "%";
+                        //activeBtn.dataset.value = "0";
+                        //activeBtn.innerHTML = " Remove vote";
+                    }
+                }
+            }
+        
+            $('.voter-popup').popup();
+        }
+    </script>
+    
 	
 	
 	<section class="footerSection">
