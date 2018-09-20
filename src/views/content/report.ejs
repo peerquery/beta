@@ -24,6 +24,7 @@
 	<meta name="robots" content="index, follow" />
 	
 	<link rel="stylesheet" href="/build/dist/styles.css">
+	<link rel="stylesheet" href="/build/dist/report.css">
     
 </head>
 <body>
@@ -57,7 +58,7 @@
   
   <form id="response-form" style="display:none" class="ui reply form">
     <div class="field">
-      <textarea id="response"></textarea>
+      <div id="editor"></div>
     </div>
     <div class="ui blue labeled submit icon button" id="comment_btn">
       <i class="icon edit"></i> Add Response
@@ -141,26 +142,17 @@
 	<script src="/build/dist/report.js"></script>
 	<script>
         function responsesReady() {
-        
             var slidd = document.getElementsByClassName("slider");    
             for (var i in slidd) {
-                
                 slidd[i].oninput = function() {
-                
                     activeSlidd = document.getElementById(this.id);
                     activeBtn = document.getElementById(parseInt(this.id) + "-btn");
-                    
                     if (activeBtn.dataset.votestate == 'false') {
                         activeBtn.dataset.value = this.value;
                         activeBtn.innerText = " + " + this.value/100 + "%";
-                    } else if (activeBtn.dataset.votestate == 'true') {		//no code in this section will work since if the voted state is true, then slider is disabled!
-                        //activeBtn.innerHTML = " " + -(this.value/100) + "%";
-                        //activeBtn.dataset.value = "0";
-                        //activeBtn.innerHTML = " Remove vote";
                     }
                 }
             }
-        
             $('.voter-popup').popup();
         }
     </script>
