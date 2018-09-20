@@ -3,6 +3,7 @@
 
 var sc2 = require('sc2-sdk'),
 	dsteem = require('dsteem'),
+    Editor = require('../../lib/editor'),
 	templator = require('../templator'),
 	config = require('../../configs/config'),
 	utils = require('../../lib/utils'),
@@ -18,6 +19,8 @@ var sc2 = require('sc2-sdk'),
 	
 	try {
 		
+        
+        Editor.disable_image_upload();
         
         
         var post_category = "";
@@ -233,8 +236,9 @@ var sc2 = require('sc2-sdk'),
         function addresponse() {
         
             document.getElementById('comment_btn').className = "ui disabled blue labeled submit icon button";
-            document.getElementById('response').disabled = true;
-            var message = document.getElementById('response').value;
+            var message = Editor.setup.getValue();
+            
+            document.getElementById('editor').style = "pointer-events:none; opacity: 0.5; box-sizing: border-box; height: 400px;";
 		
             //----toggle close the button, empty its contents and reload the comments area only then enable the disabled onces
 		
@@ -250,13 +254,14 @@ var sc2 = require('sc2-sdk'),
                 
                 if (err !== null) {
                     
-                    //var nErr = JSON.stringify(err.error_description);
-                    
-                    document.getElementById('response').disabled = false;
                     document.getElementById('comment_btn').className = "ui blue labeled submit icon button";
+                    document.getElementById('editor').style = "box-sizing: border-box; height: 400px;";
+                    Editor.setup.setHtml('')
+                    
+                    alert('Sorry an err occured. Please try again later.');
 					
+                    //var nErr = JSON.stringify(err.error_description);
                     //if (nErr.indexOf("The comment is archived") > -1) return alert("Post with the same permlink already exists and is archived, please change your permlink.");
-					
                     //if (nErr.indexOf("You may only post once every 5") > -1) return alert("You may only post once every five minutes!");
                     
                 }  else {
@@ -268,9 +273,8 @@ var sc2 = require('sc2-sdk'),
                     
                     $("#response-form").slideToggle("slow");
                     document.getElementById('comment_btn').className = "ui blue labeled submit icon button";
-                    document.getElementById('response').disabled = false;
-                    document.getElementById('response').value = "";
-                    
+                    document.getElementById('editor').style = "box-sizing: border-box; height: 400px;";
+                    Editor.setup.setHtml('')
                     
                     var comment_active_votes = [];
                     
