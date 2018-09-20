@@ -2,12 +2,10 @@
 'use strict';
 
 var sc2 = require('sc2-sdk'),
-	dsteem = require('dsteem'),
-	config = require('../../configs/config'),
-	client = new dsteem.Client(config.steem_api),
-	Quill = require('quill');
-	
-	//jquery is already universal through the `ui.js` global file
+    Editor = require('../../lib/editor'),
+	config = require('../../configs/config');
+    
+	//jquery is already universal through the `scripts.js` global file
 
 $( window ).on( "load", function() {
 	
@@ -29,57 +27,15 @@ $( window ).on( "load", function() {
 		
 			//$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
 			
-			var toolbarOptions = [
-				['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-				['blockquote', 'code-block', 'link', 'image'],
-			
-				[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-				[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-				[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-				[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-				[{ 'direction': 'rtl' }],                         // text direction
-			
-				[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-			
-				[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-				[{ 'font': [] }],
-				[{ 'align': [] }],
-		
-				['clean']                                         // remove formatting button
-			];
-		
-		
-			var quill = new Quill('#editor', {
-				modules: {
-					toolbar: toolbarOptions
-					},
-				placeholder: 'Prepare your post here...',
-				theme: 'snow'
-			});
-		
-		
-			var toolbar = quill.getModule('toolbar');
-			toolbar.addHandler('image', function() {
-
-				var range = this.quill.getSelection();
-				var value = prompt('What is the image URL');
-				this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
-	
-			});
-		
-	
+            Editor.disable_image_upload();
+            
 			$('#publish').on('click', function() {
-			
 				publish();
-			
 			})
 		
 		
-		
 			function publish() {
-		
-				//console.log(quill.root.innerHTML)
+            
 				//publish function goes here
 				
 				var project_title;
@@ -93,10 +49,10 @@ $( window ).on( "load", function() {
 				}
 				
 				const title = document.getElementById('post-title').value;
-				if (title == "") { alert('Enter title'); document.getElementById('post-title').focus(); return };
+				if (title == "") { alert('Please enter title'); document.getElementById('post-title').focus(); return };
 			
-				const body = quill.root.innerHTML;
-				if (body == "<p><br></p>") { alert('Enter post body'); return; };
+				const body = Editor.setup.getValue();
+				if (body == "") { alert('Please enter post body'); return; };
 			
 				const author = active_user;
 				const category = $('#reportCategory').find(":selected").val();
@@ -107,7 +63,7 @@ $( window ).on( "load", function() {
 				permlink = author + "-" + permlink + "-" + String(new Date().getTime()).substr(-8);
 			
 				var tagStr = document.getElementById('post-tags').value;
-				if (tagStr == "") { alert("Enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
+				if (tagStr == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
 			
 				var tagStrg = tagStr.toLowerCase();
 				//var tagStrng = tagStrg.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
