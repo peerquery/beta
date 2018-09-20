@@ -137,7 +137,7 @@
 						<i class="user icon"></i>
 						Account
 					</a>
-					<a class="item" href="/logout">
+					<a class="item" id="logout" onClick="logOut()">
 						<i class="sign out icon"></i>
 						Logout
 					</a>
@@ -155,6 +155,9 @@
 
   
   
-	<script> const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim(); </script>
+	<script>
+        const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim();
+        function logOut(){ sessionStorage.clear(); window.location.href = "/logout"};
+    </script>
 	
   
