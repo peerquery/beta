@@ -96,13 +96,13 @@ $( window ).on( "load", function() {
 				const author = active_user;
 				const category = "peerquery";
                 
-				var tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').toLowerCase().replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+				const tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').toLowerCase().replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
 				permlink = tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
 			
-				var tagString = document.getElementById('query-tags').value.toLowerCase().replace(/\W+/g, " ");
+				const tagString = document.getElementById('query-tags').value.toLowerCase().replace(/\W+/g, " ");
 				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('query-tags').focus(); return;} ;
 			
-				var tags = tagString.split(" ", 3);
+				const tags = tagString.split(" ", 3);
 				tags.unshift(category);
 			
 				if(title.length < 5) { alert("Please enter a longer title!"); return;	};

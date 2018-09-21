@@ -57,10 +57,10 @@ $( window ).on( "load", function() {
 				const author = active_user;
 				const category = $('#reportCategory').find(":selected").val();
                 
-                var tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '').toLowerCase();
-				permlink = author + "-" + tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
+                const tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '').toLowerCase();
+				const permlink = author + "-" + tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
 			
-				var tagString = document.getElementById('post-tags').value.replace(/\W+/g, " ").toLowerCase();
+				const tagString = document.getElementById('post-tags').value.replace(/\W+/g, " ").toLowerCase();
 				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
 			
 				var tags = tagString.split(" ", 3);
@@ -71,7 +71,7 @@ $( window ).on( "load", function() {
 				document.getElementById('form').className = "ui loading form";
 				$('#publish').addClass("disabled");
 				
-			
+                
 				do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title);
 				
 			
