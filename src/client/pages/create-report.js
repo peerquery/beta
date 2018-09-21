@@ -51,14 +51,14 @@ $( window ).on( "load", function() {
 				const title = document.getElementById('post-title').value;
 				if (title == "") { alert('Please enter title'); document.getElementById('post-title').focus(); return };
 			
-				const body = Editor.setup.getValue();
-				if (body == "") { alert('Please enter post body'); return; };
-			
 				const author = active_user;
 				const category = $('#reportCategory').find(":selected").val();
                 
                 const tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '').toLowerCase();
 				const permlink = author + "-" + tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
+			
+				const body = Editor.setup.getValue() + config.report_attribution.replace(/URL/g, config.site_uri + "/report/" + permlink);
+				if (body == "") { alert('Please enter post body'); return; };
 			
 				const tagString = document.getElementById('post-tags').value.replace(/\W+/g, " ").toLowerCase();
 				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;

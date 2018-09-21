@@ -60,9 +60,6 @@ $( window ).on( "load", function() {
 				const description = document.getElementById('queryDescription').value;
 				if (description == "") { alert('Please enter description'); document.getElementById('queryDescription').focus(); return };
 				
-				const body = Editor.setup.getValue();
-				if (body == "<p><br></p>") { alert('Please enter query body'); return; };
-			
 			
 				const telephone = document.getElementById('queryTelephone').value;
 				if (telephone == "") { alert('Please telephone'); document.getElementById('queryTelephone').focus(); return };
@@ -98,6 +95,9 @@ $( window ).on( "load", function() {
                 
 				const tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').toLowerCase().replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
 				permlink = tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
+			
+				const body = Editor.setup.getValue() + config.query_attribution.replace(/URL/g, config.site_uri + "/query/" + permlink);
+				if (body == "") { alert('Please enter query body'); return; };
 			
 				const tagString = document.getElementById('query-tags').value.toLowerCase().replace(/\W+/g, " ");
 				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('query-tags').focus(); return;} ;
