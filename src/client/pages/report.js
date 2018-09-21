@@ -40,7 +40,7 @@ var sc2 = require('sc2-sdk'),
 		
 		const report = await client.database.call('get_content', [author, permlink]);
         
-        if(report == "" || report.author == "") {alert("Sorry, could not load post."); return;}
+        if(!report || report.author == "") {alert("Sorry, could not load post."); return;}
         
 		const author_earnings = Math.max(Number(report.pending_payout_value.split(' ')[0]), Number(report.total_payout_value.split(' ')[0]) + Number(report.curator_payout_value.split(' ')[0])).toFixed(2);
         
@@ -331,7 +331,7 @@ var sc2 = require('sc2-sdk'),
             
             var comments = await client.database.call('get_content_replies', [author, permlink]);
             
-            if(!comment || comment.author == "") {document.getElementById('comments-spinner').style.display = "none"; return };
+            if(!comments || comments.lenght == 0) {document.getElementById('comments-spinner').style.display = "none"; return };
             
             if(sort == "oldest") comments = comments;
             if(sort == "trending") comments = await comments.sort(function(a, b) { return Number(b.net_rshares) - Number(a.net_rshares)	});
