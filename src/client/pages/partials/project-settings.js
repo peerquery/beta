@@ -1,6 +1,15 @@
-
+    
 	$( window ).on( "load", function() {
 	
+var Editor = require('../../../lib/editor'),
+	config = require('../../../configs/config');
+    
+    window.Editor = Editor;
+    
+    Editor.disable_image_upload();
+    
+	//jquery is already universal through the `scripts.js` global file
+
 		$('#updateBtn').on('click', function() {
 	
 			if(validateForm() == true) {
@@ -24,7 +33,7 @@
 			data.cover = $('#projectCover').val();
 			data.description = $('#projectDescription').val().substring(0, 160);
 			data.mission = $('#projectMission').val().substring(0, 160);
-			data.story = $('#projectStory').val();
+			data.story = Editor.setup.getValue();
 			//data.state = $('#projectState').dropdown('get value');
 			data.state = $('#projectState').find(":selected").text();
 			data.tag = $('#projectTag').val();
@@ -49,9 +58,8 @@
 			
 				if(invalid == 0) {name = 'Name field'; id = 'projectName', field = 'nameField'};
 				if(invalid == 1) {name = 'Description field'; id = 'projectField', field = 'descriptionField'};
-				if(invalid == 2) {name = 'Story field'; id = 'projectStory', field = 'storyField'};
-				if(invalid == 3) {name = 'State field'; id = 'projectState', field = 'stateField'};
-				if(invalid == 4) {name = 'Tag field'; id = 'projectTag', field = 'tagField'};
+				if(invalid == 2) {name = 'State field'; id = 'projectState', field = 'stateField'};
+				if(invalid == 3) {name = 'Tag field'; id = 'projectTag', field = 'tagField'};
 			
 				alert(name + ' cannot be empty');
 				$('#' + id).focus();
@@ -59,7 +67,10 @@
 			
 				return false;
 			
-			} else {
+			} else if(data.story == "") {	//cannot enter empty body
+                alert('Please enter story of your project.');
+                return false;
+            } else {
 			
 				return true;
 			
@@ -110,7 +121,10 @@
 				$('#projectCover').val(response.cover);
 				$('#projectDescription').val(response.description);
 				$('#projectMission').val(response.mission);
-				$('#projectStory').val(response.story);
+				//$('#edito').val(response.story);
+				
+                Editor.setup.setHtml(Editor.setup.convertor.toHTML(response.story))
+                
 				$('#projectState').val(response.state.toLowerCase()).change();
                 $('#projectTag').val(response.tag);
 				$('#projectWebsite').val(response.website);
