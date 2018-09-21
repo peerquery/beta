@@ -27,10 +27,8 @@ var sc2 = require('sc2-sdk'),
         var parent_author = "";
         var parent_permlink = "";
         
-        const access_token = await Promise.resolve(sessionStorage.access_token);
+        const access_token = await Promise.resolve(sessionStorage.access_token) || "access_token";
 		
-		if(!active_user || active_user === '') { alert('Sorry not logged in. Please login and try again.'); window.location.href = '/login' };
-			
 		let steem_api = sc2.Initialize({
 			app: config.sc2_app_name,
 			callbackURL: window.location.href,
