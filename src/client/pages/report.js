@@ -231,7 +231,7 @@ var sc2 = require('sc2-sdk'),
         function addresponse() {
         
             document.getElementById('comment_btn').className = "ui disabled blue labeled submit icon button";
-            var message = Editor.setup.getValue();
+            var message = Editor.setup.getValue() + config.comment_attribution;
             
             document.getElementById('editor').style = "pointer-events:none; opacity: 0.5; box-sizing: border-box; height: 400px;";
 		
