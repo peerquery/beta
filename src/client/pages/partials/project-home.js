@@ -1,4 +1,6 @@
 
+var parser = require("../../../lib/post-parser-web");
+
 	$( window ).on( "load", function() {
 		async function get() {
 		
@@ -6,7 +8,7 @@
 			
 				var response = await Promise.resolve($.get("/api/project/" + project_slug + "/home" ));
 				$('#home-loader').hide();
-				$('#home-content').html(response[0].story);
+				$('#home-content').html(parser.content(response[0].story));
 				//console.log(response);
 			
 			} catch(err) {

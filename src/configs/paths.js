@@ -24,6 +24,7 @@ module.exports = {
 	peers: resolveApp('./src/client/pages/peers.js'),
 	peer: resolveApp('./src/client/pages/peer.js'),
 	steem: resolveApp('./src/client/pages/steem.js'),
+	query: resolveApp('./src/client/pages/query.js'),
 	report: resolveApp('./src/client/pages/report.js'),
 	queries: resolveApp('./src/client/pages/queries.js'),
 	create_report: resolveApp('./src/client/pages/create-report.js'),

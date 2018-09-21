@@ -4,6 +4,7 @@ var paths = require('./paths.js');
 var entry = {};
 
 entry = {
+    
 	styles: paths.styles,
 	scripts: paths.scripts,
 	login: paths.login,
@@ -16,6 +17,7 @@ entry = {
 	project_members: paths.project_members,
 	project_settings: paths.project_settings,
 	reports: paths.reports,
+	query: paths.query,
 	peers: paths.peers,
 	peer: paths.peer,
 	steem: paths.steem,
@@ -24,6 +26,7 @@ entry = {
 	create_query: paths.create_query,
 	create_project: paths.create_project,
 	project_queries: paths.project_queries
+    
 }
     
 module.exports = entry;
