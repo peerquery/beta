@@ -58,7 +58,7 @@ $( window ).on( "load", function() {
 				const category = $('#reportCategory').find(":selected").val();
                 
                 var tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '').toLowerCase();
-				permlink = author + "-" + tlink + "-" + String(new Date().getTime()).substr(-8);
+				permlink = author + "-" + tlink + "-" + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
 			
 				var tagString = document.getElementById('post-tags').value.replace(/\W+/g, " ").toLowerCase();
 				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('post-tags').focus(); return;} ;
