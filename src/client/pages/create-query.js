@@ -2,12 +2,12 @@
 'use strict';
 
 var sc2 = require('sc2-sdk'),
-	dsteem = require('dsteem'),
-	config = require('../../configs/config'),
-	client = new dsteem.Client(config.steem_api),
-	Quill = require('quill');
-	
+    Editor = require('../../lib/editor'),
+	config = require('../../configs/config');
+    
+    require("semantic-ui-calendar/dist/calendar.min.css");
 	//jquery is already universal through the `ui.js` global file
+    
 	
 $( window ).on( "load", function() {
 	
@@ -29,56 +29,16 @@ $( window ).on( "load", function() {
 		
 			//$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
 			
-			var toolbarOptions = [
-				['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-				['blockquote', 'code-block', 'link', 'image'],
-			
-				[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-				[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-				[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-				[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-				[{ 'direction': 'rtl' }],                         // text direction
-			
-				[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-			
-				[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-				[{ 'font': [] }],
-				[{ 'align': [] }],
-		
-				['clean']                                         // remove formatting button
-			];
-		
-		
-			var quill = new Quill('#editor', {
-				modules: {
-					toolbar: toolbarOptions
-					},
-				placeholder: 'Prepare your query here...',
-				theme: 'snow'
-			});
-		
-		
-			var toolbar = quill.getModule('toolbar');
-			toolbar.addHandler('image', function() {
-
-				var range = this.quill.getSelection();
-				var value = prompt('What is the image URL');
-				this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
 	
-			});
-		
-	
+            Editor.disable_image_upload();
+            
 			$('#publish').on('click', function() {
-			
 				publish();
-			
 			})
 		
 		
 			async function publish() {
 		
-				//console.log(quill.root.innerHTML)
 				//publish function goes here
 				
 				var project_title;
@@ -100,7 +60,7 @@ $( window ).on( "load", function() {
 				const description = document.getElementById('queryDescription').value;
 				if (description == "") { alert('Please enter description'); document.getElementById('queryDescription').focus(); return };
 				
-				const body = quill.root.innerHTML;
+				const body = Editor.setup.getValue();
 				if (body == "<p><br></p>") { alert('Please enter query body'); return; };
 			
 			
