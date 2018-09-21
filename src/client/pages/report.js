@@ -19,9 +19,7 @@ var sc2 = require('sc2-sdk'),
 	
 	try {
 		
-        
         Editor.disable_image_upload();
-        
         
         var post_category = "";
         var parent_author = "";
@@ -41,6 +39,9 @@ var sc2 = require('sc2-sdk'),
 		const author = permlink.split('-')[0];
 		
 		const report = await client.database.call('get_content', [author, permlink]);
+        
+        if(report == "" || report.author == "") {alert("Sorry, could not load post."); return;}
+        
 		const author_earnings = Math.max(Number(report.pending_payout_value.split(' ')[0]), Number(report.total_payout_value.split(' ')[0]) + Number(report.curator_payout_value.split(' ')[0])).toFixed(2);
         
         //do some nasty DOM manipulations
@@ -224,10 +225,6 @@ var sc2 = require('sc2-sdk'),
         
         }
 
-        
-        
-        
-        
         
         
         
