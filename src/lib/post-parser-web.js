@@ -49,7 +49,7 @@ module.exports = {
 		var md = new Remarkable({ html: true, breaks: false, linkify: false, typographer: false, quotes: '“”‘’' });
 		
 		//sanitze html before appending to  'dom parser'
-		var safeText = DOMPurify.sanitize(html);
+		var safeText = DOMPurify.sanitize(html, {SAFE_FOR_JQUERY: true});
 		
 		var mdText = md.render(safeText);
 		
