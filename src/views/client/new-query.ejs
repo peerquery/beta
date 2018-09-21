@@ -23,11 +23,8 @@
 	<!-- SEO robots -->
 	<meta name="robots" content="index, follow" />
 	
-	<script src="/build/dist/ui.js"></script>
-	<link href="/assets/css/quill.css" rel="stylesheet">
-	
-	<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
-	<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+	<link href="/build/dist/styles.css" rel="stylesheet">
+	<link href="/build/dist/create_query.css" rel="stylesheet">
 	
 </head>
 
@@ -129,14 +126,7 @@
 		
 		<div class="field">
 			<label>Details[This content is to Steem]</label>
-			<div id="editor">
-			
-				<h1><i>Sample template</i></h1>
-				<p>Please update or delete and use your own.</p>
-				<br/>
-				<br/>
-			
-			</div>
+			<div id="editor"></div>
 		</div>
 		
 		
@@ -159,7 +149,7 @@
 			
 				<div class="field">
 				
-						<label>Deadline</label>
+						<label>Query deadline</label>
 						<div class="ui calendar" id="queryDeadline">
 							<div class="ui input left icon">
 							<i class="calendar icon"></i>
@@ -319,11 +309,13 @@
   
   
 	<script src="/build/dist/scripts.js"></script>
+	<script src="/assets/js/semantic-ui-calendar.js"></script>
 	<script src="/build/dist/create_query.js"></script>
-	<script>window.onload = function() {
-            $('#queryDeadline').calendar(); var deadline = '';
+	<script>
+            var now = new Date(); now.setDate(now.getDate() + 14);
+            window.deadline = deadline;
+            $('#queryDeadline').calendar(); var deadline = now;
             $('.ui.calendar').calendar({ onChange: function (date, text) {deadline = text;},});
-            }
 	</script>
 	
   
