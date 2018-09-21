@@ -331,6 +331,8 @@ var sc2 = require('sc2-sdk'),
             
             var comments = await client.database.call('get_content_replies', [author, permlink]);
             
+            if(!comment || comment.author == "") {document.getElementById('comments-spinner').style.display = "none"; return };
+            
             if(sort == "oldest") comments = comments;
             if(sort == "trending") comments = await comments.sort(function(a, b) { return Number(b.net_rshares) - Number(a.net_rshares)	});
             if(sort == "newest") comments = await comments.sort(function(a, b){return b.id - a.id});
