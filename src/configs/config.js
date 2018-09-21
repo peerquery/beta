@@ -20,4 +20,10 @@ config.sc2_app_name = "peerquery.app";
 config.sc2_scope = "vote,comment,custom_json";
 config.sc2_scope_array = "['vote', 'comment', 'custom_json']";
 
+//attribution
+config.report_attribution = "---\nPublished on [Peer Query - Blockchain-powered p2p collaboration](URL).\n---";
+config.query_attribution = "---\nPublished on [Peer Query - Blockchain-powered p2p collaboration](URL).\n---";
+config.comment_attribution = "Posted on [Peer Query](http://www.peerquery.com).";
+
 module.exports = config;
+
