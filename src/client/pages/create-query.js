@@ -95,18 +95,13 @@ $( window ).on( "load", function() {
 			
 				const author = active_user;
 				const category = "peerquery";
-				var link = title.replace(/\W+/g, " ");
-				var permlk = link.replace(/\s+/g, '-');
-				var plink = permlk.toLowerCase();
-				var permlink = plink.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
-				permlink = permlink + "-0" + String(new Date().getTime()).substr(-8);
+                
+				var tlink = title.replace(/\W+/g, " ").replace(/\s+/g, '-').toLowerCase().replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
+				permlink = tlink + "-0" + String(new Date().getTime()).substr(-8);
 			
-				var tagStr = document.getElementById('query-tags').value;
-				if (tagStr == "") { alert("Please enter atleast one tag"); document.getElementById('query-tags').focus(); return;} ;
+				var tagString = document.getElementById('query-tags').value.toLowerCase().replace(/\W+/g, " ");
+				if (tagString == "") { alert("Please enter atleast one tag"); document.getElementById('query-tags').focus(); return;} ;
 			
-				var tagStrg = tagStr.toLowerCase();
-				//var tagStrng = tagStrg.replace(/^[^a-z\d]*|[^a-z\d]*$/gi, '');
-				var tagString = tagStrg.replace(/\W+/g, " ");
 				var tags = tagString.split(" ", 3);
 				tags.unshift(category);
 			
