@@ -11,6 +11,9 @@
     "lint": "./node_modules/.bin/eslint **/*.js",
     "test": "mocha --timeout 40000 --exit",
     "build": "webpack",
+    "debuild": "set NODE_ENV=debug && webpack",
+    "deserve": "set NODE_ENV=debug && webpack && npm run start",
+    "qserve": "set NODE_ENV=production && webpack && npm run start",
     "stage": "npm run lint && webpack && npm test && node ./src/app.js",
     "start": "node ./src/app.js",
     "kill": "taskkill /f /im node.exe"
