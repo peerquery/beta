@@ -318,10 +318,10 @@ $( window ).on( 'load', async function() {
         votePanelBtn(this.id);
     });   
         
-    $('.vote_btn').on('click', function(){
+    $('#comments-container').on('click', '.vote_btn', function(){
         vote(this.id);
-    });        
-        
+    });
+    
     $('#response-toggle').click(function(){		
         if (!active_user || active_user === '') { window.location.href = '/login'; return ; }
         $('#response-form').slideToggle('slow');	
