@@ -40,5 +40,8 @@ module.exports = {
         'deadline': false,
         'Buffer': false,
         'process': false,
+    },
+    'parserOptions': {
+        'ecmaVersion': 2017
     }
 };
