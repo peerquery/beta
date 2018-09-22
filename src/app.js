@@ -22,7 +22,7 @@ const node_env = process.env.NODE_ENV,
     server_port = Number(process.env.SERVER_PORT),
     port = (node_env == 'production') ? server_port + 8001 : server_port;
     
-app.listen(port);
+if (!module.parent) app.listen(port);
 //start();
 	
 console.log('\n\n\nServer running at port: ' + port);
