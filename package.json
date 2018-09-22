@@ -9,7 +9,7 @@
     "prepush": "npm version minor",
     "lintfix": "./node_modules/.bin/eslint **/*.js --fix",
     "lint": "./node_modules/.bin/eslint **/*.js",
-    "test": "mocha --timeout 40000 --exit",
+    "test": "npm run lint && mocha --timeout 40000 --exit",
     "build": "webpack",
     "debuild": "set NODE_ENV=debug && webpack",
     "deserve": "set NODE_ENV=debug && webpack && npm run start",
