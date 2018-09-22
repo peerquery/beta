@@ -2,7 +2,8 @@ module.exports = {
     'env': {
         'es6': true,
         'node': true,
-        'browser': true
+        'browser': true,
+        'mocha': true
     },
     extends: [
         'eslint:recommended'
@@ -15,7 +16,7 @@ module.exports = {
         'space-in-parens': [0],
         'keyword-spacing': [1],
         'no-useless-escape': [0],
-        'no-unused-vars': [0],
+        'no-unused-vars': [0, { 'varsIgnorePattern': 'should|expect' }],
         'indent': ['error', 4],
         'linebreak-style': ['error', 'unix'],
         'quotes': ['error', 'single'],
