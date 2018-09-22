@@ -7,6 +7,8 @@ var router = require('../../server/router'),
 module.exports = function(err, req, res, next) {
 	
     console.log('process err (500) : \n' + err);
+    
+    res.status(500);
     return router(address._static._500, req, res);
 	
 };
