@@ -5,13 +5,13 @@
   "main": "./src/app.js",
   "private": true,
   "scripts": {
-    "precommit": "./node_modules/.bin/eslint **/*.js",
+    "precommit": "npm run lint",
     "prepush": "npm version minor",
     "lintfix": "./node_modules/.bin/eslint **/*.js --fix",
     "lint": "./node_modules/.bin/eslint **/*.js",
-    "test": "echo \"skipping tests\"",
+    "test": "mocha --timeout 40000 --exit",
     "build": "webpack",
-    "stage": "webpack && node ./src/app.js",
+    "stage": "npm run lint && webpack && npm test && node ./src/app.js",
     "start": "node ./src/app.js",
     "kill": "taskkill /f /im node.exe"
   },
@@ -68,6 +68,9 @@
     "doc": "docs"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.2.0",
     "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^1.1.11",
     "css-loader": "^1.0.0",
@@ -77,7 +80,8 @@
     "expose-loader": "^0.7.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0-rc.15",
+    "mocha": "^5.2.0",
     "style-loader": "^0.22.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
