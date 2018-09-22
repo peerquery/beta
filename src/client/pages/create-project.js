@@ -2,114 +2,114 @@
 'use strict';
 	
 var Editor = require('../../lib/editor'),
-	config = require('../../configs/config');
+    config = require('../../configs/config');
     
-	//jquery is already universal through the `ui.js` global file
+//jquery is already universal through the `ui.js` global file
 		
-        Editor.disable_image_upload();
+Editor.disable_image_upload();
             
-		//$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
-		$('#projectFounder').val(active_user);
+//$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
+$('#projectFounder').val(active_user);
 	
-		$('#createBtn').on('click', function() {
+$('#createBtn').on('click', function() {
 	
-			if(validateForm() == true) {
-				post();
-				$('form').addClass('loading');
-				$( '#' + this.id).addClass('disabled');
-			};
+    if (validateForm() == true) {
+        post();
+        $('form').addClass('loading');
+        $( '#' + this.id).addClass('disabled');
+    }
 		
-		});
+});
 	
 	
-		var data = {};
+var data = {};
 	
-		function validateForm() {
+function validateForm() {
 		
-			data.name = $('#projectName').val();
-			data.location = $('#projectLocation').val()
-			//data.founder = active_user; //handled server side for thorough consistency
-			data.logo = $('#projectLogo').val();
-			data.cover = $('#projectCover').val();
-			data.description = $('#projectDescription').val().substring(0, 160);
-			data.title = $('#projectTitle').val().substring(0, 100);
-			data.mission = $('#projectMission').val().substring(0, 160);
-			data.story = Editor.setup.getValue();
-			data.state = $('#projectState').find(":selected").val().toLowerCase();
-			data.tag = $('#projectTag').val();
-			data.website = $('#projectWebsite').val();
-			data.website = (data.website.indexOf('://') === -1) ? 'http://' + data.website : data.website;
-			data.steem = $('#projectSteem').val();
-			data.facebook = $('#projectFacebook').val();
-			data.twitter = $('#projectTwitter').val();
-			data.github = $('#projectGithub').val();
-			data.chat = $('#projectChat').val();
+    data.name = $('#projectName').val();
+    data.location = $('#projectLocation').val();
+    //data.founder = active_user; //handled server side for thorough consistency
+    data.logo = $('#projectLogo').val();
+    data.cover = $('#projectCover').val();
+    data.description = $('#projectDescription').val().substring(0, 160);
+    data.title = $('#projectTitle').val().substring(0, 100);
+    data.mission = $('#projectMission').val().substring(0, 160);
+    data.story = Editor.setup.getValue();
+    data.state = $('#projectState').find(':selected').val().toLowerCase();
+    data.tag = $('#projectTag').val();
+    data.website = $('#projectWebsite').val();
+    data.website = (data.website.indexOf('://') === -1) ? 'http://' + data.website : data.website;
+    data.steem = $('#projectSteem').val();
+    data.facebook = $('#projectFacebook').val();
+    data.twitter = $('#projectTwitter').val();
+    data.github = $('#projectGithub').val();
+    data.chat = $('#projectChat').val();
 		
-			var required = [ data.name, data.description, data.title, data.state, data.tag ];
-			var empty = '';
-			var invalid = required.indexOf(empty);
+    var required = [ data.name, data.description, data.title, data.state, data.tag ];
+    var empty = '';
+    var invalid = required.indexOf(empty);
 		
 		
-			if(invalid > -1 ) {
+    if (invalid > -1 ) {
 			
-				var name = '';
-				var id = '';
-				var field = '';
+        var name = '';
+        var id = '';
+        var field = '';
 			
-				if(invalid == 0) {name = 'Name field'; id = 'projectName', field = 'nameField'};
-				if(invalid == 1) {name = 'Description field'; id = 'projectDescription', field = 'descriptionField'};
-				if(invalid == 2) {name = 'Title field'; id = 'projectTitle', field = 'titleField'};
-				if(invalid == 3) {name = 'State field'; id = 'projectState', field = 'stateField'};
-				if(invalid == 4) {name = 'Tag field'; id = 'projectTag', field = 'tagField'};
+        if (invalid == 0) {name = 'Name field'; id = 'projectName', field = 'nameField';}
+        if (invalid == 1) {name = 'Description field'; id = 'projectDescription', field = 'descriptionField';}
+        if (invalid == 2) {name = 'Title field'; id = 'projectTitle', field = 'titleField';}
+        if (invalid == 3) {name = 'State field'; id = 'projectState', field = 'stateField';}
+        if (invalid == 4) {name = 'Tag field'; id = 'projectTag', field = 'tagField';}
 			
-				alert(name + ' cannot be empty');
-				$('#' + id).focus();
-				$('#' + field).addClass('error');
+        alert(name + ' cannot be empty');
+        $('#' + id).focus();
+        $('#' + field).addClass('error');
 			
-				return false;
+        return false;
 			
-			} else {
+    } else {
 			
-				if(data.story.length / Math.pow(1024,1) > 10) {	//greater than 10kb
-					alert('Story size cannot be more than 10kb.');
-					$('#projectStory').focus();
-					$('#storyField').addClass('error');
-					return;
+        if (data.story.length / Math.pow(1024,1) > 10) {	//greater than 10kb
+            alert('Story size cannot be more than 10kb.');
+            $('#projectStory').focus();
+            $('#storyField').addClass('error');
+            return;
 					
-				} else if(data.story == "") {	//cannot enter empty body
-					alert('Please enter story of your project.');
-                    return false;
-				} else {
-					return true;
-				}
+        } else if (data.story == '') {	//cannot enter empty body
+            alert('Please enter story of your project.');
+            return false;
+        } else {
+            return true;
+        }
 				
-			};
+    }
 		
-		}
+}
 	
 	
-		async function post() {
+async function post() {
 		
-			try{
+    try {
 			
-				var status = await Promise.resolve($.post("/api/private/create/project", data ));
-				//console.log(status);
-				window.location.href = '/project/' + status;
+        var status = await Promise.resolve($.post('/api/private/create/project', data ));
+        //console.log(status);
+        window.location.href = '/project/' + status;
 			
-			} catch(err) {
-				console.log(err);
-				alert('Sorry, an error occured. Please again');
-				window.location.reload();
-			}
+    } catch (err) {
+        console.log(err);
+        alert('Sorry, an error occured. Please again');
+        window.location.reload();
+    }
 		
-		}	
+}	
 	
-		$(".limitedText").on("keyup",function() {
-			var maxLength = $(this).attr("maxlength");
-			if(maxLength == $(this).val().length) {
-				alert("You can't write more than " + maxLength +" characters")
-			}
-		});
+$('.limitedText').on('keyup',function() {
+    var maxLength = $(this).attr('maxlength');
+    if (maxLength == $(this).val().length) {
+        alert('You can\'t write more than ' + maxLength + ' characters');
+    }
+});
 		
 		
 	

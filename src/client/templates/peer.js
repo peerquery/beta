@@ -27,4 +27,4 @@ var peer = '     '  +
  '   		See account  '  + 
  '   	</a>  ' ; 
  
- module.exports = peer;
+module.exports = peer;

@@ -49,4 +49,4 @@ var project = '     '  +
  '   		</div>  '  + 
  '   	  </div>  ';
  
- module.exports = project;
+module.exports = project;

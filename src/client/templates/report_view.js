@@ -204,4 +204,4 @@ var report_view = '     '  +
  '   	  '  + 
  '  	  ' ; 
  
- module.exports = report_view;
+module.exports = report_view;

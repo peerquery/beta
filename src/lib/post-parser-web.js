@@ -2,69 +2,69 @@
 'use strict';
 
 var Remarkable = require('remarkable'),
-	DOMPurify = require('dompurify'),
-	DomParser = require('dom-parser'),
-	parser = new DomParser();
+    DOMPurify = require('dompurify'),
+    DomParser = require('dom-parser'),
+    parser = new DomParser();
 
 
 module.exports = {
   
-	first_img: function(text) {
+    first_img: function(text) {
 		
-		try{
-			var src = text.match(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))/i)[0];
-			if(src !== null || scr !== undefined) return src;
-			return '';
-		} catch(err){
-			//console.log(err);
-			return '';
-		}
+        try {
+            var src = text.match(/(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))/i)[0];
+            if (src !== null || src !== undefined) return src;
+            return '';
+        } catch (err){
+            //console.log(err);
+            return '';
+        }
 		
-	},
+    },
 	
-	summary: function(html, count) {
+    summary: function(html, count) {
 		
-		var md = new Remarkable({ html: true, breaks: false, linkify: false, typographer: false, quotes: '“”‘’' });
+        var md = new Remarkable({ html: true, breaks: false, linkify: false, typographer: false, quotes: '“”‘’' });
 		
-		//sanitze html before appending to  'dom parser'
-		var safeText = DOMPurify.sanitize(html);
+        //sanitze html before appending to  'dom parser'
+        var safeText = DOMPurify.sanitize(html);
 		
-		var mdText = md.render(safeText);
-		mdText = "<div id='main'> " + mdText + " </div>";
+        var mdText = md.render(safeText);
+        mdText = '<div id=\'main\'> ' + mdText + ' </div>';
 		
-		var dom = parser.parseFromString(mdText);
-		var textString = dom.getElementById('main').textContent;
+        var dom = parser.parseFromString(mdText);
+        var textString = dom.getElementById('main').textContent;
 		
-		var stripedHtml = textString.replace(/<[^>]+>/g, '');
-		var stripedNewline = stripedHtml.replace(/\r?\n|\r/g, ' ');
-		var stripeImg = stripedNewline.replace(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/ig, ' ');
-		var trimHtml = stripeImg.trim();
+        var stripedHtml = textString.replace(/<[^>]+>/g, '');
+        var stripedNewline = stripedHtml.replace(/\r?\n|\r/g, ' ');
+        var stripeImg = stripedNewline.replace(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/ig, ' ');
+        var trimHtml = stripeImg.trim();
 		
-		return trimHtml.substring(0, count) + "... ";
+        return trimHtml.substring(0, count) + '... ';
 		
-	},
+    },
 	
-	content: function(html) {
+    content: function(html) {
 		
-		var md = new Remarkable({ html: true, breaks: false, linkify: false, typographer: false, quotes: '“”‘’' });
+        var md = new Remarkable({ html: true, breaks: false, linkify: false, typographer: false, quotes: '“”‘’' });
 		
-		//sanitze html before appending to  'dom parser'
-		var safeText = DOMPurify.sanitize(html, {SAFE_FOR_JQUERY: true});
+        //sanitze html before appending to  'dom parser'
+        var safeText = DOMPurify.sanitize(html, {SAFE_FOR_JQUERY: true});
 		
-		var mdText = md.render(safeText);
+        var mdText = md.render(safeText);
 		
-		//lots of parsing work yet to be done
+        //lots of parsing work yet to be done
 		
-		return mdText;
+        return mdText;
 		
-	},
+    },
 	
-	clean: async function(html) {
+    clean: async function(html) {
 		
-		var clean = await DOMPurify.sanitize(html, {SAFE_FOR_JQUERY: true});
+        var clean = await DOMPurify.sanitize(html, {SAFE_FOR_JQUERY: true});
 		
-		return clean;
+        return clean;
 		
-	}
+    }
   
-}
+};

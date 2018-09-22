@@ -1,21 +1,21 @@
 
-'use strict'
+'use strict';
 
 module.exports = function (req, res, next) {
 	
-	if(!req.active_user) {
+    if (!req.active_user) {
 		
-		res.redirect("/login");
+        res.redirect('/login');
 		
-	} else if(req.active_user && req.active_user == null) {
+    } else if (req.active_user && req.active_user == null) {
 		
-			res.redirect("/login");
+        res.redirect('/login');
 			
-	} else {
+    } else {
 		
-		next();
+        next();
 		
-	}
+    }
 
-}
+};
 

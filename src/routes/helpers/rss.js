@@ -1,5 +1,5 @@
 
 
 module.exports = function(app) {
-	//coming soon
-}
+    //coming soon
+};

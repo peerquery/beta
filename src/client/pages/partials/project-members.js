@@ -2,36 +2,36 @@
 'use strict';
 
 var dsteem = require('dsteem'),
-	create = require('./../../../lib/content-creator'),
-	config = require('./../../../configs/config'),
-	client = new dsteem.Client(config.steem_api);
+    create = require('./../../../lib/content-creator'),
+    config = require('./../../../configs/config'),
+    client = new dsteem.Client(config.steem_api);
 	
 async function display() {
 	
-	try {
+    try {
 		
-		$("#members-container").html('');
-		$("#members-loader").show();
+        $('#members-container').html('');
+        $('#members-loader').show();
 		
-		var results = await Promise.resolve($.get("/api/members/project/" + project_slug));
-		var members = results.members;
+        var results = await Promise.resolve($.get('/api/members/project/' + project_slug));
+        var members = results.members;
 			
-		$("#members-loader").hide();
+        $('#members-loader').hide();
 			
-		for (var x in members) {
-			var member = await create.member(members[x])
-			$("#members-container").append(member);	
-		}
+        for (var x in members) {
+            var member = await create.member(members[x]);
+            $('#members-container').append(member);	
+        }
 		
-	} catch(err){
-		alert("Sorry, error fetching members");
-		console.log(err);
-	}
+    } catch (err){
+        alert('Sorry, error fetching members');
+        console.log(err);
+    }
 	
 	
-};
+}
 
 
-$( window ).on( "load", function() {
-	display();
+$( window ).on( 'load', function() {
+    display();
 });

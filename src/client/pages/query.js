@@ -3,19 +3,19 @@
 
 var parser = require('../../lib/post-parser-web');
 
-	//jquery is already universal through the `ui.js` global file
+//jquery is already universal through the `ui.js` global file
     
     
 (async () => {
 	
-	try {
+    try {
         
-        $("#body").html(parser.content( $("#temp").html() ));
-        $("#temp").remove();
+        $('#body').html(parser.content( $('#temp').html() ));
+        $('#temp').remove();
         
-	} catch(err){
-		console.log(err);
-	}
+    } catch (err){
+        console.log(err);
+    }
     
     
 })();

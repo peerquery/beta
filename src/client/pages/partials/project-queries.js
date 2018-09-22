@@ -2,56 +2,56 @@
 'use strict';
 
 var creator = require('./../../../lib/content-creator'),
-	timeago = require('timeago.js')();
+    timeago = require('timeago.js')();
 	
-	//jquery is already universal through the `ui.js` global file
+//jquery is already universal through the `ui.js` global file
 	
-	var last_id = 0;
+var last_id = 0;
 	
 async function display() {
 	
-	$("#moreBtn").hide();
-	$("#item-container").html('');
-	$('#loader').show();
+    $('#moreBtn').hide();
+    $('#item-container').html('');
+    $('#loader').show();
 	
 	
-	try {
+    try {
 		
-		var queries = await Promise.resolve($.get("/api/queries/project/" + project_slug + "/" + last_id));
+        var queries = await Promise.resolve($.get('/api/queries/project/' + project_slug + '/' + last_id));
 		
-		if(!queries || queries == '' || queries.length == 0 ) { $('#loader').hide(); return };
+        if (!queries || queries == '' || queries.length == 0 ) { $('#loader').hide(); return; }
 		
-		if(queries.length == 20) { $('#moreBtn').show(); last_id = queries[queries.length - 1]._id; };
+        if (queries.length == 20) { $('#moreBtn').show(); last_id = queries[queries.length - 1]._id; }
 		
-		for (var x in queries) {
+        for (var x in queries) {
 			
-			//queries[x].created = timeago.format(queries[x].created);
-			if(!queries[x].logo) queries[x].logo = '/images/placeholder.png';
+            //queries[x].created = timeago.format(queries[x].created);
+            if (!queries[x].logo) queries[x].logo = '/images/placeholder.png';
 			
-			var query = await creator.query(queries[x]);
-			$("#item-container").append(query);
+            var query = await creator.query(queries[x]);
+            $('#item-container').append(query);
 			
-		}
+        }
 		
-		$('#loader').hide();
+        $('#loader').hide();
 		
-		ready();
+        ready();
 			
 		
 		
-	} catch(err){
-		console.log(err);
-	}
+    } catch (err){
+        console.log(err);
+    }
 	
 }
 
 
 $('#moreBtn').on('click', function() {
-	$(this).hide();
-	display();
-})
+    $(this).hide();
+    display();
+});
 	
 	
-$( window ).on( "load", function() {
-	display();
+$( window ).on( 'load', function() {
+    display();
 });
