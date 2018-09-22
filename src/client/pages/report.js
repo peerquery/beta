@@ -138,8 +138,8 @@ $( window ).on( 'load', async function() {
         $('#report_view').append(report_view);
 			
         $('#loader').hide();
-		
         
+		
         utils.check_vote(report, report.active_votes);
 		
         
@@ -155,12 +155,6 @@ $( window ).on( 'load', async function() {
         post_category = report.parent_permlink;
         parent_author = report.author;
         parent_permlink = report.permlink;
-	
-        
-        //call comments after processing post
-        document.getElementById('voted').click();
-        
-        
 	
         
     } catch (err){
@@ -434,9 +428,12 @@ $( window ).on( 'load', async function() {
 	
     });
         
-   
+    //keep down here else risk it not working
+    //must be called last, after functions are loaded and post is also processed
+    document.getElementById('voted').click();
+        
     
-})();
+});
 
   
     
