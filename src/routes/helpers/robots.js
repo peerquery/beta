@@ -4,7 +4,7 @@ module.exports = function(app) {
 
     app.get('/robots.txt', function (req, res) {
         var data;
-        if(req.subdomains.indexOf('staging') > -1) {    //staging deployment
+        if (req.subdomains.indexOf('staging') > -1) {    //staging deployment
             data = 
                 'User-agent: *' +
                 '\nDisallow: /';
