@@ -62,6 +62,7 @@ async function getState(path) {
         var results = await process(result, path);
 		
         for (var x in results) {
+            results[x].permlink = results[x].author + '-' + results[x].permlink;
             var post = await create.post(results[x]);
             document.getElementById('item-container').appendChild(post);
         }
