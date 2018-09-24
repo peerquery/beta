@@ -40,6 +40,7 @@ module.exports = {
         'deadline': false,
         'Buffer': false,
         'process': false,
+        'pqy_notify': false,
     },
     'parserOptions': {
         'ecmaVersion': 2017
