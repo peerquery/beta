@@ -5,8 +5,6 @@
   "main": "./src/app.js",
   "private": true,
   "scripts": {
-    "precommit": "npm run lint",
-    "prepush": "npm version minor",
     "lintfix": "./node_modules/.bin/eslint \"**/*.js\" --fix",
     "lint": "./node_modules/.bin/eslint \"**/*.js\"",
     "test": "npm run lint && mocha --timeout 40000 --exit",
