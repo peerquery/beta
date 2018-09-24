@@ -2,15 +2,13 @@
 
 module.exports = function() {
     
-    //-----image not found system
-    
+    //image not found system
     $('img').each(function() {
         if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
             // image was broken, replace with your new image
             this.src = '/assets/images/placeholder.png';
         }
     });
-    
     
     $('.scroll').click(function(event){
         $('html, body').animate({scrollTop: '+=600px'}, 800);
@@ -24,5 +22,7 @@ module.exports = function() {
         document.cookie = 'cookie_reminder' + '=' + new Date().toDateString() + ';' + expires + ';path=/';
     });
 	
+    //listener for notifications message close icon click
+    $('#notifications-container').on('click', '.message .close', function() { $(this).closest('.message').transition('fade'); });
 	
 };
