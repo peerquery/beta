@@ -5,9 +5,17 @@ var Editor = require('../../lib/editor'),
     config = require('../../configs/config');
     
 //jquery is already universal through the `ui.js` global file
-		
-Editor.disable_image_upload();
-            
+
+    
+$( window ).on( 'load', function() {
+
+    //set up editor
+    window.Editor = Editor;
+    Editor.disable_image_upload();
+    Editor.auto_save();
+    
+});
+    
 //$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
 $('#projectFounder').val(active_user);
 	
@@ -91,9 +99,15 @@ function validateForm() {
 async function post() {
 		
     try {
-			
+        
         var status = await Promise.resolve($.post('/api/private/create/project', data ));
         //console.log(status);
+        
+        //clear backup from localStorage
+        var type = window.location.pathname.split('/')[2];
+        if (!type) type = 'comment';
+        window.localStorage.removeItem(type);
+        
         window.location.href = '/project/' + status;
 			
     } catch (err) {

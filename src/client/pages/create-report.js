@@ -13,7 +13,10 @@ $( window ).on( 'load', function() {
 	
     //$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
     
+    //set up editor
+    window.Editor = Editor;
     Editor.disable_image_upload();
+    Editor.auto_save();
     
     $('#publish').on('click', function() {
         publish();
@@ -96,6 +99,7 @@ $( window ).on( 'load', function() {
                     //console.log('Success!', results);
                     //now ping the server with update
                     try {
+                        
                         var data = {};
                         data.steemid = results.result.id;
                         if (project_slug_id !== '') data.project_slug_id = project_slug_id;
@@ -106,6 +110,12 @@ $( window ).on( 'load', function() {
                         data.permlink = permlink;
                         var status = await Promise.resolve($.post('/api/private/create/report', data ));
                         //console.log(status);
+                        
+                        //clear backup from localStorage
+                        var type = window.location.pathname.split('/')[2];
+                        if (!type) type = 'comment';
+                        window.localStorage.removeItem(type);
+                        
                     } catch (err) {
                         console.log(err);
                         alert('Sorry, an error occured updating the server. However, the report has been successfully published to your Steem account.');

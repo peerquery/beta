@@ -14,7 +14,10 @@ $( window ).on( 'load', async function() {
 
     var user_projects;
     
+    //set up editor
+    window.Editor = Editor;
     Editor.disable_image_upload();
+    Editor.auto_save();
     
     $('#publish').on('click', function() {
         publish();
@@ -139,6 +142,7 @@ $( window ).on( 'load', async function() {
                     //console.log('Success!', results);
                     //now ping the server with update
                     try {
+                        
                         var data = {};
                         data.steemid = results.result.id;
                         //data.steemid = 6768679; //used during hurried dev testing
@@ -162,6 +166,12 @@ $( window ).on( 'load', async function() {
                         
                         var status = await Promise.resolve($.post('/api/private/create/query', data ));
                         //console.log(status);
+                        
+                        //clear backup from localStorage
+                        var type = window.location.pathname.split('/')[2];
+                        if (!type) type = 'comment';
+                        window.localStorage.removeItem(type);
+                        
                         window.location.href = '/query/' + permlink;
                         
                     } catch (err) {
