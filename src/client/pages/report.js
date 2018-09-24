@@ -32,8 +32,8 @@ const steem_api = sc2.Initialize({
 });
     
     
-const permlink = window.location.pathname.split('/')[2];
-const author = permlink.split('-')[0];
+var permlink = window.location.pathname.split('/')[2];
+var author = permlink.split('-')[0];
 var report;
 var author_earnings;
 
@@ -43,7 +43,17 @@ $( window ).on( 'load', async function() {
 		
         report = await client.database.call('get_content', [author, permlink]);
         
-        if (!report || report.author == '') {alert('Sorry, could not load post.'); return;}
+        //if (!report || report.author == '') {pqy_notify.warn('Sorry, could not load post.'); return;}
+        if (!report || report.author == '') {
+            
+            var new_url = window.location.pathname.split('/')[2];
+            author  = new_url.split('-')[0];
+            permlink = new_url.replace(author + '-', '');
+            
+            report = await client.database.call('get_content', [author, permlink]);
+            
+            if (!report || report.author == '') {pqy_notify.warn('Sorry, could not load post.'); return;}
+        }
         
         author_earnings = Math.max(Number(report.pending_payout_value.split(' ')[0]), Number(report.total_payout_value.split(' ')[0]) + Number(report.curator_payout_value.split(' ')[0])).toFixed(2);
         
