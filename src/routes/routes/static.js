@@ -10,7 +10,7 @@ module.exports = function(app) {
         return router(address._static.create, req, res);
     });
 	
-    app.get('/contact', function (req, res) {
+    app.get('/support/contact', function (req, res) {
         return router(address._static.contact, req, res);
     });
 
@@ -18,7 +18,7 @@ module.exports = function(app) {
         return router(address._static.abuse, req, res);
     });
 	
-    app.get('/faqs', function (req, res) {
+    app.get('/support/faqs', function (req, res) {
         return router(address._static.faqs, req, res);
     });
 	
@@ -37,11 +37,11 @@ module.exports = function(app) {
     app.get('/terms-and-conditions', function (req, res) {
         return router(address._static.terms, req, res);
     });
-	
     /*
 	app.get('/HNAP1/', function (req, res) {
-		console.log(req);
-		res.json({eat-this: "#$%#&#^@)#(&@!>?"});
+		//console.log(req);
+		//res.status(408).json({try: 'harder'});
 	})
 	*/
+    
 };
