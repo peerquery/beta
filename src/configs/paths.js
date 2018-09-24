@@ -9,7 +9,7 @@ module.exports = {
     app: resolveApp('./src/app.js'),
     //styles: [ resolveApp('./node_modules/semantic-ui-css/semantic.min.css'), resolveApp('./src/configs/global.css') ],
     styles: resolveApp('./src/client/ui/styles.js'),
-    scripts: resolveApp('./src/client/ui/scripts.js'),
+    scripts: resolveApp('./src/client/ui/scripts_index.js'),
     login: resolveApp('./src/client/pages/login.js'),
     config: resolveApp('./configs/config.js'),
     index: resolveApp('./src/client/pages/index.js'),
