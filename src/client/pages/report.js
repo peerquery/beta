@@ -15,6 +15,7 @@ var sc2 = require('sc2-sdk'),
     //jquery is already universal through the `scripts.js` global file
     
     
+//set up editor
 Editor.disable_image_upload();
     
 var post_category = '';
@@ -268,8 +269,9 @@ $( window ).on( 'load', async function() {
             }  else {
                 
                 console.log('Success!');
-                //use this function to reload the comments instead of reloading the whole page
-                    
+                
+                //now load and display only the new comment
+                
                 var result = await client.database.call('get_content', [active_user, comment_permlink]);
                     
                 $('#response-form').slideToggle('slow');
