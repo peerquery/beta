@@ -2,12 +2,12 @@
 'use strict';
 
 var content = require('./content'),
-    test = require('./test');
+    _status = require('./status');
 	
 module.exports = async function (app) {
 	
     content(app);
-    test(app);
+    _status(app);
 	
 };
 	
