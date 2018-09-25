@@ -142,13 +142,24 @@ code {
 	margin: 5px 5px 5px 5px;
 }
 
-
 pre {
-	background-color: #f8f8f8 !important;
-	margin: 40px 40px 40px 40px;
-	padding: 20px 20px 20px 20px;
-	font-size: 90%;
+  background-color: #f8f8f8 !important;
+  margin: 40px 40px 40px 40px;
+  padding: 20px 20px 20px 20px;
+  font-size: 90%;
+  white-space: pre-wrap;
+       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+      /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+    /* Opera 7 */
+  word-wrap: break-word;
+       /* Internet Explorer 5.5+ */
+  ;
 }
+
 
 iframe {
 	text-align: center;
