@@ -118,6 +118,11 @@ $('#created').on('click', function() {
     display('created');
 });
 
+$('.scroll').click(function(event){
+    $('html, body').animate({scrollTop: '+=600px'}, 800);
+});
+	
+
 	
 display('featured');
 
