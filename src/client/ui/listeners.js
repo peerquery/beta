@@ -2,10 +2,6 @@
 
 module.exports = function() {
     
-    $('.scroll').click(function(event){
-        $('html, body').animate({scrollTop: '+=600px'}, 800);
-    });
-	
     $('#notifications-container')
         .on('click', '.cookie_consent', function(event){
             $(this).hide();
