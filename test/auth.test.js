@@ -11,13 +11,11 @@ var expect = chai.expect;
 
 chai.use(chaiHttp);
 
-
-
-describe('AUTH', function() {
-    describe('/api/private/', function() {
+describe('AUTH: unauthorized post request to private API', function() {
+    describe('/api/private', function() {
         it('responds with status 401', function(done) {
             chai.request(app)
-                .post('/api/private/')
+                .post('/api/private')
                 .end(function(err, res) {
                     expect(res).to.have.status(401);
                     done();
@@ -26,23 +24,32 @@ describe('AUTH', function() {
     });
 });
 
-describe('AUTH', function() {
+describe('AUTH: post invalid data to login API', function() {
     describe('/api/login', function() {
-        it('responds with 401 status', function(done) {
+        it('responds with 500 status and body "sorry, error processing login" ', function() {
             chai.request(app)
-                .post('/api/login/test')
-                .send({what: 'sample'})
-                .end(function(err, res) {
-                    expect(res).to.have.status(500);
-                    done();
+                .get('/login')
+                .then(function(res) {
+                    expect(res).to.have.cookie('_csrf');
+                    expect(res).to.have.cookie('_xcsrf');
+                    // The `agent` now has the _csrf and _xcsrf cookie saved, and will send it
+                    // back to the server in the next request:
+                    return chai.request(app)
+                        .post('/api/login')
+                        .set('cookie', res.headers['set-cookie'])   //important! send the csrf cookies here!!!
+                        .then(function (res) {
+                            expect(res).to.have.status(500);
+                            expect(res.test).to.equal('"sorry, error processing login"');
+                        });
                 });
-        }); 
+            chai.request(app).close();
+        });
     });
 });
 
-describe('AUTH', function() {
+describe('AUTH: get request to route a restricted to logged-in users', function() {
     describe('/create/report', function() {
-        it('responds with redirect to /login', function(done) {
+        it('responds with redirect', function(done) {
             chai.request(app)
                 .get('/create/report')
                 .end(function(err, res) {
@@ -53,9 +60,9 @@ describe('AUTH', function() {
     });
 });
 
-describe('AUTH', function() {
+describe('AUTH: get request to logout route', function() {
     describe('/logout', function() {
-        it('responds with redirect to /', function(done) {
+        it('responds with redirect', function(done) {
             chai.request(app)
                 .get('/logout')
                 .end(function(err, res) {
@@ -66,7 +73,7 @@ describe('AUTH', function() {
     });
 });
 
-describe('AUTH', function() {
+describe('AUTH: post request to private API without auth', function() {
     describe('/api/private/', function() {
         it('responds with status 401', function(done) {
             chai.request(app)
@@ -79,7 +86,7 @@ describe('AUTH', function() {
     });
 });
 
-describe('AUTH', function() {
+describe('AUTH: get request to private API without auth', function() {
     describe('/api/private/auth', function() {
         it('responds with status 401', function(done) {
             chai.request(app)

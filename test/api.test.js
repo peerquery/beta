@@ -11,28 +11,16 @@ var expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('API GET', function() {
-    describe('/api/test', function() {
-        it('responds with status 200', function(done) {
+describe('API: get request API base', function() {
+    describe('/api', function() {
+        it('responds with status 200 and body "/get API functional" ', function(done) {
             chai.request(app)
-                .get('/api/test')
+                .get('/api')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
+                    expect(res.text).to.equal('"/get API functional"');
                     done();
                 });
         });
-    });
-});
-
-describe('API', function() {
-    describe('/api/private', function() {
-        it('responds with status 401', function(done) {
-            chai.request(app)
-                .post('/api/private')
-                .end(function(err, res) {
-                    expect(res).to.have.status(401);
-                    done();
-                });
-        }); 
     });
 });

@@ -11,7 +11,7 @@ var expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('DB', function() {
+describe('DB: unauthorized get request to private API', function() {
     describe('/api/private/projects/list', function() {
         it('responds with status 401', function(done) {
             chai.request(app)
@@ -24,7 +24,7 @@ describe('DB', function() {
     });
 });
 
-describe('DB', function() {
+describe('DB: fetch sample data from DB with public API', function() {
     describe('/api/test/data', function() {
         it('responds with status 200 && json', function() {
             return chai.request(app)
