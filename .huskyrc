@@ -1,6 +1,6 @@
 {
   "hooks": {
     "pre-commit": "npm run lintfix",
-    "pre-push": "npm version minor",
+    "pre-push": "npm run test && npm version minor"
   }
 }
