@@ -1,5 +1,5 @@
 ## Contributing
-Code contributions are welcome for **App Stream**; use the following guide to submit your updates.
+Code contributions are welcome for **Peer Query**; use the following guide to submit your updates.
 
 ### Get started:
 If you are new to contributing to projects, refer to the official [Github contributor guide](https://help.github.com/articles/fork-a-repo/).
