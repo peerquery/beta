@@ -33,7 +33,7 @@ module.exports = {
                 loader: 'url-loader?limit=100000',
             },
             {
-                //requires a dependency, not devDepency: babel-polyfill
+                //might require a dependency, not devDepency: babel-polyfill
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
