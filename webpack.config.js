@@ -32,16 +32,12 @@ module.exports = {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000',
             },
-            /*
-            {	//requires a dependency, not devDepency: babel-polyfill
+            {
+                //requires a dependency, not devDepency: babel-polyfill
                 test: /\.js$/,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: {
-                    plugins: ['transform-runtime'],
-                    presets: ['env']
-                }
-            }
-            */
+            },
         ],
     },
     stats: {
