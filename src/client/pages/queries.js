@@ -32,7 +32,8 @@ async function display(type) {
 
         for (var x in queries) {
             //queries[x].created = timeago.format(queries[x].created);
-            if (!queries[x].logo) queries[x].logo = '/images/placeholder.png';
+            if (!queries[x].logo)
+                queries[x].logo = '/assets/images/placeholder.png';
 
             var query = await creator.query(queries[x]);
             $('#item-container').append(query);

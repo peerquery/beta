@@ -32,7 +32,8 @@ async function display(type) {
 
         for (var x in projects) {
             projects[x].created = timeago.format(projects[x].created);
-            if (!projects[x].logo) projects[x].logo = '/images/placeholder.png';
+            if (!projects[x].logo)
+                projects[x].logo = '/assets/images/placeholder.png';
 
             var project = await templator.project(projects[x]);
             $('#item-container').append(project);
