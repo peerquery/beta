@@ -11,7 +11,7 @@ let steem_api = sc2.Initialize({
 });
 
 steem_api.revokeToken(function(err, res) {
-    console.log(err, res);
+    //console.log(err, res);
     sessionStorage.clear();
     window.location.href = '/';
 });
