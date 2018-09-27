@@ -7,6 +7,7 @@
   "scripts": {
     "lintfix": "./node_modules/.bin/eslint \"**/*.js\" --fix",
     "lint": "./node_modules/.bin/eslint \"**/*.js\"",
+    "lintstaged": "./node_modules/.bin/lint-staged",
     "test": "npm run lintfix && mocha --timeout 40000 --exit",
     "build": "webpack",
     "dbuild": "set NODE_ENV=debug && webpack",
@@ -20,6 +21,9 @@
     "prettier": "./node_modules/.bin/prettier r --config .prettierrc --write \"**/*.js*\"",
     "pretty-quick": "./node_modules/.bin/pretty-quick --staged",
     "kill": "taskkill /f /im node.exe"
+  },
+  "lint-staged": {
+    "*.js": ["npm run lintfix", "git add"]
   },
   "repository": {
     "type": "git",
