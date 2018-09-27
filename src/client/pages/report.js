@@ -264,17 +264,15 @@ $( window ).on( 'load', async function() {
                 
             //console.log(err, reslt)
                 
-            if (err !== null) {
+            if (err) {
                     
                 document.getElementById('comment_btn').className = 'ui blue labeled submit icon button';
                 document.getElementById('editor').style = 'box-sizing: border-box; height: 400px;';
                 Editor.setup.setHtml('');
-                    
-                window.pqy_notify.warn('Sorry an err occured. Please try again later.');
-					
+                
                 var err_description = JSON.stringify(err.error_description);
                 
-                if (!err_description) { window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
+                if (!err_description) { console.log(err); window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
                 
                 if (err_description.indexOf('The comment is archived') > -1) window.pqy_notify.warn('Post with the same permlink already exists and is archived, please change your permlink.');
                 if (err_description.indexOf('You may only post once every 5') > -1) window.pqy_notify.warn('You may only post once every five minutes!');
