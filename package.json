@@ -23,7 +23,10 @@
     "kill": "taskkill /f /im node.exe"
   },
   "lint-staged": {
-    "*.js": ["npm run lintfix", "git add"]
+    "*.js": [
+      "npm run lintfix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -42,7 +45,8 @@
   },
   "homepage": "https://github.com/peerquery/beta#readme",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/runtime": "^7.0.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
@@ -82,10 +86,9 @@
     "doc": "docs"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.3",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.2.0",
