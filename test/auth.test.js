@@ -64,11 +64,11 @@ describe('AUTH: get request to route a restricted to logged-in users', function(
 
 describe('AUTH: get request to logout route', function() {
     describe('/logout', function() {
-        it('responds with redirect', function(done) {
+        it('response should not have *_auth* cookie', function(done) {
             chai.request(app)
                 .get('/logout')
                 .end(function(err, res) {
-                    expect(res).to.redirect;
+                    expect(res).to.not.have.cookie('_auth');
                     done();
                 });
         });
