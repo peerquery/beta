@@ -207,7 +207,7 @@ $( window ).on( 'load', async function() {
             steem_api.vote(vter, athor, pmlink, weight, function (err, reslt) {
                 //console.log(err, reslt);
                 if (err) {
-                    alert(err + '\n' + 'Please try again!');
+                    window.pqy_notify.warn(err + '\n' + 'Please try again!');
                     document.getElementById(elID).className = cClass;  //re-enable the btn after OP is done
                     console.log(err);
 	
@@ -270,11 +270,14 @@ $( window ).on( 'load', async function() {
                 document.getElementById('editor').style = 'box-sizing: border-box; height: 400px;';
                 Editor.setup.setHtml('');
                     
-                alert('Sorry an err occured. Please try again later.');
+                window.pqy_notify.warn('Sorry an err occured. Please try again later.');
 					
-                //var nErr = JSON.stringify(err.error_description);
-                //if (nErr.indexOf("The comment is archived") > -1) return alert("Post with the same permlink already exists and is archived, please change your permlink.");
-                //if (nErr.indexOf("You may only post once every 5") > -1) return alert("You may only post once every five minutes!");
+                var err_description = JSON.stringify(err.error_description);
+                
+                if (!err_description) { window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
+                
+                if (err_description.indexOf('The comment is archived') > -1) window.pqy_notify.warn('Post with the same permlink already exists and is archived, please change your permlink.');
+                if (err_description.indexOf('You may only post once every 5') > -1) window.pqy_notify.warn('You may only post once every five minutes!');
                     
             }  else {
                 
@@ -335,7 +338,7 @@ $( window ).on( 'load', async function() {
     });
     
     $('#response-toggle').click(function(){		
-        if (!active_user || active_user === '') { window.location.href = '/login'; return ; }
+        if (!active_user || active_user === '') { window.location.href = '/login'; return; }
         $('#response-form').slideToggle('slow');	
     });
 	
@@ -405,13 +408,16 @@ $( window ).on( 'load', async function() {
 		
             if (err) {
 	
-                let nErr = JSON.stringify(err);
+                let err_description = JSON.stringify(err.error_description);
+                if (!err_description) { window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
 			
-                if (nErr.indexOf('Account has already re-blogged this post') > -1) {
+                if (err_description.indexOf('Account has already re-blogged this post') > -1) {
+                    window.pqy_notify.inform('You have already reblogged this post');
                     console.log('Already re-blogged');
                 }
 			
             } else {
+                window.pqy_notify.inform('You have already reblogged this post');
                 console.log('Resteemed!');
             }
 	
@@ -430,7 +436,7 @@ $( window ).on( 'load', async function() {
         var following = document.getElementById('follow-btn').dataset.following;
         var follower = active_user;
 		
-        if (follower == following) { alert('You cannot follow yourself!'); return; }
+        if (follower == following) { window.pqy_notify.warn('You cannot follow yourself!'); return; }
 		
         steem_api.follow(follower, following, function (err, res) {
             //console.log(err, res);

@@ -36,7 +36,7 @@ $( window ).on( 'load', function() {
         }
         
         const title = document.getElementById('post-title').value;
-        if (title == '') { alert('Please enter title'); document.getElementById('post-title').focus(); return; }
+        if (title == '') { window.pqy_notify.warn('Please enter title'); document.getElementById('post-title').focus(); return; }
         
         const author = active_user;
         const category = $('#reportCategory').find(':selected').val();
@@ -45,15 +45,15 @@ $( window ).on( 'load', function() {
         const permlink = author + '-' + tlink + '-' + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
         
         const body = Editor.setup.getValue() + config.report_attribution.replace(/URL/g, config.site_uri + '/report/' + permlink);
-        if (body == '') { alert('Please enter post body'); return; }
+        if (body == '') { window.pqy_notify.warn('Please enter post body'); return; }
         
         const tagString = document.getElementById('post-tags').value.replace(/\W+/g, ' ').toLowerCase();
-        if (tagString == '') { alert('Please enter atleast one tag'); document.getElementById('post-tags').focus(); return;} 
+        if (tagString == '') { window.pqy_notify.warn('Please enter atleast one tag'); document.getElementById('post-tags').focus(); return;} 
         
         var tags = tagString.split(' ', 3);
         tags.unshift(category);
         
-        if (title.length < 5) { alert('Please enter a longer title!'); return;	}
+        if (title.length < 5) { window.pqy_notify.warn('Please enter a longer title!'); return;	}
         document.getElementById('form').className = 'ui loading form';
         
         $('#publish').addClass('disabled');
@@ -64,7 +64,7 @@ $( window ).on( 'load', function() {
     async function do_publish(category, author, permlink, title, body, tags, project_slug_id, project_title) {
         const access_token = await Promise.resolve(sessionStorage.access_token);
         
-        if (!active_user || active_user === '') { alert('Sorry not logged in. Please login and try again.'); window.location.href = '/login'; }
+        if (!active_user || active_user === '') { window.pqy_notify.warn('Sorry not logged in. Please login and try again.'); window.location.href = '/login'; }
         
         let steem_api = sc2.Initialize({
             app: config.sc2_app_name,
@@ -84,16 +84,16 @@ $( window ).on( 'load', function() {
             
             async function (err, results) {
                 if (err) {
-                    var nErr = JSON.stringify(err.error_description);
-                    //console.log(nErr);
-                    if (nErr.indexOf('The comment is archived') > -1)
-                        return alert('Post with the same permlink already exists and is archived, please change your permlink.');
+                    var err_description = JSON.stringify(err.error_description);
+                    //console.log(err_description);
+                    if (err_description.indexOf('The comment is archived') > -1)
+                        return window.pqy_notify.warn('Post with the same permlink already exists and is archived, please change your permlink.');
                     
-                    if (nErr.indexOf('You may only post once every 5') > -1)
-                        return alert('You may only post once every five minutes!');
+                    if (err_description.indexOf('You may only post once every 5') > -1)
+                        return window.pqy_notify.warn('You may only post once every five minutes!');
                     
                     //throw err;
-                    alert('Failure! ' + err);
+                    window.pqy_notify.warn('Failure! ' + err);
                     document.getElementById('form').className = 'ui form';
                 } else {
                     //console.log('Success!', results);
@@ -118,7 +118,7 @@ $( window ).on( 'load', function() {
                         
                     } catch (err) {
                         console.log(err);
-                        alert('Sorry, an error occured updating the server. However, the report has been successfully published to your Steem account.');
+                        window.pqy_notify.warn('Sorry, an error occured updating the server. However, the report has been successfully published to your Steem account.');
                         window.location.href = '/report/' + permlink;
                     }
                     window.location.href = '/report/' + permlink;

@@ -70,7 +70,7 @@ function validateForm() {
         if (invalid == 3) {name = 'State field'; id = 'projectState', field = 'stateField';}
         if (invalid == 4) {name = 'Tag field'; id = 'projectTag', field = 'tagField';}
 			
-        alert(name + ' cannot be empty');
+        window.pqy_notify.warn(name + ' cannot be empty');
         $('#' + id).focus();
         $('#' + field).addClass('error');
 			
@@ -79,13 +79,13 @@ function validateForm() {
     } else {
 			
         if (data.story.length / Math.pow(1024,1) > 10) {	//greater than 10kb
-            alert('Story size cannot be more than 10kb.');
+            window.pqy_notify.warn('Story size cannot be more than 10kb.');
             $('#projectStory').focus();
             $('#storyField').addClass('error');
             return;
 					
         } else if (data.story == '') {	//cannot enter empty body
-            alert('Please enter story of your project.');
+            window.pqy_notify.warn('Please enter story of your project.');
             return false;
         } else {
             return true;
@@ -112,7 +112,7 @@ async function post() {
 			
     } catch (err) {
         console.log(err);
-        alert('Sorry, an error occured. Please again');
+        window.pqy_notify.warn('Sorry, an error occured. Please again');
         window.location.reload();
     }
 		
@@ -121,7 +121,7 @@ async function post() {
 $('.limitedText').on('keyup',function() {
     var maxLength = $(this).attr('maxlength');
     if (maxLength == $(this).val().length) {
-        alert('You can\'t write more than ' + maxLength + ' characters');
+        window.pqy_notify.warn('You can\'t write more than ' + maxLength + ' characters');
     }
 });
 		

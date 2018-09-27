@@ -11,7 +11,6 @@ require('semantic-ui-calendar/dist/calendar.min.css');
     
 $( window ).on( 'load', async function() {
     
-
     var user_projects;
     
     //set up editor
@@ -22,7 +21,6 @@ $( window ).on( 'load', async function() {
     $('#publish').on('click', function() {
         publish();
     });
-        
         
     async function publish() {
         
@@ -37,41 +35,41 @@ $( window ).on( 'load', async function() {
         }
         
         const title = document.getElementById('query-title').value;
-        if (title == '') { alert('Please enter title'); document.getElementById('query-title').focus(); return; }
+        if (title == '') { window.pqy_notify.warn('Please enter title'); document.getElementById('query-title').focus(); return; }
         
         const image = document.getElementById('queryImage').value;
-        if (image == '') { alert('Please enter image'); document.getElementById('queryImage').focus(); return; }
+        if (image == '') { window.pqy_notify.warn('Please enter image'); document.getElementById('queryImage').focus(); return; }
         
         const description = document.getElementById('queryDescription').value;
-        if (description == '') { alert('Please enter description'); document.getElementById('queryDescription').focus(); return; }
+        if (description == '') { window.pqy_notify.warn('Please enter description'); document.getElementById('queryDescription').focus(); return; }
         
         const telephone = document.getElementById('queryTelephone').value;
-        if (telephone == '') { alert('Please telephone'); document.getElementById('queryTelephone').focus(); return; }
+        if (telephone == '') { window.pqy_notify.warn('Please telephone'); document.getElementById('queryTelephone').focus(); return; }
         
         const email = document.getElementById('queryEmail').value;
-        if (email == '') { alert('Please enter email'); document.getElementById('queryEmail').focus(); return; }
+        if (email == '') { window.pqy_notify.warn('Please enter email'); document.getElementById('queryEmail').focus(); return; }
         
         var website = document.getElementById('queryWebsite').value;
-        if (website == '') { alert('Please enter website'); document.getElementById('queryWebsite').focus(); return; }
+        if (website == '') { window.pqy_notify.warn('Please enter website'); document.getElementById('queryWebsite').focus(); return; }
         website = (website.indexOf('://') === -1) ? 'http://' + website : website;
         
         const terms = document.getElementById('queryTerms').value;
-        if (terms == '') { alert('Please enter terms'); document.getElementById('queryTerms').focus(); return; }
+        if (terms == '') { window.pqy_notify.warn('Please enter terms'); document.getElementById('queryTerms').focus(); return; }
         
         const type = document.getElementById('queryType').value;
-        if (type == '') { alert('Please enter type'); document.getElementById('queryType').focus(); return; }
+        if (type == '') { window.pqy_notify.warn('Please enter type'); document.getElementById('queryType').focus(); return; }
         
         const label = document.getElementById('queryLabel').value;
-        if (label == '') { alert('Please enter label'); document.getElementById('queryLabel').focus(); return; }
+        if (label == '') { window.pqy_notify.warn('Please enter label'); document.getElementById('queryLabel').focus(); return; }
         
         //const deadline = document.getElementById('queryDeadline').value;        //deadline is assigned from the script on the page itself
-        if (deadline == '') { alert('Please enter deadline'); document.getElementById('queryDeadline').focus(); return; }
+        if (deadline == '') { window.pqy_notify.warn('Please enter deadline'); document.getElementById('queryDeadline').focus(); return; }
         const reward = Number(document.getElementById('queryReward').value) || 0;
         
-        if (reward == '') { alert('Please enter reward in numeric form'); document.getElementById('queryReward').focus(); return; }
+        if (reward == '') { window.pqy_notify.warn('Please enter reward in numeric form'); document.getElementById('queryReward').focus(); return; }
         const reward_form = document.getElementById('queryRewardForm').value;
         
-        if (reward_form == '') { alert('Please enter reward form'); document.getElementById('queryRewardForm').focus(); return; }
+        if (reward_form == '') { window.pqy_notify.warn('Please enter reward form'); document.getElementById('queryRewardForm').focus(); return; }
         const author = active_user;
         
         const category = 'peerquery';
@@ -80,15 +78,15 @@ $( window ).on( 'load', async function() {
         const permlink = tlink + '-' + (Date.now().toString(36) + Math.random().toString(36).substr(2, 5));
         
         const body = Editor.setup.getValue() + config.query_attribution.replace(/URL/g, config.site_uri + '/query/' + permlink);
-        if (body == '') { alert('Please enter query body'); return; }
+        if (body == '') { window.pqy_notify.warn('Please enter query body'); return; }
         
         const tagString = document.getElementById('query-tags').value.toLowerCase().replace(/\W+/g, ' ');
-        if (tagString == '') { alert('Please enter atleast one tag'); document.getElementById('query-tags').focus(); return;} 
+        if (tagString == '') { window.pqy_notify.warn('Please enter atleast one tag'); document.getElementById('query-tags').focus(); return;} 
         
         const tags = tagString.split(' ', 3);
         tags.unshift(category);
         
-        if (title.length < 5) { alert('Please enter a longer title!'); return;    }
+        if (title.length < 5) { window.pqy_notify.warn('Please enter a longer title!'); return;    }
         
         document.getElementById('form').className = 'ui loading form';
         
@@ -104,7 +102,7 @@ $( window ).on( 'load', async function() {
         
         const access_token = await Promise.resolve(sessionStorage.access_token);
             
-        if (!access_token || access_token == '') { alert('Sorry, no auth tokens. Please login and try again.'); window.location.href = '/login'; }
+        if (!access_token || access_token == '') { window.pqy_notify.warn('Sorry, no auth tokens. Please login and try again.'); window.location.href = '/login'; }
             
         const steem_api = sc2.Initialize({
             app: config.sc2_app_name,
@@ -125,17 +123,17 @@ $( window ).on( 'load', async function() {
             async function (err, results) {
                 if (err) {
                 
-                    var nErr = JSON.stringify(err.error_description);
-                    //console.log(nErr);
-                    
-                    if (nErr.indexOf('The comment is archived') > -1)
-                        return alert('Post with the same permlink already exists and is archived, please change your permlink.');
+                    var err_description = JSON.stringify(err.error_description);
+                    if (!err_description) { window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
                 
-                    if (nErr.indexOf('You may only post once every 5') > -1)
-                        return alert('You may only post once every five minutes!');
+                    if (err_description.indexOf('The comment is archived') > -1)
+                        return window.pqy_notify.warn('Post with the same permlink already exists and is archived, please change your permlink.');
+                
+                    if (err_description.indexOf('You may only post once every') > -1)
+                        return window.pqy_notify.warn('You may only post once every few seconds!');
                         //throw err;
                 
-                    alert('Failure! ' + nErr);
+                    window.pqy_notify.warn('Failure! ' + err_description);
                     document.getElementById('form').className = 'ui form';
                 
                 } else {
@@ -176,7 +174,7 @@ $( window ).on( 'load', async function() {
                         
                     } catch (err) {
                         console.log(err);
-                        alert('Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.');
+                        window.pqy_notify.warn('Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.');
                         window.location.href = '/query/' + permlink;
                     }
                
@@ -209,7 +207,7 @@ $( window ).on( 'load', async function() {
     $('.limitedText').on('keyup',function() {
         var maxLength = $(this).attr('maxlength');
         if (maxLength == $(this).val().length) {
-            alert('You can\'t write more than ' + maxLength + ' characters');
+            window.pqy_notify.warn('You can\'t write more than ' + maxLength + ' characters');
         }
     });
             
