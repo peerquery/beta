@@ -62,7 +62,7 @@ var report_view =
     '     <div class="ui tiny four statistics">  ' +
     '     <a id="author-href" href="{{author_href}}" class="ui tiny statistic">  ' +
     '       <div class="value">  ' +
-    '         <img src="{{author_img}}" id="author-image" class="ui circular inline image"/>  ' +
+    '         <img src="{{author_img}}" style="width: auto" id="author-image" class="ui circular inline image"/>  ' +
     '         <span id="author-reputation">{{author_rep}}</span>  ' +
     '       </div>  ' +
     '       <div class="label" id="author-account">{{author}}  ' +
