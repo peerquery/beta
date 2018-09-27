@@ -24,6 +24,7 @@
     "pm2kill": "node ./node_modules/pm2/bin/pm2 kill",
     "pm2delete": "node ./node_modules/pm2/bin/pm2 delete all ",
     "prettier": "./node_modules/.bin/prettier r --config .prettierrc --write \"**/*.js*\"",
+    "pretty-quick": "./node_modules/.bin/pretty-quick --staged",
     "kill": "taskkill /f /im node.exe"
   },
   "repository": {
@@ -97,6 +98,7 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "prettier": "^1.14.3",
+    "pretty-quick": "^1.7.0",
     "style-loader": "^0.22.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
