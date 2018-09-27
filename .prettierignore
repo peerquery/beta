@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build files and vendor
+public/
+
+# Local files
+local/
+
+# Scripts
+scripts/
+
+#these files get cauth due to the fact their extension *.json* includes charactors*.js*
+package.json
+package-lock.json
