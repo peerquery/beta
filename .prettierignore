@@ -10,6 +10,6 @@ local/
 # Scripts
 scripts/
 
-#these files get cauth due to the fact their extension *.json* includes charactors*.js*
+#these files get caught due to the fact their extension *.json* includes characters *.js*
 package.json
 package-lock.json
