@@ -16,6 +16,7 @@ address.content.report = 'content/report';
 //client views
 address.client = {};
 address.client.login = 'client/login';
+address.client.logout = 'client/logout';
 address.client.new_report = 'client/new-report';
 address.client.new_query = 'client/new-query';
 address.client.new_project = 'client/new-project';

@@ -25,6 +25,7 @@ module.exports = function(app) {
     });
 
     app.get('/logout', function(req, res) {
-        res.clearCookie('_auth').redirect('/');
+        res.clearCookie('_auth');
+        router(address.client.logout, req, res);
     });
 };
