@@ -1,7 +1,7 @@
 
 'use strict';
 
-var sc2 = require('sc2-sdk'),
+var sc2 = require('steemconnect'),
     Editor = require('../../lib/editor'),
     config = require('../../configs/config');
     
@@ -124,7 +124,7 @@ $( window ).on( 'load', async function() {
                 if (err) {
                 
                     var err_description = JSON.stringify(err.error_description);
-                    if (!err_description) { console.log(err); window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; };
+                    if (!err_description) { console.log(err); window.pqy_notify.warn('Sorry, something went wrong. Please try again'); return; }
                 
                     if (err_description.indexOf('The comment is archived') > -1)
                         return window.pqy_notify.warn('Post with the same permlink already exists and is archived, please change your permlink.');

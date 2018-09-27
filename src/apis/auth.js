@@ -3,7 +3,7 @@
 
 var jwt = require('jsonwebtoken'),
     encryptor = require('../lib/encryptor'),
-    sc2 = require('sc2-sdk'),
+    sc2 = require('steemconnect'),
     peer = require('../models/peer'),
     activity = require('../models/activity'),
     config = require('../configs/config'),

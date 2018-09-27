@@ -1,7 +1,7 @@
 
 'use strict';
 
-var sc2 = require('sc2-sdk'),
+var sc2 = require('steemconnect'),
     dsteem = require('dsteem'),
     Editor = require('../../lib/editor'),
     templator = require('../templator'),
