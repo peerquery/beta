@@ -12,6 +12,7 @@ module.exports = {
     styles: resolveApp('./src/client/ui/styles.js'),
     scripts: resolveApp('./src/client/ui/scripts_index.js'),
     login: resolveApp('./src/client/pages/login.js'),
+    logout: resolveApp('./src/client/pages/logout.js'),
     config: resolveApp('./configs/config.js'),
     index: resolveApp('./src/client/pages/index.js'),
     projects: resolveApp('./src/client/pages/projects.js'),

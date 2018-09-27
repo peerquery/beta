@@ -6,6 +6,7 @@ entry = {
     styles: paths.styles,
     scripts: paths.scripts,
     login: paths.login,
+    logout: paths.logout,
     index: paths.index,
     projects: paths.projects,
     queries: paths.queries,
