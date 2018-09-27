@@ -45,6 +45,10 @@ module.exports = async function() {
         try {
             const auth = await Promise.resolve($.get('/api/private/auth'));
             sessionStorage.access_token = auth.access_token;
+
+            $('#loggedin-desktop-options').show();
+            $('#loggedin-desktop-create').show();
+            $('#logged_in_user_href').attr('href', '/peer/' + active_user);
         } catch (err) {
             alert(
                 'Sorry, could not auth your account. Consider signing in again'
