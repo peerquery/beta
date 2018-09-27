@@ -1,4 +1,3 @@
-
 'use strict';
 
 var express = require('express'),
@@ -21,50 +20,48 @@ var express = require('express'),
     _404_route = require('../routes/routes/404'),
     common_apis = require('../apis/common'),
     secure_apis = require('../apis/secure');
-	
+
 module.exports = function(server) {
-	
     var app = express();
     app.use(helmet());
-	
+
     app.enable('trust proxy'); // since we are behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
-	
+
     app.set('views', __dirname + '/../views');
     app.set('view engine', 'ejs');
-	
+
     app.use(cors);
     app.use(compression());
     app.use(cookie(process.env.COOKIE_SECRET));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(hpp());
-	
+
     app.use(limiter);
     //app.use(cache);
-    app.use(express.static(__dirname + '/../../public'));     //could comment out for the sake of Elastic BeanStalk proxy server for serving static files
-	
+    app.use(express.static(__dirname + '/../../public')); //could comment out for the sake of Elastic BeanStalk proxy server for serving static files
+
     //sanitize user inputs against possibly dangerous DB expressions among user inputs
     app.use(mongoSanitize());
-    
+
     app.use(vet);
-	
+
     //make sure only logged-in user can access the private apis
     app.use('/api/private/', api_authorize);
-	
+
     //now implement csrf protection for secured view routes and api routes
     app.use(csrf({ cookie: true }));
     app.use(csrf_config);
-	
+
     //declared before csrf module since these routes do not need protection
     common_routes(app);
     common_apis(app);
-	
+
     secure_routes(app);
     secure_apis(app);
-	
+
     app.use(_500_route);
     app.use(_404_route);
-	
+
     return app;
-	
 };

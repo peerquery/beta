@@ -1,4 +1,3 @@
-
 'use strict';
 
 const project_template = require('./templates/project'),
@@ -7,53 +6,47 @@ const project_template = require('./templates/project'),
     templater = require('./template-engine');
 
 module.exports = {
-	
     project: async function(data) {
-		
         var template = await templater(project_template);
-		
+
         var div = document.createElement('div');
         div.className = 'ui card';
-	
-        div.innerHTML = await template( data );
-		
+
+        div.innerHTML = await template(data);
+
         return div;
     },
-	
+
     peer: async function(data) {
-		
         var template = await templater(user_template);
-		
+
         var div = document.createElement('div');
         div.className = 'ui card';
-	
-        div.innerHTML = await template( data );
-		
+
+        div.innerHTML = await template(data);
+
         return div;
     },
-	
+
     report: async function(data) {
-		
         var template = await templater(report_view_template);
-		
+
         var div = document.createElement('div');
         div.className = '';
-	
-        div.innerHTML = await template( data );
-		
+
+        div.innerHTML = await template(data);
+
         return div;
     },
-	
+
     report_view: async function(data) {
-		
         var template = await templater(report_view_template);
-		
+
         var div = document.createElement('div');
         div.className = '';
-	
-        div.innerHTML = await template( data );
-		
+
+        div.innerHTML = await template(data);
+
         return div;
     },
-	
 };

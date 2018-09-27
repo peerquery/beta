@@ -1,4 +1,3 @@
-
 //http://vancelucas.com/blog/stronger-encryption-and-decryption-in-node-js/
 
 'use strict';

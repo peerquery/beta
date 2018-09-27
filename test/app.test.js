@@ -1,4 +1,3 @@
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -44,7 +43,10 @@ describe('APP: get request to sitemap_index', function() {
                 .get('/sitemap_index.xml')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
-                    expect(res).to.have.header('content-type', 'application/xml');
+                    expect(res).to.have.header(
+                        'content-type',
+                        'application/xml'
+                    );
                     done();
                 });
         });

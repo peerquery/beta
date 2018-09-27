@@ -1,4 +1,3 @@
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -48,10 +47,11 @@ describe('CSRF: get request first; then post request to API base with CSRF', fun
                     expect(res).to.have.cookie('_xcsrf');
                     // The `agent` now has the _csrf and _xcsrf cookie saved, and will send it
                     // back to the server in the next request:
-                    return chai.request(app)
+                    return chai
+                        .request(app)
                         .post('/api')
-                        .set('cookie', res.headers['set-cookie'])   //important! send the csrf cookies here!!!
-                        .then(function (res) {
+                        .set('cookie', res.headers['set-cookie']) //important! send the csrf cookies here!!!
+                        .then(function(res) {
                             expect(res).to.have.status(200);
                             expect(res.text).to.equal('"/post API functional"');
                         });

@@ -2,7 +2,8 @@ const fs = require('fs'),
     path = require('path'),
     root = fs.realpathSync(process.cwd()),
     resolveApp = relativePath => path.resolve(root, relativePath),
-    resolveRuntime = relativePath => path.resolve(fs.realpathSync(process.cwd()), relativePath);
+    resolveRuntime = relativePath =>
+        path.resolve(fs.realpathSync(process.cwd()), relativePath);
 
 module.exports = {
     dir: resolveApp('.'),
@@ -17,10 +18,18 @@ module.exports = {
     project: resolveApp('./src/client/pages/project.js'),
     reports: resolveApp('./src/client/pages/reports.js'),
     project_home: resolveApp('./src/client/pages/partials/project-home.js'),
-    project_reports: resolveApp('./src/client/pages/partials/project-reports.js'),
-    project_queries: resolveApp('./src/client/pages/partials/project-queries.js'),
-    project_members: resolveApp('./src/client/pages/partials/project-members.js'),
-    project_settings: resolveApp('./src/client/pages/partials/project-settings.js'),
+    project_reports: resolveApp(
+        './src/client/pages/partials/project-reports.js'
+    ),
+    project_queries: resolveApp(
+        './src/client/pages/partials/project-queries.js'
+    ),
+    project_members: resolveApp(
+        './src/client/pages/partials/project-members.js'
+    ),
+    project_settings: resolveApp(
+        './src/client/pages/partials/project-settings.js'
+    ),
     peers: resolveApp('./src/client/pages/peers.js'),
     peer: resolveApp('./src/client/pages/peer.js'),
     steem: resolveApp('./src/client/pages/steem.js'),
@@ -33,5 +42,5 @@ module.exports = {
     public: resolveApp('./public'),
     server: resolveApp('./src/server/server.js'),
     client: resolveApp('./src/client/index.js'),
-    publicRuntime: () => resolveRuntime('./public')
+    publicRuntime: () => resolveRuntime('./public'),
 };

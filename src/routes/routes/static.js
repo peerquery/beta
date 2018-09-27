@@ -1,40 +1,38 @@
-
 'use strict';
 
 var router = require('../../server/router'),
     address = require('../indexes/address');
 
 module.exports = function(app) {
-	
-    app.get('/create', function (req, res) {
+    app.get('/create', function(req, res) {
         return router(address._static.create, req, res);
     });
-	
-    app.get('/support/contact', function (req, res) {
+
+    app.get('/support/contact', function(req, res) {
         return router(address._static.contact, req, res);
     });
 
-    app.get('/abuse', function (req, res) {
+    app.get('/abuse', function(req, res) {
         return router(address._static.abuse, req, res);
     });
-	
-    app.get('/support/faqs', function (req, res) {
+
+    app.get('/support/faqs', function(req, res) {
         return router(address._static.faqs, req, res);
     });
-	
-    app.get('/team', function (req, res) {
+
+    app.get('/team', function(req, res) {
         return router(address._static.team, req, res);
     });
-	
-    app.get('/privacy-policy', function (req, res) {
+
+    app.get('/privacy-policy', function(req, res) {
         return router(address._static.privacy, req, res);
     });
-	
-    app.get('/full-disclosure', function (req, res) {
+
+    app.get('/full-disclosure', function(req, res) {
         return router(address._static.disclosure, req, res);
     });
-	
-    app.get('/terms-and-conditions', function (req, res) {
+
+    app.get('/terms-and-conditions', function(req, res) {
         return router(address._static.terms, req, res);
     });
     /*
@@ -43,5 +41,4 @@ module.exports = function(app) {
 		//res.status(408).json({try: 'harder'});
 	})
 	*/
-    
 };

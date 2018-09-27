@@ -1,4 +1,3 @@
-
 'use strict';
 
 var shortid = require('shortid'),
@@ -10,18 +9,14 @@ var shortid = require('shortid'),
     query = require('../models/query'),
     project = require('../models/project');
 //do not worry about sanitizing req.body; already done in the server!
-    
-module.exports = function (app) {
-    
-    app.post('/api/private/create/report', async function (req, res) {
-        
+
+module.exports = function(app) {
+    app.post('/api/private/create/report', async function(req, res) {
         try {
-            
             var project_title = req.body.project_title;
             var project_slug_id = req.body.project_slug_id;
-            
+
             var newReport = report({
-                
                 steemid: req.body.steemid,
                 author: req.active_user.account,
                 title: req.body.title,
@@ -34,70 +29,76 @@ module.exports = function (app) {
                 url: req.active_user.account + '/' + req.body.permlink,
                 view_count: 1,
                 created: new Date(),
-                update_at: new Date()
-                
+                update_at: new Date(),
             });
-        
+
             var newActivity = activity({
-                
                 title: req.body.title,
-                slug_id: '/@' + req.active_user.account + '/' + req.body.permlink,
+                slug_id:
+                    '/@' + req.active_user.account + '/' + req.body.permlink,
                 action: 'create',
                 type: 'report',
                 source: 'user',
                 account: req.active_user.account,
-                description: '@' + req.active_user.account + ' just published a new report: ' + req.body.title,
-                created: Date.now()
-                
+                description:
+                    '@' +
+                    req.active_user.account +
+                    ' just published a new report: ' +
+                    req.body.title,
+                created: Date.now(),
             });
-            
+
             var updatePeer = {
-                
-                $inc : {'report_count' : 1},
+                $inc: { report_count: 1 },
                 badge: 'reporter',
                 last_update: Date.now(),
-                last_report: req.body.permlink
-                
+                last_report: req.body.permlink,
             };
-        
+
             await newReport.save();
             await newActivity.save();
-            await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );    //returns query though
-            
-            if (project_slug_id !== null && project_slug_id !== undefined && project_title !== null && project_title !== undefined) {
-            
+            await peer.findOneAndUpdate(
+                { account: req.active_user.account },
+                updatePeer,
+                { upsert: true }
+            ); //returns query though
+
+            if (
+                project_slug_id !== null &&
+                project_slug_id !== undefined &&
+                project_title !== null &&
+                project_title !== undefined
+            ) {
                 var updateProject = {
-                
-                    $inc : {'report_count' : 1},
-                    last_update: Date.now()
-                
+                    $inc: { report_count: 1 },
+                    last_update: Date.now(),
                 };
-                
-                var newQuery = {slug_id: project_slug_id, title: project_title, owner: req.active_user.account};
-                await project.findOneAndUpdate( newQuery, updateProject, {upsert: true} );//returns query!?
-            
+
+                var newQuery = {
+                    slug_id: project_slug_id,
+                    title: project_title,
+                    owner: req.active_user.account,
+                };
+                await project.findOneAndUpdate(newQuery, updateProject, {
+                    upsert: true,
+                }); //returns query!?
             }
-        
+
             res.status(200).send('success');
-        
-        } catch (err){
-            
-            res.status(500).send('sorry, could not create project. please try again');
+        } catch (err) {
+            res.status(500).send(
+                'sorry, could not create project. please try again'
+            );
             console.log(err);
-            
         }
-        
     });
-    
-    app.post('/api/private/create/query', async function (req, res) {
-        
+
+    app.post('/api/private/create/query', async function(req, res) {
         try {
-            
             var project_title = req.body.project_title;
             var project_slug_id = req.body.project_slug_id;
-            
+
             var newQuery = query({
-                
                 steemid: req.body.steemid,
                 author: req.active_user.account,
                 title: req.body.title,
@@ -121,73 +122,80 @@ module.exports = function (app) {
                 image: req.body.image,
                 description: req.body.description,
                 created: new Date(),
-                update_at: new Date()
-                
+                update_at: new Date(),
             });
-        
+
             var newActivity = activity({
-                
                 title: req.body.title,
-                slug_id: '/@' + req.active_user.account + '/' + req.body.permlink,
+                slug_id:
+                    '/@' + req.active_user.account + '/' + req.body.permlink,
                 action: 'create',
                 type: 'query',
                 source: 'user',
                 account: req.active_user.account,
-                description: '@' + req.active_user.account + ' just published a new query: ' + req.body.title,
-                created: Date.now()
-                
+                description:
+                    '@' +
+                    req.active_user.account +
+                    ' just published a new query: ' +
+                    req.body.title,
+                created: Date.now(),
             });
-            
+
             var updatePeer = {
-                
-                $inc : {'query_count' : 1},
+                $inc: { query_count: 1 },
                 badge: 'querant',
                 last_update: Date.now(),
-                last_report: req.body.permlink
-                
+                last_report: req.body.permlink,
             };
-            
+
             await newQuery.save();
             await newActivity.save();
-            await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );    //returns query though
-            
-            if (project_slug_id !== null && project_slug_id !== undefined && project_title !== null && project_title !== undefined) {
-            
+            await peer.findOneAndUpdate(
+                { account: req.active_user.account },
+                updatePeer,
+                { upsert: true }
+            ); //returns query though
+
+            if (
+                project_slug_id !== null &&
+                project_slug_id !== undefined &&
+                project_title !== null &&
+                project_title !== undefined
+            ) {
                 var updateProject = {
-                
-                    $inc : {'query_count' : 1},
-                    last_update: Date.now()
-                
+                    $inc: { query_count: 1 },
+                    last_update: Date.now(),
                 };
-                
-                var projectQuery = {slug_id: project_slug_id, title: project_title, owner: req.active_user.account};
-                await project.findOneAndUpdate( projectQuery, updateProject, {upsert: true} );//returns query!?
-            
+
+                var projectQuery = {
+                    slug_id: project_slug_id,
+                    title: project_title,
+                    owner: req.active_user.account,
+                };
+                await project.findOneAndUpdate(projectQuery, updateProject, {
+                    upsert: true,
+                }); //returns query!?
             }
-        
+
             res.status(200).send('success');
-        
-        } catch (err){
-            
-            res.status(500).send('sorry, could not create project. please try again');
+        } catch (err) {
+            res.status(500).send(
+                'sorry, could not create project. please try again'
+            );
             console.log(err);
-            
         }
-        
     });
-    
-    app.post('/api/private/create/project', async function (req, res) {
-        
+
+    app.post('/api/private/create/project', async function(req, res) {
         try {
-            
-            if (req.body.story.length / Math.pow(1024,1) > 10) throw new Error('Story size is larger than allowed');    //greater than 10kb)
-            
+            if (req.body.story.length / Math.pow(1024, 1) > 10)
+                throw new Error('Story size is larger than allowed'); //greater than 10kb)
+
             const slug = shortid.generate();
-            
+
             var story = await parser.clean(req.body.story);
-            
+
             var newProject = project({
-                
                 name: req.body.name,
                 slug: slug,
                 slug_id: slug,
@@ -216,61 +224,59 @@ module.exports = function (app) {
                 team: {
                     account: req.active_user.account,
                     role: 'owner',
-                    created: new Date()
+                    created: new Date(),
                 },
                 members: {
                     account: req.active_user.account,
-                    created: new Date()
-                }
-                
+                    created: new Date(),
+                },
             });
-        
+
             var newActivity = activity({
-                
                 title: req.body.title,
                 slug_id: '/project/' + slug,
                 action: 'create',
                 type: 'project',
                 source: 'user',
                 account: req.active_user.account,
-                description: '@' + req.active_user.account + ' just created a new project: ' + req.body.name,
-                created: Date.now()
-                
+                description:
+                    '@' +
+                    req.active_user.account +
+                    ' just created a new project: ' +
+                    req.body.name,
+                created: Date.now(),
             });
-        
+
             var updatePeer = {
-                
-                $inc : {'project_count' : 1},
+                $inc: { project_count: 1 },
                 badge: 'builder',
                 last_update: Date.now(),
                 last_project_slug_id: slug,
                 last_project_title: req.body.title,
-                $push: {projects: 
-                    {
+                $push: {
+                    projects: {
                         id: newProject._id,
                         title: req.body.title,
                         slug_id: slug,
-                        created: new Date()
-                    }
-                }
-                
+                        created: new Date(),
+                    },
+                },
             };
-        
-            await newProject.save();
-            await peer.findOneAndUpdate( {account: req.active_user.account}, updatePeer, {upsert: true} );    //returns query though
-            await newActivity.save();
-            
-            res.status(200).send(slug);
-        
-        } catch (err){
-            
-            res.status(500).send('sorry, could not create project. please try again');
-            console.log(err);
-            
-        }
-        
-        
-    });
-    
-};
 
+            await newProject.save();
+            await peer.findOneAndUpdate(
+                { account: req.active_user.account },
+                updatePeer,
+                { upsert: true }
+            ); //returns query though
+            await newActivity.save();
+
+            res.status(200).send(slug);
+        } catch (err) {
+            res.status(500).send(
+                'sorry, could not create project. please try again'
+            );
+            console.log(err);
+        }
+    });
+};

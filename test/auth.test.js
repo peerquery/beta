@@ -1,4 +1,3 @@
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -20,7 +19,7 @@ describe('AUTH: unauthorized post request to private API', function() {
                     expect(res).to.have.status(401);
                     done();
                 });
-        }); 
+        });
     });
 });
 
@@ -34,12 +33,15 @@ describe('AUTH: post invalid data to login API', function() {
                     expect(res).to.have.cookie('_xcsrf');
                     // The `agent` now has the _csrf and _xcsrf cookie saved, and will send it
                     // back to the server in the next request:
-                    return chai.request(app)
+                    return chai
+                        .request(app)
                         .post('/api/login')
-                        .set('cookie', res.headers['set-cookie'])   //important! send the csrf cookies here!!!
-                        .then(function (res) {
+                        .set('cookie', res.headers['set-cookie']) //important! send the csrf cookies here!!!
+                        .then(function(res) {
                             expect(res).to.have.status(500);
-                            expect(res.test).to.equal('"sorry, error processing login"');
+                            expect(res.test).to.equal(
+                                '"sorry, error processing login"'
+                            );
                         });
                 });
             chai.request(app).close();
@@ -56,7 +58,7 @@ describe('AUTH: get request to route a restricted to logged-in users', function(
                     expect(res).to.redirect;
                     done();
                 });
-        }); 
+        });
     });
 });
 
@@ -69,7 +71,7 @@ describe('AUTH: get request to logout route', function() {
                     expect(res).to.redirect;
                     done();
                 });
-        }); 
+        });
     });
 });
 
@@ -82,7 +84,7 @@ describe('AUTH: post request to private API without auth', function() {
                     expect(res).to.have.status(401);
                     done();
                 });
-        }); 
+        });
     });
 });
 
@@ -95,6 +97,6 @@ describe('AUTH: get request to private API without auth', function() {
                     expect(res).to.have.status(401);
                     done();
                 });
-        }); 
+        });
     });
 });

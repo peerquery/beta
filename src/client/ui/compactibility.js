@@ -13,11 +13,11 @@ module.exports = {
         return navigator.cookieEnabled;
     },
     webstorage: function() {
-        if (typeof(Storage) !== 'undefined') return true;
+        if (typeof Storage !== 'undefined') return true;
         else return false;
     },
     cookie_terms: function() {
-        if ( document.cookie.indexOf('cookie_reminder') == -1 ) return false;
+        if (document.cookie.indexOf('cookie_reminder') == -1) return false;
         else return true;
-    }
+    },
 };

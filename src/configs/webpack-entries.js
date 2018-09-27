@@ -1,10 +1,8 @@
-
 var paths = require('./paths.js');
 
 var entry = {};
 
 entry = {
-    
     styles: paths.styles,
     scripts: paths.scripts,
     login: paths.login,
@@ -25,8 +23,7 @@ entry = {
     create_report: paths.create_report,
     create_query: paths.create_query,
     create_project: paths.create_project,
-    project_queries: paths.project_queries
-    
+    project_queries: paths.project_queries,
 };
-    
+
 module.exports = entry;

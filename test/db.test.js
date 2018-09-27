@@ -1,4 +1,3 @@
-
 'use strict';
 
 process.env.NODE_ENV = 'test';
@@ -27,15 +26,16 @@ describe('DB: unauthorized get request to private API', function() {
 describe('DB: fetch sample data from DB with public API', function() {
     describe('/api/test/data', function() {
         it('responds with status 200 && json', function() {
-            return chai.request(app)
-                .get('/api/test/data')           
-                .then(function (res) {
+            return chai
+                .request(app)
+                .get('/api/test/data')
+                .then(function(res) {
                     expect(res).to.have.status(200);
                     expect(res).to.be.json;
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     throw err;
                 });
-        }); 
+        });
     });
 });
