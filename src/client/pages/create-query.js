@@ -1,7 +1,6 @@
 'use strict';
 
-var sc2 = require('steemconnect'),
-    Editor = require('../../lib/editor'),
+var Editor = require('../../lib/editor'),
     config = require('../../configs/config');
 
 require('semantic-ui-calendar/dist/calendar.min.css');
@@ -136,19 +135,14 @@ $(window).on('load', async function() {
                     .toString(36)
                     .substr(2, 5));
 
-        const body =
-            $('<div />')
-                .html(Editor.setup.getMarkdown())
-                .find('span')
-                .contents()
-                .unwrap()
-                .end()
-                .end()
-                .html() +
-            config.query_attribution.replace(
-                /URL/g,
-                config.site_uri + '/query/' + permlink
-            );
+        const body = $('<div />')
+            .html(Editor.setup.getMarkdown())
+            .find('span')
+            .contents()
+            .unwrap()
+            .end()
+            .end()
+            .html();
         if (body == '') {
             window.pqy_notify.warn('Please enter query body');
             return;
@@ -219,107 +213,46 @@ $(window).on('load', async function() {
         image,
         description
     ) {
-        const access_token = await Promise.resolve(sessionStorage.access_token);
+        //console.log('Success!', results);
+        //now ping the server with update
+        try {
+            var data = {};
+            if (project_slug_id !== '') data.project_slug_id = project_slug_id;
+            if (project_title !== '') data.project_title = project_title;
+            data.title = title;
+            data.category = category;
+            data.body = body;
+            data.permlink = permlink;
+            data.terms = terms;
+            data.telephone = telephone;
+            data.email = email;
+            data.website = website;
+            data.reward = reward;
+            data.reward_form = reward_form;
+            data.label = label;
+            data.type = type;
+            data.deadline = deadline;
+            data.image = image;
+            data.description = description;
 
-        if (!access_token || access_token == '') {
-            window.pqy_notify.warn(
-                'Sorry, no auth tokens. Please login and try again.'
+            var status = await Promise.resolve(
+                $.post('/api/private/create/query', data)
             );
-            window.location.href = '/login';
+            //console.log(status);
+
+            //clear backup from localStorage
+            var type = window.location.pathname.split('/')[2];
+            if (!type) type = 'comment';
+            window.localStorage.removeItem(type);
+
+            window.location.href = '/query/' + permlink;
+        } catch (err) {
+            console.log(err);
+            window.pqy_notify.warn(
+                'Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.'
+            );
+            window.location.href = '/query/' + permlink;
         }
-
-        const steem_api = sc2.Initialize({
-            app: config.sc2_app_name,
-            callbackURL: window.location.href,
-            accessToken: access_token,
-            scope: config.sc2_scope_array,
-        });
-
-        steem_api.comment(
-            '', // author, leave blank for new query
-            category, // first tag
-            author, // username
-            permlink, // permlink
-            title, // Title
-            body, // Body of query
-            { tags: tags, app: 'peerquery' }, // json metadata (additional tags, app name, etc)
-
-            async function(err, results) {
-                if (err) {
-                    var err_description = JSON.stringify(err.error_description);
-                    if (!err_description) {
-                        console.log(err);
-                        window.pqy_notify.warn(
-                            'Sorry, something went wrong. Please try again'
-                        );
-                        return;
-                    }
-
-                    if (err_description.indexOf('The comment is archived') > -1)
-                        return window.pqy_notify.warn(
-                            'Post with the same permlink already exists and is archived, please change your permlink.'
-                        );
-
-                    if (
-                        err_description.indexOf(
-                            'You may only post once every'
-                        ) > -1
-                    )
-                        return window.pqy_notify.warn(
-                            'You may only post once every few seconds!'
-                        );
-                    //throw err;
-
-                    window.pqy_notify.warn('Failure! ' + err_description);
-                    document.getElementById('form').className = 'ui form';
-                } else {
-                    //console.log('Success!', results);
-                    //now ping the server with update
-                    try {
-                        var data = {};
-                        data.steemid = results.result.id;
-                        //data.steemid = 6768679; //used during hurried dev testing
-                        if (project_slug_id !== '')
-                            data.project_slug_id = project_slug_id;
-                        if (project_title !== '')
-                            data.project_title = project_title;
-                        data.title = title;
-                        data.category = category;
-                        data.body = body;
-                        data.permlink = permlink;
-                        data.terms = terms;
-                        data.telephone = telephone;
-                        data.email = email;
-                        data.website = website;
-                        data.reward = reward;
-                        data.reward_form = reward_form;
-                        data.label = label;
-                        data.type = type;
-                        data.deadline = deadline;
-                        data.image = image;
-                        data.description = description;
-
-                        var status = await Promise.resolve(
-                            $.post('/api/private/create/query', data)
-                        );
-                        //console.log(status);
-
-                        //clear backup from localStorage
-                        var type = window.location.pathname.split('/')[2];
-                        if (!type) type = 'comment';
-                        window.localStorage.removeItem(type);
-
-                        window.location.href = '/query/' + permlink;
-                    } catch (err) {
-                        console.log(err);
-                        window.pqy_notify.warn(
-                            'Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.'
-                        );
-                        window.location.href = '/query/' + permlink;
-                    }
-                }
-            }
-        );
     }
 
     (async function() {
