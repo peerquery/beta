@@ -72,7 +72,7 @@
 							<div class="summary">
 								<a href="/peer/<%= data.author %>"><%= data.author %></a> created this <a><%= data.type %></a>.
 								<div class="date">
-									<%= data.created.toDateString() %>
+									<%= new Date(data.created).toDateString() %>
 								</div>
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 									<i class="calendar times icon"></i>
 									<div class="content">
 										<a class="header">Deadline</a>
-										<a class="description"><%= data.deadline.toDateString() %></a>
+										<a class="description"><%= new Date(data.deadline).toDateString() %></a>
 									</div>
 								</div>
 							
