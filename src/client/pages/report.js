@@ -310,7 +310,24 @@ $(window).on('load', async function() {
     function addresponse() {
         document.getElementById('comment_btn').className =
             'ui disabled blue labeled submit icon button';
-        var message = Editor.setup.getValue() + config.comment_attribution;
+        var message =
+            $('<div />')
+                .html(
+                    $('<div />')
+                        .html(Editor.setup.getMarkdown())
+                        .find('span')
+                        .contents()
+                        .unwrap()
+                        .end()
+                        .end()
+                        .html()
+                )
+                .find('span')
+                .contents()
+                .unwrap()
+                .end()
+                .end()
+                .html() + config.comment_attribution;
 
         document.getElementById('editor').style =
             'pointer-events:none; opacity: 0.5; box-sizing: border-box; height: 400px;';

@@ -137,7 +137,14 @@ $(window).on('load', async function() {
                     .substr(2, 5));
 
         const body =
-            Editor.setup.getValue() +
+            $('<div />')
+                .html(Editor.setup.getMarkdown())
+                .find('span')
+                .contents()
+                .unwrap()
+                .end()
+                .end()
+                .html() +
             config.query_attribution.replace(
                 /URL/g,
                 config.site_uri + '/query/' + permlink

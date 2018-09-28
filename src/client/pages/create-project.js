@@ -40,7 +40,14 @@ function validateForm() {
     data.mission = $('#projectMission')
         .val()
         .substring(0, 160);
-    data.story = Editor.setup.getValue();
+    data.story = $('<div />')
+        .html(Editor.setup.getMarkdown())
+        .find('span')
+        .contents()
+        .unwrap()
+        .end()
+        .end()
+        .html();
     data.state = $('#projectState')
         .find(':selected')
         .val()

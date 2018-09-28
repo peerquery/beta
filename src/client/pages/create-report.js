@@ -63,7 +63,14 @@ $(window).on('load', function() {
                     .substr(2, 5));
 
         const body =
-            Editor.setup.getValue() +
+            $('<div />')
+                .html(Editor.setup.getMarkdown())
+                .find('span')
+                .contents()
+                .unwrap()
+                .end()
+                .end()
+                .html() +
             config.report_attribution.replace(
                 /URL/g,
                 config.site_uri + '/report/' + permlink

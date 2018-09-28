@@ -50,7 +50,15 @@ module.exports = {
         var type = window.location.pathname.split('/')[2];
         if (!type) type = 'comment';
 
-        let data = window.Editor.setup.getValue();
+        let data = window
+            .$('<div />')
+            .html(window.Editor.setup.getMarkdown())
+            .find('span')
+            .contents()
+            .unwrap()
+            .end()
+            .end()
+            .html();
 
         //localStorage.setItem(type, this.setup.getValue());//calling setup directly doesn't work
         localStorage.setItem(type, data);
