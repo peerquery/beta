@@ -3,7 +3,10 @@
 var dsteem = require('dsteem'),
     config = require('../../configs/config'),
     create = require('../../lib/content-creator'),
-    client = new dsteem.Client(config.steem_api);
+    client = new dsteem.Client(config.steem_api),
+    templator = require('../../client/templator'),
+    timeago = require('timeago.js')();
+
 //jquery is already universal through the `ui.js` global file
 
 var last_id = 0;
@@ -84,6 +87,27 @@ async function get_responses_to_top(result) {
         console.log(err);
     }
 }
+
+(async function display() {
+    var api = '/api/fetch/projects/featured/0';
+
+    try {
+        var projects = await Promise.resolve($.get(api));
+
+        for (var x in projects) {
+            projects[x].created = timeago.format(projects[x].created);
+            if (!projects[x].logo)
+                projects[x].logo = '/assets/images/placeholder.png';
+
+            var project = await templator.project(projects[x]);
+            $('#projects-item-container').append(project);
+        }
+
+        $('._project_').show();
+    } catch (err) {
+        console.log(err);
+    }
+})();
 
 $('#moreBtn').on('click', function() {
     $(this).hide();

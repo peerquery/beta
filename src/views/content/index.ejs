@@ -36,7 +36,7 @@
 </section>
 
 
-<div class="pusher" <% if(typeof username == 'string' && username) { %> style = "display:none" <% } %>>
+<div class="pusher" <% if(typeof username == 'string' && username) { %> style = "display:none" <% } %> >
 
   <div class="ui inverted vertical masthead center aligned segment" style="margin-top: -7%; margin-bottom: 2%; background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/background.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
 	
@@ -193,9 +193,9 @@
 			
 				<div class="or"></div>
 				
-			<a class="ui blue button" href="/projects">
-				<i class="coffee icon"></i>
-				All projects
+			<a class="ui blue button" href="/create/report">
+				<i class="clipboard icon"></i>
+				Create new
 			</a>
 		</div>
 		  
@@ -204,6 +204,63 @@
 		  
         </div>
       </div>
+      
+      
+      
+        <div class="row _project_" style="display:none">
+            <div class="center aligned column">
+            
+                <br/><br/>
+                <h2 class="ui center aligned header">Interesting projects built by your peers</h2>
+                <br/><br/>
+		  
+            </div>
+        </div>
+          
+      
+	  <div class="row _project_" style="display:none">
+
+		  
+		  <br/><br/>
+          
+          <div class="ui three stackable link cards" style="margin-top:5rem; margin-bottom:3rem; width: 100%; margin: auto" id="projects-item-container">
+          </div>
+          
+          
+          
+        </div>
+        
+        
+	  
+	  <div class="row _project_" style="display:none">
+        <div class="center aligned column">
+        <br/><br/>
+	  
+	  
+		  
+		<div class="ui buttons" id="more-button">
+			<a class="ui yellow button" href="/projects">
+				<i class="coffee icon"></i>
+				All projects
+			</a>
+			
+				<div class="or"></div>
+				
+			<a class="ui blue button" href="/create/project">
+				<i class="coffee icon"></i>
+				Create new
+			</a>
+		</div>
+		  
+		  
+		  
+		  
+        </div>
+      </div>
+      
+        
+        
+      
     </div>
   
   
@@ -268,7 +325,7 @@
 		<a class="ui large button" href="/@peerquery" target="_blank">See what's new</a>
 		<a class="ui large button" href="https://steem.io" target="_blank">Explore Steem</a>
 		<a class="ui large button" href="https://github.com/peerquery/beta" target="_blank">Contribute</a>
-		<a class="ui large button" href="/faqs" target="_blank">Read FAQs</a>
+		<a class="ui large button" href="/support/faqs" target="_blank">Read FAQs</a>
 		
 		
 		<br/>
