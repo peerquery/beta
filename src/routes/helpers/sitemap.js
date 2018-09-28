@@ -159,19 +159,22 @@ module.exports = function(app) {
         var sm_i = await read('./src/configs/sitemap_index.xml', 'utf8'); //this whole part is exported to main app so path are related not to here
 
         sm_i = sm_i.replace(/SITE_URI/g, config.site_uri);
-        sm_i = sm_i.replace(/LAST_UPDATED_SITE/g, new Date());
-        sm_i = sm_i.replace(/LAST_UPDATED_PEERS/g, peer.created || new Date());
+        sm_i = sm_i.replace(/LAST_UPDATED_SITE/g, new Date().toISOString());
+        sm_i = sm_i.replace(
+            /LAST_UPDATED_PEERS/g,
+            new Date(peer.created).toISOString() || new Date().toISOString()
+        );
         sm_i = sm_i.replace(
             /LAST_UPDATED_PROJECTS/g,
-            project.created || new Date()
+            new Date(project.created).toISOString() || new Date().toISOString()
         );
         sm_i = sm_i.replace(
             /LAST_UPDATED_REPORTS/g,
-            report.created || new Date()
+            new Date(report.created).toISOString() || new Date().toISOString()
         );
         sm_i = sm_i.replace(
             /LAST_UPDATED_QUERIES/g,
-            query.created || new Date()
+            new Date(query.created).toISOString() || new Date().toISOString()
         );
 
         res.set('Content-Type', 'application/xml');
