@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var querySchema = new Schema({
-    steemid: { type: String, required: true },
     title: { type: String, required: true },
     author: { type: String, required: true },
     permlink: { type: String, required: true, unique: true },
