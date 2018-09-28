@@ -449,6 +449,7 @@ $(window).on('load', async function() {
 
         if (!comments || comments.length == 0) {
             document.getElementById('comments-spinner').style.display = 'none';
+            document.getElementById('contributors_earnings').innerText = '$0';
             responsesReady();
             return;
         }
