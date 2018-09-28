@@ -55,26 +55,6 @@ module.exports = function(app) {
         return router(address.content.queries, req, res);
     });
 
-    app.get('/queries/:query', async function(req, res) {
-        try {
-            var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
-            var results = await query
-                .findOne({ slug: req.params.query })
-                .select(query);
-
-            if (!results || results == '')
-                return router(address._static._404, req, res);
-
-            results.path = '/';
-            res.req_data = results;
-            return router(address.content.query, req, res);
-        } catch (err) {
-            console.log(err);
-            return router(address._static._500, req, res);
-        }
-    });
-
     app.get('/project/:project', async function(req, res) {
         try {
             var query =
