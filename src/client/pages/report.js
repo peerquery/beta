@@ -447,8 +447,9 @@ $(window).on('load', async function() {
             permlink,
         ]);
 
-        if (!comments || comments.lenght == 0) {
+        if (!comments || comments.length == 0) {
             document.getElementById('comments-spinner').style.display = 'none';
+            responsesReady();
             return;
         }
 
@@ -465,11 +466,6 @@ $(window).on('load', async function() {
             comments = await comments.sort(function(a, b) {
                 return b.net_votes - a.net_votes;
             });
-
-        if (comments.length == 0) {
-            responsesReady();
-            return;
-        }
 
         var comment_active_votes = [];
 
