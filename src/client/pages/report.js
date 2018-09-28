@@ -416,13 +416,13 @@ $(window).on('load', async function() {
         addresponse();
     });
 
-    $('#comments-container, #report_view').on(
-        'click',
-        '.vote_toggle',
-        function() {
+    $('#comments-container, #report_view')
+        .on('click', '.vote_toggle', function() {
             votePanelBtn(this.id);
-        }
-    );
+        })
+        .on('click', '.vote_btn', function() {
+            vote(this.id);
+        });
 
     $('#comments-container').on('click', '.vote_btn', function() {
         vote(this.id);
