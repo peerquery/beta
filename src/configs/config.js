@@ -22,8 +22,6 @@ config.sc2_scope_array = '[\'vote\', \'comment\', \'custom_json\']';
 //attribution
 config.report_attribution =
     '  \n\n- - -\n\n  Published on [Peer Query - Blockchain-powered p2p collaboration](URL).  \n\n  ';
-config.query_attribution =
-    '  \n\n- - -\n\n  Published on [Peer Query - Blockchain-powered p2p collaboration](URL).  \n\n  ';
 config.comment_attribution =
     '  \n\n- - -\n\n  Posted on [Peer Query](http://www.peerquery.com).';
 
