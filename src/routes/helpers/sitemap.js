@@ -308,7 +308,7 @@ module.exports = function(app) {
         //console.log(siteSitemap.toString());
 
         try {
-            let xml = siteSitemap.toXML(xml);
+            let xml = siteSitemap.toXML();
             res.header('Content-Type', 'application/xml');
             res.send(xml);
         } catch (err) {
