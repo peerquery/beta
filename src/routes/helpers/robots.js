@@ -8,7 +8,6 @@ module.exports = function(app) {
             //production deployment
             data =
                 'User-agent: *' +
-                '\nDisallow: /api*' +
                 '\nSitemap: https://www.peerquery.com/sitemap.xml';
         }
         res.type('text/plain');
