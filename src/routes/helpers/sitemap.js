@@ -61,7 +61,7 @@ module.exports = function(app) {
             for (var x in data) {
                 reportSitemap.add({
                     url: config.site_uri + '/report/' + data[x].permlink,
-                    changefreq: 'daily',
+                    changefreq: 'weekly',
                 });
             }
         } catch (err) {
@@ -75,7 +75,7 @@ module.exports = function(app) {
             for (var x in data) {
                 peerSitemap.add({
                     url: config.site_uri + '/peer/' + data[x].account,
-                    changefreq: 'daily',
+                    changefreq: 'monthly',
                 });
             }
         } catch (err) {
@@ -89,7 +89,7 @@ module.exports = function(app) {
             for (var x in data) {
                 projectSitemap.add({
                     url: config.site_uri + '/project/' + data[x].slug,
-                    changefreq: 'daily',
+                    changefreq: 'weekly',
                 });
             }
         } catch (err) {
@@ -103,7 +103,7 @@ module.exports = function(app) {
             for (var x in data) {
                 querySitemap.add({
                     url: config.site_uri + '/query/' + data[x].permlink,
-                    changefreq: 'daily',
+                    changefreq: 'weekly',
                 });
             }
         } catch (err) {
