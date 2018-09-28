@@ -25,7 +25,7 @@ const config = require('../../configs/config');
 
             //check is session storage is supported or not. if not - alert the user that their browser is NOT supported
             if (typeof Storage == 'undefined') {
-                alert(
+                window.pqy_notify.warn(
                     'Sorry your browser is NOT supported. Please upgrade or switch to a modern broswer.'
                 );
                 window.location.href = '/';
@@ -78,7 +78,9 @@ const config = require('../../configs/config');
         }
     } catch (err) {
         console.log(err);
-        alert('Sorry, error logging you in. Please try again.');
+        window.pqy_notify.warn(
+            'Sorry, error logging you in. Please try again.'
+        );
         window.location.href = redirect_uri || '/';
     }
 })();

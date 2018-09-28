@@ -36,7 +36,7 @@ async function display() {
             }
         }
     } catch (err) {
-        alert('Sorry, error fetching reports');
+        window.pqy_notify.warn('Sorry, error fetching reports');
         console.log(err);
     }
 }

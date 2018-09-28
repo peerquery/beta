@@ -11,7 +11,7 @@ $(window).on('load', function() {
             //console.log(response);
         } catch (err) {
             //console.log(err);
-            alert('Sorry, an error occured. Please again');
+            window.pqy_notify.warn('Sorry, an error occured. Please again');
             //window.location.reload();
         }
     }

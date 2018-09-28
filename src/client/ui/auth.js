@@ -22,7 +22,7 @@ module.exports = async function() {
 
     //check is sessionStorage is supported or not. if not - alert the user that their browser is NOT supported
     if (typeof Storage == 'undefined') {
-        alert(
+        window.pqy_notify.warn(
             'Sorry your browser is NOT supported. Please upgrade or switch to a modern broswer.'
         );
         return;
@@ -50,7 +50,7 @@ module.exports = async function() {
             $('#loggedin-desktop-create').show();
             $('#logged_in_user_href').attr('href', '/peer/' + active_user);
         } catch (err) {
-            alert(
+            window.pqy_notify.warn(
                 'Sorry, could not auth your account. Consider signing in again'
             );
             console.log(err);

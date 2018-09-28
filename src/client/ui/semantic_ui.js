@@ -33,7 +33,7 @@ module.exports = function() {
         $('.ui.modal')
             .modal({
                 onShow: function() {
-                    //window.alert('Showing modal!!!');
+                    //window.pqy_notify.warn('Showing modal');
                     //console.log(this); //works but rather only logs the real modal itself!
                     document.getElementById('modal_href').href =
                         '/@' + el.dataset.account + '/' + el.dataset.permlink;

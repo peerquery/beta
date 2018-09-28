@@ -37,7 +37,7 @@ async function display() {
             }
         }
     } catch (err) {
-        alert('Sorry, error fetching account');
+        window.pqy_notify.warn('Sorry, error fetching account');
         console.log(err);
     }
 }
@@ -61,7 +61,7 @@ async function get_posts(data) {
     //console.log(acc);
 
     if (acc == '' || acc[0] == '') {
-        alert('Account does not exist!');
+        window.pqy_notify.warn('Account does not exist!');
         return;
     } else {
         acc = acc[0];

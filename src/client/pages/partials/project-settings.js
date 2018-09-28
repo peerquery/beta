@@ -74,14 +74,14 @@ $(window).on('load', function() {
                 (id = 'projectTag'), (field = 'tagField');
             }
 
-            alert(name + ' cannot be empty');
+            window.pqy_notify.warn(name + ' cannot be empty');
             $('#' + id).focus();
             $('#' + field).addClass('error');
 
             return false;
         } else if (data.story == '') {
             //cannot enter empty body
-            alert('Please enter story of your project.');
+            window.pqy_notify.warn('Please enter story of your project.');
             return false;
         } else {
             return true;
@@ -97,7 +97,7 @@ $(window).on('load', function() {
             window.location.href = '/project/' + status;
         } catch (err) {
             console.log(err);
-            alert('Sorry, an error occured. Please again');
+            window.pqy_notify.warn('Sorry, an error occured. Please again');
             window.location.reload();
         }
     }
@@ -105,7 +105,9 @@ $(window).on('load', function() {
     $('.limitedText').on('keyup', function() {
         var maxLength = $(this).attr('maxlength');
         if (maxLength == $(this).val().length) {
-            alert('You can\'t write more than ' + maxLength + ' characters');
+            window.pqy_notify.warn(
+                'You can\'t write more than ' + maxLength + ' characters'
+            );
         }
     });
 
@@ -144,7 +146,7 @@ $(window).on('load', function() {
             //console.log(response);
         } catch (err) {
             console.log(err);
-            alert('Sorry, an error occured. Please again');
+            window.pqy_notify.warn('Sorry, an error occured. Please again');
             window.location.reload();
         }
     })();

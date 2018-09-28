@@ -22,7 +22,7 @@ async function display() {
             $('#members-container').append(member);
         }
     } catch (err) {
-        alert('Sorry, error fetching members');
+        window.pqy_notify.warn('Sorry, error fetching members');
         console.log(err);
     }
 }
