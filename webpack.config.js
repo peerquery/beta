@@ -41,6 +41,8 @@ module.exports = {
     },
     stats: {
         colors: true,
+        entrypoints: false,
+        children: false,
     },
     devtool: process.env.NODE_ENV == 'debugging' ? 'source-map' : false,
     mode:
