@@ -241,9 +241,9 @@ $(window).on('load', async function() {
             //console.log(status);
 
             //clear backup from localStorage
-            var type = window.location.pathname.split('/')[2];
-            if (!type) type = 'comment';
-            window.localStorage.removeItem(type);
+            var content_type = window.location.pathname.split('/')[2];
+            if (!content_type) content_type = 'comment';
+            window.localStorage.removeItem(content_type);
 
             window.location.href = '/query/' + permlink;
         } catch (err) {

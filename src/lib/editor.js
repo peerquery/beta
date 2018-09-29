@@ -47,8 +47,8 @@ module.exports = {
     },
 
     backup: function() {
-        var type = window.location.pathname.split('/')[2];
-        if (!type) type = 'comment';
+        var content_type = window.location.pathname.split('/')[2];
+        if (!content_type) content_type = 'comment';
 
         let data = window
             .$('<div />')
@@ -60,29 +60,31 @@ module.exports = {
             .end()
             .html();
 
-        //localStorage.setItem(type, this.setup.getValue());//calling setup directly doesn't work
-        localStorage.setItem(type, data);
+        //localStorage.setItem(content_type, this.setup.getValue());//calling setup directly doesn't work
+        localStorage.setItem(content_type, data);
     },
 
     auto_save: function() {
-        var type = window.location.pathname.split('/')[2];
-        if (!type) type = 'comment';
+        var content_type = window.location.pathname.split('/')[2];
+        if (!content_type) content_type = 'comment';
 
         //check if saved post exists
-        var post = localStorage.getItem(type);
+        var post = localStorage.getItem(content_type);
 
         let editor = window.Editor.setup;
 
         if (post && post !== '') {
             editor.setMarkdown(post);
-            pqy_notify.success('Existing ' + type + ' restored to editor');
+            pqy_notify.success(
+                'Existing ' + content_type + ' restored to editor'
+            );
         }
 
         //setInterval(this.backup, 1 * 60 * 1000, data);//if we had real-time dynamic input of data. currently attempting this does not produce real-time data
         setInterval(this.backup, 1 * 60 * 1000); //every 1 minute
         pqy_notify.inform(
             'Saving the <em>editor content</em> for your ' +
-                type +
+                content_type +
                 ' locally every 1 minute'
         );
     },
