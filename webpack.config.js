@@ -1,7 +1,6 @@
 // webpack.config.js
 var path = require('path'),
     webpack_entry = require('./src/configs/webpack-entries'),
-    paths = require('./src/configs/paths'),
     extractTextPlugin = require('extract-text-webpack-plugin'),
     webpack = require('webpack'),
     env = require('dotenv').config();
