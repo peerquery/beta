@@ -1,7 +1,7 @@
 // webpack.config.js
 var path = require('path'),
     webpack_entry = require('./src/configs/webpack-entries'),
-    extractTextPlugin = require('extract-text-webpack-plugin'),
+    miniCssExtractPlugin = require('mini-css-extract-plugin'),
     webpack = require('webpack'),
     env = require('dotenv').config();
 
@@ -16,23 +16,23 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
         }),
-        new extractTextPlugin('[name].css'),
+        new miniCssExtractPlugin({ filename: '[name].css' }),
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: extractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader',
-                }),
+                use: [
+                    'style-loader',
+                    miniCssExtractPlugin.loader,
+                    'css-loader',
+                ],
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000',
             },
             {
-                //might require a dependency, not devDepency: babel-polyfill
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
