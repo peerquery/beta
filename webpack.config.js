@@ -1,9 +1,10 @@
 // webpack.config.js
-var path = require('path'),
-    webpack_entry = require('./src/configs/webpack-entries'),
-    miniCssExtractPlugin = require('mini-css-extract-plugin'),
-    webpack = require('webpack'),
-    env = require('dotenv').config();
+const path = require('path');
+const webpack_entry = require('./src/configs/webpack-entries');
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const env = require('dotenv').config();
 
 module.exports = {
     entry: webpack_entry,
@@ -38,6 +39,9 @@ module.exports = {
                 loader: 'babel-loader',
             },
         ],
+    },
+    optimization: {
+        minimizer: [new UglifyJsPlugin()],
     },
     stats: {
         colors: true,
