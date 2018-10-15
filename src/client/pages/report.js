@@ -182,7 +182,7 @@ $(window).on('load', async function() {
             '&t=' +
             document.title;
 
-        var report_view = await templator.report_view(data);
+        var report_view = await templator.report(data);
         $('#report_view').append(report_view);
 
         $('#loader').hide();
