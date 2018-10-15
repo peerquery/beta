@@ -20,7 +20,7 @@ app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 const node_env = process.env.NODE_ENV,
     server_port = Number(process.env.SERVER_PORT),
     port =
-        node_env == 'production ' || node_env == 'staging'
+        node_env == 'production' || node_env == 'staging'
             ? server_port + 8001
             : server_port;
 
