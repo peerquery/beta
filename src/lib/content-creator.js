@@ -1,17 +1,24 @@
 'use strict';
 
 const utils = require('./../../src/lib/utils'),
-    parser = require('./../../src/lib/post-parser-web'),
+    markup = require('markup-builder'),
+    mtools = require('markup-tools'),
     timeago = require('timeago.js'),
     timeagoInstance = timeago();
+
+const mk_opt = {
+    video: true,
+    account_scheme: '/peer',
+    hashtag_scheme: '/reports/trending',
+};
 
 module.exports = {
     post: async function(text) {
         var resteem_state = 'hidden';
         if (text.first_reblogged_on) resteem_state = 'visible';
 
-        var summary = await parser.summary(text.body, 150);
-        var src = await parser.first_img(text.body);
+        var summary = await markup.build.summary(text.body, 150);
+        var src = mtools.parse.images(text.body);
 
         var item = document.createElement('div');
         item.className = 'item';
@@ -86,7 +93,10 @@ module.exports = {
         pop.setAttribute('data-account', text.author);
         pop.setAttribute('data-title', text.title);
         pop.setAttribute('data-permlink', text.permlink);
-        pop.setAttribute('data-body', await parser.content(text.body)); //------------- use parser to do light-parsing of content to be displayed
+        pop.setAttribute(
+            'data-body',
+            await markup.build.content(text.body, mk_opt)
+        );
         pop.innerHTML = '<i class=\'small circular inverted blue bug icon\'></i>';
 
         var i_resteem = document.createElement('i');
@@ -184,7 +194,7 @@ module.exports = {
     },
 
     comment_summary: async function(cmt) {
-        var summary = await parser.summary(cmt.body, 100);
+        var summary = await markup.build.summary(cmt.body, 100);
 
         var comment = document.createElement('div');
         comment.className = 'comment';
@@ -378,7 +388,10 @@ module.exports = {
 
         var div_response = document.createElement('div');
         div_response.className = 'description post-body';
-        div_response.innerHTML = parser.content(response.body);
+        div_response.innerHTML = await markup.build.content(
+            response.body,
+            mk_opt
+        );
 
         var vote_div = document.createElement('div');
         vote_div.className =

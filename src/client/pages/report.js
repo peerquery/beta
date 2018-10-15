@@ -2,11 +2,11 @@
 
 var sc2 = require('steemconnect'),
     dsteem = require('dsteem'),
+    markup = require('markup-builder'),
     Editor = require('../../lib/editor'),
     templator = require('../templator'),
     config = require('../../configs/config'),
     utils = require('../../lib/utils'),
-    parser = require('../../lib/post-parser-web'),
     creator = require('../../lib/content-creator'),
     issues_renderer = require('../renderers/issues'),
     client = new dsteem.Client(config.steem_api),
@@ -28,6 +28,12 @@ const steem_api = sc2.Initialize({
     accessToken: access_token,
     scope: config.sc2_scope_array,
 });
+
+const mk_opt = {
+    video: true,
+    account_scheme: '/peer',
+    hashtag_scheme: '/reports/trending',
+};
 
 var permlink = window.location.pathname.split('/')[2];
 var author = permlink.split('-')[0];
@@ -121,14 +127,14 @@ $(window).on('load', async function() {
         data.author = report.author;
         data.href = report.permlink;
         data.author_name = report.author.toUpperCase();
-        data.author_href = '/@' + report.author;
+        data.author_href = '/peer/' + report.author;
         data.author_img =
             'https://steemitimages.com/u/' + report.author + '/avatar';
         data.category = report.category;
         data.type = type;
         data.created = timeago.format(report.created);
         data.author_rep = utils.reputation(report.author_reputation);
-        data.body = parser.content(report.body);
+        data.body = await markup.build.content(report.body, mk_opt);
 
         data.active_votes = report.active_votes.length;
         data.active_comments = report.children;

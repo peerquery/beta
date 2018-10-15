@@ -1,10 +1,7 @@
 'use strict';
 
 var shortid = require('shortid'),
-    createDOMPurify = require('dompurify'),
-    { JSDOM } = require('jsdom'),
-    window = new JSDOM('').window,
-    DOMPurify = createDOMPurify(window),
+    markup = require('markup-builder'),
     mongoose = require('mongoose'),
     activity = require('../models/activity'),
     project = require('../models/project');
@@ -13,7 +10,7 @@ var shortid = require('shortid'),
 module.exports = function(app) {
     app.post('/api/private/update/project', async function(req, res) {
         try {
-            var story = await DOMPurify.sanitize(req.body.story, {
+            var story = await markup.build.sanitize(req.body.story, {
                 SAFE_FOR_JQUERY: true,
             });
 

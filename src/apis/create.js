@@ -2,7 +2,7 @@
 
 var shortid = require('shortid'),
     mongoose = require('mongoose'),
-    parser = require('../lib/post-parser-node'),
+    markup = require('markup-builder'),
     activity = require('../models/activity'),
     peer = require('../models/peer'),
     report = require('../models/report'),
@@ -21,7 +21,7 @@ module.exports = function(app) {
                 author: req.active_user.account,
                 title: req.body.title,
                 category: req.body.category,
-                summary: parser.summary(req.body.body, 300),
+                summary: await markup.build.summary(req.body.body, 300),
                 body: req.body.body,
                 permlink: req.body.permlink,
                 project_title: project_title,
@@ -103,7 +103,7 @@ module.exports = function(app) {
                 author: req.active_user.account,
                 title: req.body.title,
                 category: req.body.category,
-                summary: parser.summary(req.body.body, 300),
+                summary: await markup.build.summary(req.body.body, 300),
                 body: req.body.body,
                 permlink: req.body.permlink,
                 project_title: project_title,
@@ -193,7 +193,7 @@ module.exports = function(app) {
 
             const slug = shortid.generate();
 
-            var story = await parser.clean(req.body.story);
+            var story = await markup.build.clean(req.body.story);
 
             var newProject = project({
                 name: req.body.name,
