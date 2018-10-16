@@ -193,7 +193,7 @@ module.exports = function(app) {
 
             const slug = shortid.generate();
 
-            var story = await markup.build.clean(req.body.story);
+            var story = await markup.build.sanitize(req.body.story);
 
             var newProject = project({
                 name: req.body.name,
