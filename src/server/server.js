@@ -4,6 +4,7 @@ var express = require('express'),
     helmet = require('helmet'),
     bodyParser = require('body-parser'),
     mongoSanitize = require('express-mongo-sanitize'),
+    reqSanitizer = require('req-sanitizer'),
     cookie = require('cookie-parser'),
     csrf = require('csurf'),
     hpp = require('hpp'),
@@ -33,8 +34,9 @@ module.exports = function(server) {
     app.use(cors);
     app.use(compression());
     app.use(cookie(process.env.COOKIE_SECRET));
-    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(reqSanitizer());
     app.use(hpp());
 
     app.use(limiter);
