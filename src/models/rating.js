@@ -12,7 +12,7 @@ var ratingSchema = new Schema({
     description: { type: String, required: true },
     state: { type: String, required: true }, //approved, rejected, pending
     type: { type: String, required: true }, //project, user
-    created: { type: Date, required: true, Default: Date.now },
+    created: { type: Date, required: true, default: Date.now },
 });
 
 ratingSchema.index({ author: 1, slug: 1 });

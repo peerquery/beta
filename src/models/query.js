@@ -11,8 +11,8 @@ var querySchema = new Schema({
     description: { type: String, required: true },
     body: { type: String, required: true },
     meta_description: { type: String },
-    created: { type: Date, Default: Date.now, required: true },
-    deadline: { type: Date, Default: Date.now, required: true },
+    created: { type: Date, default: Date.now, required: true },
+    deadline: { type: Date, default: Date.now, required: true },
     reward: Number,
     reward_form: String,
     terms: String,
@@ -33,9 +33,9 @@ var querySchema = new Schema({
     project_slug_id: { type: String },
 
     //stats
-    view_count: { type: Number, Default: 0 },
-    vote_count: { type: Number, Default: 0 },
-    comment_count: { type: Number, Default: 0 },
+    view_count: { type: Number, default: 0 },
+    vote_count: { type: Number, default: 0 },
+    comment_count: { type: Number, default: 0 },
 });
 
 querySchema.index({
