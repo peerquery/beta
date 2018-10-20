@@ -16,7 +16,7 @@ var activitySchema = new Schema({
     state: { type: String },
     likes: { type: Number },
     dislikes: { type: Number },
-    created: { type: Date, required: true, Default: Date.now },
+    created: { type: Date, required: true, default: Date.now },
 });
 
 activitySchema.index({ account: 1 });
