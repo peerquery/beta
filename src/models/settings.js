@@ -8,7 +8,7 @@ var settingsSchema = new Schema(
         admin_account: { type: String, unique: true, required: true },
         admin_email: { type: String, unique: true, required: true },
         admin_hash: { type: String, required: true },
-        init_time: { type: Date, Default: Date.now, required: true },
+        init_time: { type: Date, default: Date.now, required: true },
         updated_at: Date,
     },
     {
