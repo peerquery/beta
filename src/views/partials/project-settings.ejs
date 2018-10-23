@@ -1,138 +1,148 @@
 
-	<div id="settings-loader" class="ui large active centered inline loader"></div>
-	
-	
-	<form class="ui form" id="settings-form" style="display:none">
-	
-	
-  <h4 class="ui dividing header">General</h4>
-	
 
-  <div class="field">
+<div>
+
+
+    <meta name="robots" itemprop="robots" content="noindex" />
+
     
-  
-  <div class="two fields">
-      <div class="field" id="nameField"><label>Name*</label>
-        <input type="text" id="projectName" name="" placeholder="">
-      </div>
-      <div class="field"><label>Location</label>
-        <input id="projectLocation" type="text" name="" placeholder="">
-      </div>
+    <!--
+    
+    <h4 class="ui dividing header">Private</h4>
+
+   <div class="ui segment">
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <label>Only members can see reports, queries and members.</label>
+            </div>
+            <button class="compact ui right floated button">Save</button>
+        </div>
     </div>
-  </div>
   
-  <div class="field">
-   
-    <div class="fields"> 
-      <div class="eight wide field"><label>Profile image</label>
-        <input type="text" id="projectLogo" placeholder="">
-      </div>
-      <div class="eight wide field"> <label>Cover image</label>
-        <input type="text" id="projectCover" placeholder="">
-      </div>
+    <h4 class="ui dividing header">Archive</h4>
+
+   <div class="ui segment">
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <label>Stop all activity on the project. Undo anytime.</label>
+            </div>
+            <button class="compact ui right floated button">Save</button>
+        </div>
     </div>
-  </div>
+    
+    
+    -->
+  
 	
-  <div class="field" id="descriptionField">
-    <label>Brief description[Text only 160 characters max]*</label>
-    <textarea class="limitedText" maxlength="160" id="projectDescription" rows="2"></textarea>
-  </div>
-  
-  
-  <br/>
-  
-  <h4 class="ui dividing header">Definition</h4>
-  
-  
-  
-  <div class="field">
-    <label>Mission[Text only 160 characters max]</label>
-    <textarea id="projectMission" class="limitedText" maxlength="160" rows="2"></textarea>
-  </div>
-  
-  
-  <div class="field">
-    <label>Project story[Landing page view: HTML supported and encouraged]</label>
-    <div id="editor"></div>
-  </div>
-  
-  
-  
-  <div class="field">
-    <div class="two fields">
+    <h4 class="ui dividing header">Export data</h4>
 	
-	
-    <div class="field" id="stateField">
-      <label>State</label>
-      <select id="projectState" class="ui fluid dropdown">
-    <option value="">Change state</option>
-    <option value="hibernation">Hibernation</option>
-    <option value="active">Active</option>
-      </select>
+    <div class="ui basic segment">
+
+        <button class="ui right floated button" id="export_data">Export</button>
+        <div class="ui right pointing green label">Download the JSON or XML format of your project's data</div>
+
     </div>
+
+        
+    <h4 class="ui dividing header">Transfer ownership</h4>
 	
-      <div class="field" id="tagField"><label>Tag*</label>
-        <input type="text" id="projectTag" name="" placeholder="">
-      </div>
+    <div class="ui basic segment">
+
+        <button class="ui right floated button" id="tranfer_project">Transfer</button>
+        <div class="ui right pointing yellow label">Careful, cannot be undone. You will loose all control over the project</div>
+
     </div>
-  </div>
+
+    <h4 class="ui dividing header">Delete project</h4>
+	
   
-  
-  
-  <br/>
-  
-  
-		<h4 class="ui dividing header">Affiliations</h4>
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Website</label>
-        <input type="text" id="projectWebsite" name="" placeholder="">
-      </div>
-      <div class="field"><label>Steem</label>
-        <input type="text" id="projectSteem" name="" placeholder="">
-      </div>
+    <div class="ui basic segment">
+
+        <button class="ui right floated button" id="delete_project">Delete</button>
+        <div class="ui right pointing red label">Warning, cannot be undone. You will loose all data associated with the project</div>
+
     </div>
-	
-  </div>
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Facebook</label>
-        <input type="text" id="projectFacebook" name="" placeholder="">
-      </div>
-      <div class="field"><label>Twitter</label>
-        <input type="text" id="projectTwitter" name="" placeholder="">
-      </div>
+    
+    
+    <div class="ui mini modal export">
+        <i class="close icon"></i>
+        <div class="header">
+            Choose export format
+        </div>
+        <div class="content">
+            <div class="description">
+                <p>Download data as JSON or XML</p>
+            </div>
+        </div>
+        <div class="actions">
+            <div id="json" class="ui black button">
+                JSON
+            </div>
+            <div id="xml" class="ui right button">
+                XML
+            </div>
+        </div>
     </div>
-	
-  </div>
-  
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Github</label>
-        <input type="text" id="projectGithub" name="" placeholder="">
-      </div>
-      <div class="field"><label>Chat</label>
-        <input type="text" id="projectChat" name="" placeholder="">
-      </div>
+    
+    
+    <div class="ui mini modal transfer">
+        <i class="close icon"></i>
+        <div class="header">
+            Complete transfer to new owner
+        </div>
+        <div class="content">
+            <div class="ui fluid action input">
+                <input type="text" placeholder="New owner account">
+                <div id="transfer_btn" class="ui button">Transfer</div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui cancel black button">
+                Cancel
+            </div>
+        </div>
     </div>
-	
-  </div>
-  
-  <br/>
-  <br/>
-  
-</form>
-	
-  <div class="ui right floated button" id="updateBtn" style="display:none" tabindex="0">Update project</div>
-  
-	
-  
+    
+    
+    <div class="ui basic modal delete">
+        <div class="ui icon header">
+            <i class="hourglass end icon"></i>
+            End of the road for our lovely project
+        </div>
+        <div class="content">
+            <p>If you only want to take a break from the project, you can archive it. Remember, you can always create a new project whenever you like.</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <div id="delete_project_btn" class="ui green inverted button">
+                <i class="checkmark icon"></i>
+                Yes
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+	<script>
+    window.onload = function() {
+        $('.ui.toggle').checkbox();
+        
+        $('#tranfer_project').on('click', function() {    
+            $('.ui.modal.transfer').modal('show');
+        });
+    
+        $('#export_data').on('click', function() {  
+            $('.ui.modal.export').modal('show');
+        });
+    
+        $('#delete_project').on('click', function() {    
+            $('.ui.modal.delete').modal('show');
+        });
+    }
+    </script>
 	<script src="/build/dist/project_settings.js"></script>
-	<link rel="stylesheet" href="/build/dist/project_settings.css">
   
