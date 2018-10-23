@@ -1,6 +1,7 @@
 'use strict';
 
 const utils = require('./../../src/lib/utils'),
+    randomClass = require('./../../src/lib/helpers/random-class'),
     markup = require('markup-builder'),
     mtools = require('markup-tools'),
     timeago = require('timeago.js'),
@@ -329,9 +330,10 @@ module.exports = {
         author_img.className = 'ui avatar image';
         author_img.style.height = '80px';
         author_img.style.width = '80px';
-        author_img.src = 'https://img.busy.org/@' + response.author;
+        author_img.src =
+            'https://steemitimages.com/u/' + response.author + '/avatar';
         author_img.onerror = function() {
-            this.src = '/assets/img/avatar.png';
+            this.src = '/assets/images/placeholder.png';
             this.onerror = '';
         };
 
@@ -504,37 +506,6 @@ module.exports = {
         content.appendChild(div_extra);
 
         item.appendChild(author_img_div);
-        item.appendChild(content);
-
-        return item;
-    },
-
-    member: async function(data) {
-        var item = document.createElement('div');
-        item.className = 'item';
-
-        var img = document.createElement('img');
-        img.className = 'ui avatar image';
-        img.src = 'https://steemitimages.com/u/' + data.account + '/avatar';
-
-        var content = document.createElement('div');
-        content.className = 'content';
-
-        var a = document.createElement('a');
-        a.className = 'header';
-        a.href = '/peer/' + data.account;
-        a.target = '_blank';
-        a.innerText = data.account;
-
-        var description = document.createElement('div');
-        description.className = 'description';
-        description.innerText =
-            'Joined ' + new Date(data.created).toDateString();
-
-        content.appendChild(a);
-        content.appendChild(description);
-
-        item.appendChild(img);
         item.appendChild(content);
 
         return item;
