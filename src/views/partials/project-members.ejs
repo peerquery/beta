@@ -1,11 +1,55 @@
 
 	<div id="members-loader" class="ui large active centered inline loader"></div>
 	
+    <div class="ui raised segment" style="display:none" id="team-segment">
+        <div class="ui top right attached label">Team</div>
+        <div class="ui list" id="team-container" style="-moz-column-count: 2;-moz-column-gap: 60px;-webkit-column-count: 2;-webkit-column-gap: 60px;column-count: 2;column-gap: 60px;"></div>
+    </div>
+    
+    <br/>
+    
 	<div class="ui list" id="members-container" style="-moz-column-count: 2;-moz-column-gap: 60px;-webkit-column-count: 2;-webkit-column-gap: 60px;column-count: 2;column-gap: 60px;"></div>
 	
 	<button class="ui right floated button" id="moreBtn" style="display:none; margin-top: 3rem">Load more</button>
 	
 	<br/>
+    
+    <div class="ui basic modal remove">
+        <div class="ui icon header">
+            <i class="user times icon"></i>
+            Are your sure your want to remove user <span id='username'></span> from project?
+        </div>
+        <div class="content">
+            <p>Remember: You can add them back later.</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <div id="delete_user_btn" class="ui green inverted button">
+                <i class="checkmark icon"></i>
+                Yes
+            </div>
+        </div>
+    </div>
+    
 	
+
+	<script>
+    window.onload = function() {
+        
+        $('#members-container, #team-container').on('click', '.manage', function() {
+            let target = $(this).data('account');
+            $('#delete_user_btn').removeClass("disabled");
+            $('#username').html('<em>@' + target + '</em>');
+            $('#delete_user_btn').attr('data-account', target);
+            $('.ui.modal.remove').modal('show');
+        });
+        
+        
+    }
+    function remove_user(acc) {$('#' + acc + '-item').remove()}
+    </script>
 	<script src="/build/dist/project_members.js"></script>
   
