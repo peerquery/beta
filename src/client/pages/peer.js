@@ -88,12 +88,13 @@ async function get_posts(data) {
     }
 
     document.title = '@' + peer + ' - Peer Query';
+    document.getElementById('wallet_btn').href = '/peer/' + peer + '/wallet';
     document.getElementById('steemit_btn').href = 'http://steemit.com/@' + peer;
 
     document.getElementById('userImg').src =
         'https://steemitimages.com/u/' + peer + '/avatar';
     document.getElementById('userImg').onerror = function() {
-        this.src = '/assets/img/avatar.png';
+        this.src = '/assets/images/placeholder.png';
         this.onerror = '';
     };
     document.getElementById('username').innerText = '@' + peer;
