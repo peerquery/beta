@@ -8,7 +8,7 @@ var peerSchema = new Schema({
     steemid: { type: Number },
     account: { type: String, required: true, unique: true },
     name: { type: String },
-    created: { type: Date, Default: Date.now, required: true },
+    created: { type: Date, default: Date.now, required: true },
     about: { type: String },
     reputation: { type: String },
     location: { type: String },
@@ -25,14 +25,24 @@ var peerSchema = new Schema({
             created: { type: Date, default: Date.now },
         },
     ],
+    memberships: [
+        {
+            name: { type: String, required: true },
+            state: { type: String, required: true },
+            slug_id: { type: String, required: true },
+            role: { type: String },
+            type: { type: String },
+            created: { type: Date, default: Date.now },
+        },
+    ],
 
     //last_project
     last_project_slug_id: { type: String },
     last_project_title: { type: String },
 
     //activity
-    last_login: { type: Date, Default: Date.now },
-    last_update: { type: Date, Default: Date.now },
+    last_login: { type: Date, default: Date.now },
+    last_update: { type: Date, default: Date.now },
     last_report: { type: String },
     last_project: { type: String },
     login_count: { type: Number },
@@ -66,8 +76,8 @@ var peerSchema = new Schema({
     ],
 
     //community_stats
-    following_count: { type: Number, Default: 0 },
-    followers_count: { type: Number, Default: 0 },
+    following_count: { type: Number, default: 0 },
+    followers_count: { type: Number, default: 0 },
 });
 
 peerSchema.index({ projects: 1 });
