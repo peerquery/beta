@@ -28,7 +28,7 @@ module.exports = function(req, res, next) {
                 next();
             }
         } catch (err) {
-            //console.log(err.message);
+            //console.log(err);
             res.clearCookie('_auth').redirect('/login');
         }
     } else {
