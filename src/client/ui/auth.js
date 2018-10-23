@@ -34,6 +34,10 @@ module.exports = async function() {
         $('#loggedin-desktop-options').show();
         $('#loggedin-desktop-create').show();
         $('#logged_in_user_href').attr('href', '/peer/' + active_user);
+        $('#logged_in_user_wallet').attr(
+            'href',
+            '/peer/' + active_user + '/wallet'
+        );
     } else if (
         active_user &&
         active_user !== '' &&
@@ -48,6 +52,10 @@ module.exports = async function() {
 
             $('#loggedin-desktop-options').show();
             $('#loggedin-desktop-create').show();
+            $('#logged_in_user_wallet').attr(
+                'href',
+                '/peer/' + active_user + '/wallet'
+            );
             $('#logged_in_user_href').attr('href', '/peer/' + active_user);
         } catch (err) {
             window.pqy_notify.warn(
