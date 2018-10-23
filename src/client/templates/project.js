@@ -45,7 +45,7 @@ var project =
     '   	  </div>  ' +
     '   	  <div class="extra content">  ' +
     '   		<div class="right floated author">  ' +
-    '   		  <img class="ui avatar image" src="https://steemitimages.com/u/{{owner}}/avatar"> by <a href="/@{{owner}}">{{ owner }}</a>  ' +
+    '   		  <img class="ui avatar image" src="https://steemitimages.com/u/{{owner}}/avatar"> by <a href="/peer/{{owner}}">{{ owner }}</a>  ' +
     '   		</div>  ' +
     '   	  </div>  ';
 
