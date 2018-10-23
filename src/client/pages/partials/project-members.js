@@ -1,24 +1,42 @@
 'use strict';
 
-var dsteem = require('dsteem'),
-    create = require('./../../../lib/content-creator'),
-    config = require('./../../../configs/config'),
-    client = new dsteem.Client(config.steem_api);
+var create_member = require('./../../../lib/creators/member');
+var create_team = require('./../../../lib/creators/team');
 
-async function display() {
+async function display_team() {
     try {
-        $('#members-container').html('');
-        $('#members-loader').show();
+        $('#users-loader').show();
 
-        var results = await Promise.resolve(
-            $.get('/api/members/project/' + project_slug)
+        var all_team = await Promise.resolve(
+            $.get('/api/project/' + project_slug + '/team')
         );
-        var members = results.members;
+        var team = all_team[0].team;
+
+        for (var x in team) {
+            var teamer = await create_team(team[x]);
+            $('#team-container').append(teamer);
+        }
 
         $('#members-loader').hide();
+        $('#team-segment').show();
+        display_members();
+    } catch (err) {
+        window.pqy_notify.warn('Sorry, error fetching team');
+        $('#members-loader').hide();
+        display_members();
+        console.log(err);
+    }
+}
+
+async function display_members() {
+    try {
+        var all_members = await Promise.resolve(
+            $.get('/api/project/' + project_slug + '/members')
+        );
+        var members = all_members[0].members;
 
         for (var x in members) {
-            var member = await create.member(members[x]);
+            var member = await create_member(members[x]);
             $('#members-container').append(member);
         }
     } catch (err) {
@@ -27,6 +45,29 @@ async function display() {
     }
 }
 
+$('#delete_user_btn').on('click', async function() {
+    try {
+        let account = $(this).data('account');
+        $(this).addClass('disabled');
+
+        let data = {
+            project_slug_id: window.slug_id,
+            account: account,
+        };
+
+        let response = await Promise.resolve(
+            $.post('/api/private/project/remove_membership', data)
+        );
+
+        window.pqy_notify.inform('Successfully removed member');
+
+        window.remove_user(account);
+    } catch (err) {
+        window.pqy_notify.warn('Sorry, error removing member');
+        console.log(err);
+    }
+});
+
 $(window).on('load', function() {
-    display();
+    display_team();
 });
