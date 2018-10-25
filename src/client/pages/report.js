@@ -8,6 +8,7 @@ var sc2 = require('steemconnect'),
     config = require('../../configs/config'),
     utils = require('../../lib/utils'),
     creator = require('../../lib/content-creator'),
+    create_featured_reports = require('../../lib/creators/featured_reports'),
     issues_renderer = require('../renderers/issues'),
     client = new dsteem.Client(config.steem_api),
     timeago = require('timeago.js')();
@@ -427,6 +428,53 @@ $(window).on('load', async function() {
                 }
             }
         );
+    }
+
+    //
+    //get one blog post from our blog
+    var blog_result = await client.database.getDiscussions('blog', {
+        tag: 'peerquery',
+        limit: 1,
+    });
+    document.getElementById('last-blog-post').innerHTML =
+        '<a href=\'/report/' +
+        blog_result[0].author +
+        '-' +
+        blog_result[0].permlink +
+        '\'>' +
+        blog_result[0].title +
+        '</a>';
+    document.getElementById('from-blog').style.display = 'block';
+
+    //
+    //get featured reports
+    if (window.project_slug_id) {
+        try {
+            let data = await Promise.resolve(
+                $.get(
+                    'http://localhost/api/featured_reports/project/' +
+                        window.project_slug_id +
+                        '/' +
+                        permlink
+                )
+            );
+
+            if (data.length) {
+                for (let x in data) {
+                    data[x].created = timeago.format(data[x].created);
+                    $('#featured_reports').append(
+                        create_featured_reports(data[x])
+                    );
+                }
+
+                document.getElementById(
+                    'featured-reports-section'
+                ).style.display = 'block';
+            }
+        } catch (err) {
+            console.log(err);
+            pqy_notify.warn('Error fetching related reports');
+        }
     }
 
     //event listeners
