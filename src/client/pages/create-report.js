@@ -224,8 +224,8 @@ $(window).on('load', function() {
                 $('#projectSelect').append(
                     // Append an object to the inside of the select box
                     $('<option></option>') // Yes you can do this.
-                        .text(item.name)
-                        .val(item.slug)
+                        .text(item.name || item.title)
+                        .val(item.slug_id)
                 );
             });
         });
