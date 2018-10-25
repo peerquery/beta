@@ -17,7 +17,7 @@
 	<meta property="og:site_name" content="Peer Query">
 	<meta property="og:title" content="<%= data.name %>">
 	<meta property="og:image" content="<%= data.cover || 'https://www.peerquery.com/assets/images/peerquery-home.png' %>"/>
-	<meta property="og:description" content="<%= data.description %>">
+	<meta property="og:description" content="<%= data.description %> Join <%= data.member_count || '0' %> members." >
 	<meta property="fb:app_id" content="384491628645652">
 	
 	<!-- SEO robots -->
@@ -44,8 +44,8 @@
 			
 				<div style="margin-top:10rem">
                     
-                    <div class="image" id="project-logo-div" style="">
-                        <img style="background: #fff; margin: 0; border: 1px solid #fff; border-radius: 50%;  width: 12vw; height:12vw; box-shadow: 0 2px 2px 0 rgba(34,36,38,.15)" src="<%= data.logo %>">
+                    <div class="" style="">
+                        <img style=" border-radius: 50%; background: #fff; margin: 0; border: 1px solid #fff; width: 12vw; height:12vw; box-shadow: 0 2px 2px 0 rgba(34,36,38,.15)" src="<%= data.logo %>" onerror="this.onerror=null;this.src='/assets/images/placeholder.png'; this.onerror = ''" >
                     </div>
                     
 				</div>
@@ -57,14 +57,49 @@
 				<div style="margin-top:17rem">
 				
 					
-					<div class="ui yellow segment">
+					<div class="ui yellow segment" id="main-menu-segment">
 					
-						<div class="five ui buttons">
-							<a id="home" class="ui button"><i class="home icon"></i><span class="desktop-only">Overview</span></a>
+						<div class=" <%if (data.owner !== username) { %> four <% } else { %> five <% } %>   ui buttons">
+							<a id="home" class="ui button"><i class="thumbtack icon"></i><span class="desktop-only">About</span></a>
 							<a id="reports" class="ui button"><i class="clipboard icon"></i><span class="desktop-only">Reports</span></a>
 							<a id="queries" class="ui button"><i class="question icon"></i><span class="desktop-only">Queries</span></a>
 							<a id="members"  class="ui button"><i class="users icon"></i><span class="desktop-only">Members</span></a>
-							<a id="settings" class="ui button <%if (data.owner !== username) { %> disabled <% } %> "><i class="cog icon"></i><span class="desktop-only">Settings</span></a>
+                            
+                            <div class="ui top right pointing %> dropdown button" style="display: <%if (data.owner !== username) { %> none <% } %> ">
+                                <i class="caret down icon"></i>
+                                <span class="text desktop-only">Admin</span>
+                                <div class="menu">
+                                    <a id="activity" class="disabled item">
+                                        <i class="chart line icon"></i>
+                                        Activity
+                                    </a>
+                                    <a id="stats" class="item">
+                                        <i class="chart pie icon"></i>
+                                        Stats
+                                    </a>
+                                    <a id="requests" class="item">
+                                        <i class="user plus icon"></i>
+                                        Requests
+                                    </a>
+                                    <a id="messages" class="disabled item">
+                                        <i class="envelope icon"></i>
+                                        Messages
+                                    </a>
+                                    <a id="manage" class="item">
+                                        <i class="sliders horizontal icon"></i>
+                                        Manage
+                                    </a>
+                                    <a id="edit" class="item">
+                                        <i class="edit icon"></i>
+                                        Edit
+                                    </a>
+                                    <a id="settings" class="item">
+                                        <i class="cog icon"></i>
+                                        Settings
+                                    </a>
+                                </div>
+                            </div>
+                            
 						</div>
 				
 					</div>
@@ -119,6 +154,12 @@
 								</div>
 							</div>
 							<div class="item">
+								<i class="angle up icon"></i>
+								<div class="content">
+									<a href="<%if (data.steem) { %> <%= '/peer/' + data.steem %> <% } else { %> # <% } %> " data-tooltip="Steem" data-position="top center">Steem</a>
+								</div>
+							</div>
+							<div class="item">
 								<i class="linkify icon"></i>
 								<div class="content">
 									<a href="<%= data.website || '#' %>" data-tooltip="Website" data-position="top center"><%= data.website || '..' %></a>
@@ -133,7 +174,7 @@
 							<div class="item">
 								<i class="key icon"></i>
 								<div class="content">
-									<a href="<%= data.owner %>" data-tooltip="Owner" data-position="top center"><%= data.owner %></a>
+									<a href="/peer/<%= data.owner %>" data-tooltip="Owner" data-position="top center"><%= data.owner %></a>
 								</div>
 							</div>
 							<div class="item">
@@ -175,15 +216,21 @@
 				<% include ../partials/project-queries.ejs %>
 			<% } else if (data.path == '/members') { %>
 				<% include ../partials/project-members.ejs %>
+			<% } else if (data.path == '/requests') { %>
+				<% include ../partials/project-requests.ejs %>
+			<% } else if (data.path == '/messages') { %>
+				<% include ../partials/project-messages.ejs %>
+			<% } else if (data.path == '/manage') { %>
+				<% include ../partials/project-manage.ejs %>
+			<% } else if (data.path == '/stats') { %>
+				<% include ../partials/project-stats.ejs %>
+			<% } else if (data.path == '/edit') { %>
+				<% include ../partials/project-edit.ejs %>
 			<% } else if (data.path == '/settings') { %>
 				<% include ../partials/project-settings.ejs %>
 			<% } %>
 			
-				
-			
-				
-				
-			
+            
 			
 		</div>
 			
@@ -214,17 +261,29 @@
 						<div class="event">
 							<div class="content">
 								<div class="summary">
-									Started by <a href="/@<%= data.founder %>">@<%= data.founder %></a> on <%= new Date(data.created).toDateString() %>.
+									Started by <a href="/peer/<%= data.founder %>">@<%= data.founder %></a> on <%= new Date(data.created).toDateString() %>.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="extra content">
-					<button class="ui disabled button">Join Project</button>
+                
+                    <div class="ui fluid buttons">
+                        <button id="membership" data-tooltip="Join" data-position="top center" class="ui button" ><i class="user plus icon"></i></button>
+                        <!--
+                            <button id="message"  data-tooltip="Message" data-position="top center" class="ui button"><i class="envelope icon"></i></i></button>
+                        -->
+                    </div>
+
 				</div>
+                
+                <a class="ui bottom attached button" data-tooltip="Call to action" data-position="top center" href="<%= data.act_uri || '/project/' + data.slug + '/reports' %>" <%if (data.act_uri) { %> <%=  "target='_blank'" %> <% } %> >
+                    <i class="star icon"></i>
+                    <%= data.act_msg || 'Read about our progress' %>
+                </a>
+                
 			</div>
-			
 			
 		</div>
 		
@@ -238,7 +297,7 @@
 	
 	
 	
-	<script> const project_slug = '<%= data.slug %>'; const project_logo = '<%= data.logo %>'; </script>
+	<script> var slug_id = '<%= data.slug_id %>'; var project_name = '<%= data.name %>'; var project_slug = '<%= data.slug %>'; var project_owner = '<%= data.owner %>'; </script>
 	<script src="/build/dist/scripts.js"></script>
 	<script src="/build/dist/project.js"></script>
 	
