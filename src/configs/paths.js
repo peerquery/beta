@@ -28,10 +28,20 @@ module.exports = {
     project_members: resolveApp(
         './src/client/pages/partials/project-members.js'
     ),
+    project_requests: resolveApp(
+        './src/client/pages/partials/project-requests.js'
+    ),
+    project_manage: resolveApp('./src/client/pages/partials/project-manage.js'),
+    project_stats: resolveApp('./src/client/pages/partials/project-stats.js'),
+    project_messages: resolveApp(
+        './src/client/pages/partials/project-messages.js'
+    ),
+    project_edit: resolveApp('./src/client/pages/partials/project-edit.js'),
     project_settings: resolveApp(
         './src/client/pages/partials/project-settings.js'
     ),
     peers: resolveApp('./src/client/pages/peers.js'),
+    wallet: resolveApp('./src/client/pages/wallet.js'),
     peer: resolveApp('./src/client/pages/peer.js'),
     steem: resolveApp('./src/client/pages/steem.js'),
     query: resolveApp('./src/client/pages/query.js'),
