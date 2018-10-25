@@ -14,22 +14,26 @@
 	
 	<br/>
     
-    <div class="ui basic modal remove">
+    <div class="ui basic modal manage">
         <div class="ui icon header">
-            <i class="user times icon"></i>
-            Are your sure your want to remove user <span id='username'></span> from project?
+            <i class="cogs icon"></i>
+            Manage account for member <span id='username'></span>
         </div>
         <div class="content">
-            <p>Remember: You can add them back later.</p>
+            <p>Users on your team can only write posts for the project. If you remove a user, they can still send another membership request.</p>
         </div>
         <div class="actions">
-            <div class="ui red basic cancel inverted button">
-                <i class="remove icon"></i>
-                No
+            <div id="upgrade_user_btn" class="ui green inverted button">
+                <i class="angle up icon"></i>
+                Add to team
             </div>
-            <div id="delete_user_btn" class="ui green inverted button">
-                <i class="checkmark icon"></i>
-                Yes
+            <div id="delete_user_btn" class="ui red inverted button">
+                <i class="angle down icon"></i>
+                Remove user
+            </div>
+            <div class="ui red basic cancel inverted button">
+                <i class="times icon"></i>
+                Cancel
             </div>
         </div>
     </div>
@@ -41,15 +45,16 @@
         
         $('#members-container, #team-container').on('click', '.manage', function() {
             let target = $(this).data('account');
+            $('#upgrade_user_btn').removeClass("disabled");
             $('#delete_user_btn').removeClass("disabled");
             $('#username').html('<em>@' + target + '</em>');
+            $('#upgrade_user_btn').attr('data-account', target);
             $('#delete_user_btn').attr('data-account', target);
-            $('.ui.modal.remove').modal('show');
+            $('.ui.modal.manage').modal('show');
         });
         
         
     }
-    function remove_user(acc) {$('#' + acc + '-item').remove()}
     </script>
 	<script src="/build/dist/project_members.js"></script>
   
