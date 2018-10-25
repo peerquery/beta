@@ -31,16 +31,19 @@ $(window).on('load', function() {
     $('#requests-container').on('click', '.approve', async function() {
         try {
             let elm = this;
+            let account = $(elm).data('account');
             $(elm).addClass('disabled');
 
             let data = {
                 project_slug_id: window.slug_id,
-                account: $(elm).data('account'),
+                account: account,
             };
 
             let response = await Promise.resolve(
                 $.post('/api/private/project/approve_membership', data)
             );
+
+            $('#' + account + '-item').remove();
 
             window.pqy_notify.inform('Successfully added new member');
         } catch (err) {
@@ -52,16 +55,19 @@ $(window).on('load', function() {
     $('#requests-container').on('click', '.reject', async function() {
         try {
             let elm = this;
+            let account = $(elm).data('account');
             $(elm).addClass('disabled');
 
             let data = {
                 project_slug_id: window.slug_id,
-                account: $(elm).data('account'),
+                account: account,
             };
 
             let response = await Promise.resolve(
-                $.post('/api/private/project/leave_membership', data)
+                $.post('/api/private/project/reject_membership', data)
             );
+
+            $('#' + account + '-item').remove();
 
             window.pqy_notify.warn('Successfully declined user request');
         } catch (err) {
