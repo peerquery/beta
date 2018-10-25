@@ -34,7 +34,6 @@ module.exports = {
         slug_id: false,
         project_slug: false,
         project_logo: false,
-        project_logo: false,
         ready: false,
         responsesReady: false,
         deadline: false,
