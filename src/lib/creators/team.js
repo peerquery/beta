@@ -6,11 +6,11 @@ const randomClass = require('../helpers/random-class'),
 
 module.exports = function(data) {
     var manage =
-        window.owner !== data.account
+        /*window.owner == data.account
             ? '<i data-account="' +
               data.account +
               '" class="cog link manage icon"></i>'
-            : '';
+            : */ '';
 
     var item = document.createElement('div');
     item.className = 'item';
@@ -36,7 +36,7 @@ module.exports = function(data) {
 
     var role = document.createElement('span');
     role.className = 'floating ui ' + randomClass() + ' mini label';
-    role.innerText = data.role;
+    role.innerText = data.role || '';
 
     var description = document.createElement('small');
     description.className = 'description';
