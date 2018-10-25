@@ -12,6 +12,7 @@ address.content.queries = 'content/queries';
 address.content.query = 'content/query';
 address.content.reports = 'content/reports';
 address.content.report = 'content/report';
+address.content.wallet = 'content/wallet';
 
 //client views
 address.client = {};
