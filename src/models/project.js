@@ -22,13 +22,23 @@ var projectSchema = new Schema({
     website: { type: String },
     location: { type: String },
     steem: { type: String },
-    created: { type: Date, required: true, Default: Date.now },
-    last_update: { type: Date, required: true, Default: Date.now },
+    created: { type: Date, required: true, default: Date.now },
+    last_update: { type: Date, required: true, default: Date.now },
 
     //taxanomy
     type: { type: String, required: true },
     state: { type: String },
     tag: { type: String },
+
+    //permissions
+    member_reporting: { type: Boolean, default: false },
+    member_quering: { type: Boolean, default: false },
+    member_approving: { type: Boolean, default: false },
+
+    //action button
+    act_msg: { type: String },
+    act_uri: { type: String },
+    act_type: { type: String },
 
     //activity
     last_report: { type: Number },
@@ -51,41 +61,31 @@ var projectSchema = new Schema({
     //community
     sponsors: [
         {
-            account: { type: String, required: true, unique: true },
-            created: { type: Date, default: Date.now },
-        },
-    ],
-    team: [
-        {
-            account: { type: String, required: true, unique: true },
-            role: { type: String, required: true },
+            account: { type: String, required: true },
             created: { type: Date, default: Date.now },
         },
     ],
     members: [
         {
-            account: { type: String, required: true, unique: true },
+            account: { type: String, required: true },
             created: { type: Date, default: Date.now },
-        },
-    ],
-    following: [
-        {
-            account: { type: String, required: true, unique: true },
-            created: { type: Date, default: Date.now },
+            state: { type: String, required: true }, //pending, active, blacklist
+            type: { type: String },
+            role: { type: String },
+            comment: { type: String },
         },
     ],
     followers: [
         {
-            account: { type: String, required: true, unique: true },
+            account: { type: String, required: true },
             created: { type: Date, default: Date.now },
         },
     ],
 
     //community_stats
-    sponsors_count: { type: Number, Default: 0 },
-    member_count: { type: Number, Default: 0 },
-    following_count: { type: Number, Default: 0 },
-    followers_count: { type: Number, Default: 0 },
+    sponsor_count: { type: Number, default: 0 },
+    member_count: { type: Number, default: 0 },
+    follower_count: { type: Number, default: 0 },
 });
 
 projectSchema.index({
