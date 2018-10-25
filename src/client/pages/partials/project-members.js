@@ -45,6 +45,31 @@ async function display_members() {
     }
 }
 
+$('#upgrade_user_btn').on('click', async function() {
+    try {
+        let account = $(this).data('account');
+        $(this).addClass('disabled');
+
+        let data = {
+            project_slug_id: window.slug_id,
+            account: account,
+        };
+
+        let response = await Promise.resolve(
+            $.post('/api/private/project/upgrade_membership', data)
+        );
+
+        $('#' + account + '-item').remove();
+
+        window.pqy_notify.inform('Successfully upgrading member');
+
+        //$('.ui.modal.manage').modal('hide');
+    } catch (err) {
+        window.pqy_notify.warn('Sorry, error upgrading member');
+        console.log(err);
+    }
+});
+
 $('#delete_user_btn').on('click', async function() {
     try {
         let account = $(this).data('account');
@@ -59,9 +84,11 @@ $('#delete_user_btn').on('click', async function() {
             $.post('/api/private/project/remove_membership', data)
         );
 
+        $('#' + account + '-item').remove();
+
         window.pqy_notify.inform('Successfully removed member');
 
-        window.remove_user(account);
+        //$('.ui.modal.manage').modal('hide');
     } catch (err) {
         window.pqy_notify.warn('Sorry, error removing member');
         console.log(err);
