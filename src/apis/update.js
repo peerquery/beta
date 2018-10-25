@@ -14,7 +14,7 @@ module.exports = function(app) {
                 SAFE_FOR_JQUERY: true,
             });
 
-            var newProject = {
+            var update = {
                 name: req.body.name,
                 slug: req.body.slug,
                 location: req.body.location,
@@ -51,13 +51,7 @@ module.exports = function(app) {
 
             var query = { slug: req.body.slug, owner: req.active_user.account };
 
-            var options = { new: true };
-
-            var _status = await project.findOneAndUpdate(
-                query,
-                newProject,
-                options
-            );
+            var _status = await project.updateOne(query, update);
 
             if (!_status)
                 return res
