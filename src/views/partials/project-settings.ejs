@@ -48,7 +48,7 @@
 	
     <div class="ui basic segment">
 
-        <button class="ui right floated button" id="tranfer_project">Transfer</button>
+        <button class="ui right floated button" id="transfer_project">Transfer</button>
         <div class="ui right pointing yellow label">Careful, cannot be undone. You will loose all control over the project</div>
 
     </div>
@@ -74,11 +74,11 @@
                 <p>Download data as JSON or XML</p>
             </div>
         </div>
-        <div class="actions">
+        <div class="actions" id="export_type">
             <div id="json" class="ui black button">
                 JSON
             </div>
-            <div id="xml" class="ui right button">
+            <div id="xml" class="ui right disabled button">
                 XML
             </div>
         </div>
@@ -86,21 +86,39 @@
     
     
     <div class="ui mini modal transfer">
+    
         <i class="close icon"></i>
         <div class="header">
             Complete transfer to new owner
         </div>
+        
+        
         <div class="content">
-            <div class="ui fluid action input">
-                <input type="text" placeholder="New owner account">
-                <div id="transfer_btn" class="ui button">Transfer</div>
+            
+            <div class="ui fluid selection disabled dropdown" id="teamField">
+                
+                <input type="hidden" name="user" id="input">
+                
+                <i class="dropdown icon"></i>
+                <div class="default text">Select new owner</div>
+                
+                <div class="menu" id="team_list">
+                </div>
+                
             </div>
+        
         </div>
+        
+        
         <div class="actions">
             <div class="ui cancel black button">
                 Cancel
             </div>
+            <div class="ui green button" id="authorize_transfer">
+                Transfer
+            </div>
         </div>
+        
     </div>
     
     
@@ -117,7 +135,7 @@
                 <i class="remove icon"></i>
                 No
             </div>
-            <div id="delete_project_btn" class="ui green inverted button">
+            <div id="authorize_delete" class="ui green inverted button">
                 <i class="checkmark icon"></i>
                 Yes
             </div>
@@ -131,7 +149,28 @@
     window.onload = function() {
         $('.ui.toggle').checkbox();
         
-        $('#tranfer_project').on('click', function() {    
+        $.getJSON('/api/project/' + project_slug + '/team', null, function(datas) {
+                let data = datas[0].team;
+                $('#teamField').removeClass('disabled');
+                $.each(data, function(index, item) {
+                    // Iterates through a collection
+                        
+                        if(item.account == window.project_owner) return true; 
+                        
+                       var html = '<img class="ui mini avatar image" src="https://steemitimages.com/u/' + item.account + '/avatar">@' + item.account;
+                       var attr = { 'class': 'item', 'data-value': item.account }
+                       
+                    $('#team_list').append(
+                        // Append an object to the inside of the select box
+                       
+                        $('<div></div>') // Yes you can do this.
+                            .html(html)
+                            .attr(attr)
+                    );
+                });
+        });
+        
+        $('#transfer_project').on('click', function() {
             $('.ui.modal.transfer').modal('show');
         });
     
@@ -142,6 +181,7 @@
         $('#delete_project').on('click', function() {    
             $('.ui.modal.delete').modal('show');
         });
+        
     }
     </script>
 	<script src="/build/dist/project_settings.js"></script>
