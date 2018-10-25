@@ -17,14 +17,6 @@ var peerSchema = new Schema({
     steem_json_metadata: { type: String },
 
     //projects
-    projects: [
-        {
-            id: { type: String },
-            title: { type: String },
-            slug_id: { type: String },
-            created: { type: Date, default: Date.now },
-        },
-    ],
     memberships: [
         {
             name: { type: String, required: true },
