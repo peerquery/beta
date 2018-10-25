@@ -7,6 +7,7 @@ const randomClass = require('../helpers/random-class'),
 module.exports = function(data) {
     var item = document.createElement('div');
     item.className = 'item';
+    item.id = data.account + '-item';
 
     var content = document.createElement('div');
     content.className = 'right floated content';
