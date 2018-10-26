@@ -58,7 +58,7 @@ module.exports = function(app) {
     app.get('/project/:project', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
             var results = await projects
                 .findOne({ slug: req.params.project })
                 .select(query);
@@ -78,7 +78,7 @@ module.exports = function(app) {
     app.get('/project/:project/reports', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -99,7 +99,7 @@ module.exports = function(app) {
     app.get('/project/:project/queries', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -120,7 +120,7 @@ module.exports = function(app) {
     app.get('/project/:project/members', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -138,10 +138,125 @@ module.exports = function(app) {
         }
     });
 
+    app.get('/project/:project/requests', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOne({ slug: req.params.project })
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/requests';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
+    app.get('/project/:project/messages', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOne({ slug: req.params.project })
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/messages';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
+    app.get('/project/:project/stats', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOne({ slug: req.params.project })
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/stats';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
+    app.get('/project/:project/manage', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOne({ slug: req.params.project })
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/manage';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
+    app.get('/project/:project/edit', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOne({ slug: req.params.project })
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/edit';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
     app.get('/project/:project/settings', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug story description member_count created state tag -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -169,11 +284,17 @@ module.exports = function(app) {
         return router(address.content.peers, req, res);
     });
 
+    app.get('/peer/:username/wallet', function(req, res) {
+        return router(address.content.wallet, req, res);
+    });
+
     app.get('/report/:report', async function(req, res) {
         var find = { permlink: req.params.report };
         var report = await reports
             .findOneAndUpdate(find, { $inc: { view_count: 1 } })
-            .select('title summary author view_count -_id');
+            .select(
+                'title summary author view_count project_slug_id project_title -_id'
+            );
         res.req_data = report;
 
         return router(address.content.report, req, res);
