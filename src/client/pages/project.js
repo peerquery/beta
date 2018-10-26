@@ -18,6 +18,11 @@ $('#main-menu-segment').addClass(randomClass());
 
 (async function() {
     try {
+        if (!active_user) {
+            $('#membership').addClass('disabled');
+            return;
+        }
+
         let data = { slug_id: window.slug_id };
 
         let response = await Promise.resolve(
