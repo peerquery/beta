@@ -246,7 +246,6 @@ module.exports = function(app) {
                 last_project_title: req.body.title,
                 $push: {
                     memberships: {
-                        id: newProject._id,
                         name: req.body.title,
                         slug_id: slug,
                         state: 'active',
