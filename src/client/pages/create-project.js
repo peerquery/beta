@@ -50,8 +50,7 @@ function validateForm() {
         .html();
     data.state = $('#projectState')
         .find(':selected')
-        .val()
-        .toLowerCase();
+        .val();
     data.tag = $('#projectTag').val();
     data.website = $('#projectWebsite').val();
     data.website =
