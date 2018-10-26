@@ -48,19 +48,28 @@ $('#main-menu-segment').addClass(randomClass());
             if (
                 response.members[0].state == 'active' &&
                 response.members[0].type == 'member'
-            )
+            ) {
                 window.pqy_notify.inform(
                     'Member since: ' +
                         new Date(response.members[0].created).toDateString()
                 );
-            if (response.members[0].state == 'pending')
+
+                $('#membership').removeClass('disabled');
+            }
+            if (response.members[0].state == 'pending') {
                 window.pqy_notify.inform(
                     'Awaiting membership approval since: ' +
                         new Date(response.members[0].created).toDateString()
                 );
+
+                $('#membership').data('tooltip', 'Leave');
+                $('#membership').removeClass('disabled');
+            }
         } else {
             //is not a member
             $('#membership').html('<i class="user plus icon"></i>');
+
+            $('#membership').removeClass('disabled');
         }
     } catch (err) {
         window.pqy_notify.warn('Sorry, getting membership');
