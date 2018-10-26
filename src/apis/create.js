@@ -57,18 +57,13 @@ module.exports = function(app) {
 
             await newReport.save();
             await newActivity.save();
-            await peer.findOneAndUpdate(
+            await peer.updateOne(
                 { account: req.active_user.account },
                 updatePeer,
                 { upsert: true }
-            ); //returns query though
+            );
 
-            if (
-                project_slug_id !== null &&
-                project_slug_id !== undefined &&
-                project_title !== null &&
-                project_title !== undefined
-            ) {
+            if (project_slug_id && project_title) {
                 var updateProject = {
                     $inc: { report_count: 1 },
                     last_update: Date.now(),
@@ -79,7 +74,7 @@ module.exports = function(app) {
                     title: project_title,
                     owner: req.active_user.account,
                 };
-                await project.findOneAndUpdate(newQuery, updateProject, {
+                await project.updateOne(newQuery, updateProject, {
                     upsert: true,
                 }); //returns query!?
             }
@@ -150,11 +145,11 @@ module.exports = function(app) {
 
             await newQuery.save();
             await newActivity.save();
-            await peer.findOneAndUpdate(
+            await peer.updateOne(
                 { account: req.active_user.account },
                 updatePeer,
                 { upsert: true }
-            ); //returns query though
+            );
 
             if (
                 project_slug_id !== null &&
@@ -172,7 +167,7 @@ module.exports = function(app) {
                     title: project_title,
                     owner: req.active_user.account,
                 };
-                await project.findOneAndUpdate(projectQuery, updateProject, {
+                await project.updateOne(projectQuery, updateProject, {
                     upsert: true,
                 }); //returns query!?
             }
@@ -193,8 +188,6 @@ module.exports = function(app) {
 
             const slug = shortid.generate();
 
-            var story = await markup.build.sanitize(req.body.story);
-
             var newProject = project({
                 name: req.body.name,
                 slug: slug,
@@ -207,7 +200,7 @@ module.exports = function(app) {
                 cover: req.body.cover,
                 description: req.body.description.substring(0, 160),
                 mission: req.body.mission.substring(0, 160),
-                story: story,
+                story: req.body.story,
                 state: req.body.state,
                 member_count: 1,
                 report_count: 0,
@@ -221,13 +214,11 @@ module.exports = function(app) {
                 type: 'community',
                 created: new Date(),
                 last_update: new Date(),
-                team: {
-                    account: req.active_user.account,
-                    role: 'owner',
-                    created: new Date(),
-                },
                 members: {
                     account: req.active_user.account,
+                    role: 'owner',
+                    state: 'active',
+                    type: 'team',
                     created: new Date(),
                 },
             });
@@ -254,21 +245,24 @@ module.exports = function(app) {
                 last_project_slug_id: slug,
                 last_project_title: req.body.title,
                 $push: {
-                    projects: {
+                    memberships: {
                         id: newProject._id,
-                        title: req.body.title,
+                        name: req.body.title,
                         slug_id: slug,
+                        state: 'active',
+                        role: 'owner',
+                        type: 'team',
                         created: new Date(),
                     },
                 },
             };
 
             await newProject.save();
-            await peer.findOneAndUpdate(
+            await peer.updateOne(
                 { account: req.active_user.account },
                 updatePeer,
                 { upsert: true }
-            ); //returns query though
+            );
             await newActivity.save();
 
             res.status(200).send(slug);
@@ -277,6 +271,311 @@ module.exports = function(app) {
                 'sorry, could not create project. please try again'
             );
             console.log(err);
+        }
+    });
+
+    app.post('/api/private/create/request', async function(req, res) {
+        try {
+            var newRequest = {
+                $addToSet: {
+                    members: {
+                        account: req.active_user.account,
+                        state: 'pending',
+                        created: new Date(),
+                    },
+                },
+            };
+
+            var newActivity = activity({
+                title: req.body.name,
+                slug_id: '/project/' + req.body.slug_id,
+                action: 'create',
+                type: 'request',
+                source: 'user',
+                account: req.active_user.account,
+                description:
+                    '@' +
+                    req.active_user.account +
+                    ' asked to join: ' +
+                    req.body.name,
+                created: Date.now(),
+            });
+
+            var updatePeer = {
+                last_update: Date.now(),
+                $addToSet: {
+                    memberships: {
+                        name: req.body.name,
+                        state: 'pending',
+                        slug_id: req.body.slug_id,
+                        created: new Date(),
+                    },
+                },
+            };
+
+            await project.updateOne(
+                {
+                    slug_id: req.body.slug_id,
+                    'members.account': { $ne: req.active_user.account },
+                },
+                newRequest,
+                { upsert: true }
+            );
+
+            await peer.updateOne(
+                {
+                    account: req.active_user.account,
+                    'memberships.slug_id': { $ne: req.body.slug_id },
+                },
+                updatePeer,
+                { upsert: true }
+            );
+
+            await newActivity.save();
+
+            res.status(200).send('success');
+        } catch (err) {
+            res.status(500).send(
+                'sorry, could not create request. please try again'
+            );
+            console.log(err);
+        }
+    });
+
+    //approve membership request
+    app.post('/api/private/project/approve_membership', async function(
+        req,
+        res
+    ) {
+        try {
+            let can_approve = await project.findOne(
+                { slug_id: req.body.project_slug_id },
+                {
+                    members: {
+                        $elemMatch: {
+                            account: req.active_user.account,
+                            type: 'team',
+                        },
+                    },
+                }
+            );
+
+            if (can_approve.members.length) {
+                let approve_request = await project.updateOne(
+                    {
+                        slug_id: req.body.project_slug_id,
+                        'members.account': req.body.account,
+                    },
+                    {
+                        $set: {
+                            'members.$.state': 'active',
+                            'members.$.type': 'member',
+                        },
+                    },
+                    { upsert: true }
+                );
+
+                let update_member_count = await project.updateOne(
+                    { slug_id: req.body.project_slug_id },
+                    { $inc: { member_count: 1 } }
+                );
+
+                let membership_updated = await peer.updateOne(
+                    {
+                        account: req.body.account,
+                        'memberships.slug_id': req.body.project_slug_id,
+                    },
+                    {
+                        $set: {
+                            'memberships.$.state': 'active',
+                            'membership.$.type': 'member',
+                        },
+                    },
+                    { upsert: true }
+                );
+
+                if (approve_request && membership_updated) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //remove project membership
+    app.post('/api/private/project/remove_membership', async function(
+        req,
+        res
+    ) {
+        try {
+            let can_remove = await project.findOne(
+                { slug_id: req.body.project_slug_id },
+                {
+                    members: {
+                        $elemMatch: {
+                            account: req.active_user.account,
+                            type: 'team',
+                        },
+                    },
+                }
+            );
+
+            if (can_remove.members.length) {
+                let leave_project = await project.updateOne(
+                    { slug_id: req.body.project_slug_id },
+                    {
+                        $pull: {
+                            members: {
+                                account: req.body.account,
+                                role: { $ne: 'owner' },
+                            },
+                        },
+                    }
+                );
+
+                let update_user = await peer.updateOne(
+                    { account: req.body.account },
+                    {
+                        $pull: {
+                            memberships: {
+                                slug_id: req.body.project_slug_id,
+                                role: { $ne: 'owner' },
+                            },
+                        },
+                    }
+                );
+
+                let update_member_count = await project.updateOne(
+                    { slug_id: req.body.project_slug_id },
+                    { $inc: { member_count: -1 } }
+                );
+
+                if (leave_project && update_user) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //reject membership
+    app.post('/api/private/project/reject_membership', async function(
+        req,
+        res
+    ) {
+        try {
+            let reject_request = await project.updateOne(
+                { slug_id: req.body.project_slug_id },
+                { $pull: { members: { account: req.body.account } } }
+            );
+
+            let update_user = await peer.updateOne(
+                { account: req.body.account },
+                {
+                    $pull: {
+                        memberships: { slug_id: req.body.project_slug_id },
+                    },
+                }
+            );
+
+            if (reject_request && update_user) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //leave project
+    app.post('/api/private/project/leave_membership', async function(req, res) {
+        try {
+            let leave_project = await project.findOneAndUpdate(
+                { slug_id: req.body.project_slug_id },
+                {
+                    $pull: {
+                        members: {
+                            account: req.active_user.account,
+                            role: { $ne: 'owner' },
+                        },
+                    },
+                },
+                { fields: { state: 1 } }
+            );
+
+            let update_user = await peer.updateOne(
+                { account: req.active_user.account },
+                {
+                    $pull: {
+                        memberships: {
+                            slug_id: req.body.project_slug_id,
+                            role: { $ne: 'owner' },
+                        },
+                    },
+                }
+            );
+
+            //reduce member count only if user's state was *active* not *pending*
+            if (leave_project && leave_project.state == 'active') {
+                let update_member_count = await project.updateOne(
+                    { slug_id: req.body.project_slug_id },
+                    { $inc: { member_count: -1 } }
+                );
+            }
+
+            if (leave_project && update_user) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //upgrade project membership - make member a team member
+    app.post('/api/private/project/upgrade_membership', async function(
+        req,
+        res
+    ) {
+        try {
+            let upgrade_membership = await project.updateOne(
+                {
+                    slug_id: req.body.project_slug_id,
+                    'members.account': req.body.account,
+                },
+                { $set: { 'members.$.type': 'team' } },
+                { upsert: true }
+            );
+
+            let update_user = await peer.updateOne(
+                {
+                    account: req.body.account,
+                    'memberships.slug_id': req.body.project_slug_id,
+                },
+                { $set: { 'memberships.$.type': 'team' } },
+                { upsert: true }
+            );
+
+            if (upgrade_membership && update_user) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(500);
+            }
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
         }
     });
 };
