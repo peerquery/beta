@@ -33,7 +33,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -60,7 +60,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -87,7 +87,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -114,7 +114,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -126,7 +126,7 @@ module.exports = async function(app) {
             let results = await queries.aggregate([{ $sample: { size: 20 } }]);
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -164,7 +164,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -191,7 +191,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -224,7 +224,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -251,7 +251,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -263,7 +263,7 @@ module.exports = async function(app) {
             let results = await projects.aggregate([{ $sample: { size: 20 } }]);
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -293,7 +293,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -324,7 +324,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -355,7 +355,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -368,12 +368,12 @@ module.exports = async function(app) {
                 .select(query);
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
 
-    app.get('/api/private/project/:slug/settings', async function(req, res) {
+    app.get('/api/private/project/:slug/edit', async function(req, res) {
         try {
             let query =
                 ' -created -followers -following -founder -last_update -member_count -team -reports -members -owner -report_count -slug -sponsors -verified -_id';
@@ -392,7 +392,7 @@ module.exports = async function(app) {
 
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -402,20 +402,31 @@ module.exports = async function(app) {
             let query = 'name title slug -_id';
 
             //the below clause makes sure only the project owner can access this api
-            let results = await projects
-                .find({ owner: req.active_user.account })
-                .select(query);
+            let results = await users.aggregate([
+                { $match: { account: req.active_user.account } },
+                {
+                    $project: {
+                        memberships: {
+                            $filter: {
+                                input: '$memberships',
+                                as: 'membership',
+                                cond: { $eq: ['$$membership.type', 'team'] },
+                            },
+                        },
+                    },
+                },
+            ]);
 
-            if (!results || results == '')
-                res.status(403).send('Sorry, you have no projects');
+            results = results[0].memberships;
+
+            if (!results) res.status(403).send('Sorry, you have no projects');
 
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
-
     //featured, viewed, voted, comment, created
 
     app.get('/api/reports/featured/:last_id', async function(req, res) {
@@ -423,7 +434,7 @@ module.exports = async function(app) {
             var start = new Date(
                 new Date().getTime() - 7 * 24 * 60 * 60 * 1000
             ); //seven days ago
-            var find = {
+            let find = {
                 created: { $gte: start },
                 project_slug_id: { $nin: [null, ''] },
             };
@@ -450,7 +461,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -460,7 +471,7 @@ module.exports = async function(app) {
             var start = new Date(
                 new Date().getTime() - 7 * 24 * 60 * 60 * 1000
             ); //seven days ago
-            var find = { created: { $gte: start } };
+            let find = { created: { $gte: start } };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -483,7 +494,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -493,7 +504,7 @@ module.exports = async function(app) {
             var start = new Date(
                 new Date().getTime() - 7 * 24 * 60 * 60 * 1000
             ); //seven days ago
-            var find = { created: { $gte: start } };
+            let find = { created: { $gte: start } };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -516,7 +527,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -526,7 +537,7 @@ module.exports = async function(app) {
             var start = new Date(
                 new Date().getTime() - 7 * 24 * 60 * 60 * 1000
             ); //seven days ago
-            var find = { created: { $gte: start } };
+            let find = { created: { $gte: start } };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -549,7 +560,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -559,7 +570,7 @@ module.exports = async function(app) {
             var start = new Date(
                 new Date().getTime() - 7 * 24 * 60 * 60 * 1000
             ); //seven days ago
-            var find = { created: { $gte: start } };
+            let find = { created: { $gte: start } };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -582,7 +593,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -590,7 +601,7 @@ module.exports = async function(app) {
     //reports by user
     app.get('/api/reports/user/:username/:last_id', async function(req, res) {
         try {
-            var find = { author: req.params.username };
+            let find = { author: req.params.username };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -613,7 +624,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -624,7 +635,7 @@ module.exports = async function(app) {
         res
     ) {
         try {
-            var find = { project_slug_id: req.params.project_slug_id };
+            let find = { project_slug_id: req.params.project_slug_id };
 
             let query = 'author permlink id';
             if (req.params.last_id == 0) {
@@ -647,10 +658,35 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
+
+    //featured reports by project for report page sidebar
+    app.get(
+        '/api/featured_reports/project/:project_slug_id/:permlink',
+        async function(req, res) {
+            try {
+                let find = {
+                    project_slug_id: req.params.project_slug_id,
+                    permlink: { $ne: req.params.permlink },
+                };
+
+                let query = 'author created title category permlink';
+
+                let results = await reports
+                    .find(find)
+                    .select(query)
+                    .limit(4)
+                    .sort({ created: -1 });
+                res.status(200).json(results);
+            } catch (err) {
+                console.log(err);
+                res.sendStatus(500);
+            }
+        }
+    );
 
     //queries by project
     app.get('/api/queries/project/:project_slug_id/:last_id', async function(
@@ -658,7 +694,7 @@ module.exports = async function(app) {
         res
     ) {
         try {
-            var find = { project_slug_id: req.params.project_slug_id };
+            let find = { project_slug_id: req.params.project_slug_id };
 
             let query =
                 'image title description author permlink reward type reward_form project_title project_slug_id deadline created';
@@ -682,24 +718,179 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //requests of project
+    app.get('/api/project/:project_slug_id/requests', async function(req, res) {
+        try {
+            let find = { slug_id: req.params.project_slug_id };
+
+            let results = await projects.aggregate([
+                { $match: { slug_id: req.params.project_slug_id } },
+                {
+                    $project: {
+                        requests: {
+                            $filter: {
+                                input: '$members',
+                                as: 'requests',
+                                cond: { $eq: ['$$requests.state', 'pending'] },
+                            },
+                        },
+                    },
+                },
+            ]);
+            res.status(200).json(results);
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //team of project
+    app.get('/api/project/:project_slug_id/team', async function(req, res) {
+        try {
+            let find = { slug_id: req.params.project_slug_id };
+
+            let results = await projects.aggregate([
+                { $match: { slug_id: req.params.project_slug_id } },
+                {
+                    $project: {
+                        team: {
+                            $filter: {
+                                input: '$members',
+                                as: 'team',
+                                cond: { $eq: ['$$team.type', 'team'] },
+                            },
+                        },
+                    },
+                },
+            ]);
+            res.status(200).json(results);
+        } catch (err) {
+            console.log(err);
             res.sendStatus(500);
         }
     });
 
     //members of project
-    app.get('/api/members/project/:project_slug_id', async function(req, res) {
+    app.get('/api/project/:project_slug_id/members', async function(req, res) {
         try {
-            var find = { slug_id: req.params.project_slug_id };
+            let find = { slug_id: req.params.project_slug_id };
 
-            let results = await projects
-                .findOne(find, { members: 1 })
-                .limit(20)
-                .sort({ created: 1 });
+            let results = await projects.aggregate([
+                { $match: { slug_id: req.params.project_slug_id } },
+                {
+                    $project: {
+                        members: {
+                            $filter: {
+                                input: '$members',
+                                as: 'members',
+                                cond: { $eq: ['$$members.type', 'member'] },
+                            },
+                        },
+                    },
+                },
+            ]);
             res.status(200).json(results);
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.sendStatus(500);
         }
     });
+
+    //stats of project
+    app.get('/api/project/:project_slug_id/stats', async function(req, res) {
+        try {
+            let find = { slug_id: req.params.project_slug_id };
+
+            let overview = await projects
+                .findOne(find, {
+                    report_count: 1,
+                    query_count: 1,
+                    member_count: 1,
+                })
+                .limit(50)
+                .sort({ created: 1 });
+
+            let team = await projects.aggregate([
+                { $match: { slug_id: req.params.project_slug_id } },
+                {
+                    $project: {
+                        team_count: {
+                            $filter: {
+                                input: '$members',
+                                as: 'team_count',
+                                cond: { $gt: ['$$team_count.type', 'team'] },
+                            },
+                        },
+                    },
+                },
+                { $unwind: '$team_count' },
+                { $group: { _id: null, team_count: { $sum: 1 } } },
+            ]);
+
+            let pending = await projects.aggregate([
+                { $match: { slug_id: req.params.project_slug_id } },
+                {
+                    $project: {
+                        pending_count: {
+                            $filter: {
+                                input: '$members',
+                                as: 'pending_count',
+                                cond: {
+                                    $eq: ['$$pending_count.state', 'pending'],
+                                },
+                            },
+                        },
+                    },
+                },
+                { $unwind: '$pending_count' },
+                { $group: { _id: null, pending_count: { $sum: 1 } } },
+            ]);
+
+            res.status(200).json({ overview, team, pending });
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    //test to see if user is a members of project
+    app.get('/api/project/:project_slug_id/membership', async function(
+        req,
+        res
+    ) {
+        try {
+            let find = { slug_id: req.params.project_slug_id };
+
+            let results = await projects.findOne(find, {
+                members: { $elemMatch: { account: req.active_user.account } },
+            });
+            res.status(200).json(results);
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    /*
+    //members of project
+    app.get('/api/project/:project_slug_id/members', async function(req, res) {
+        try {
+            let find = { slug_id: req.params.project_slug_id };
+
+            let results = await projects
+                .findOne(find, { members: 1 })
+                .limit(50)
+                .sort({ created: 1 });
+            res.status(200).json(results);
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+    */
 };
