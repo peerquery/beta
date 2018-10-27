@@ -1,8 +1,6 @@
 'use strict';
 
-var shortid = require('shortid'),
-    markup = require('markup-builder'),
-    mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
     activity = require('../models/activity'),
     project = require('../models/project');
 //do not worry about sanitizing req.body; already done in the server!
@@ -10,10 +8,6 @@ var shortid = require('shortid'),
 module.exports = function(app) {
     app.post('/api/private/update/project', async function(req, res) {
         try {
-            var story = await markup.build.sanitize(req.body.story, {
-                SAFE_FOR_JQUERY: true,
-            });
-
             var update = {
                 name: req.body.name,
                 slug: req.body.slug,
@@ -22,7 +16,7 @@ module.exports = function(app) {
                 cover: req.body.cover,
                 description: req.body.description,
                 mission: req.body.mission,
-                story: story,
+                story: req.body.story,
                 state: req.body.state,
                 tag: req.body.tag,
                 website: req.body.website,
