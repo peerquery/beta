@@ -823,7 +823,7 @@ module.exports = async function(app) {
                             $filter: {
                                 input: '$members',
                                 as: 'team_count',
-                                cond: { $gt: ['$$team_count.type', 'team'] },
+                                cond: { $eq: ['$$team_count.type', 'team'] },
                             },
                         },
                     },
