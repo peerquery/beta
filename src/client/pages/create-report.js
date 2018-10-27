@@ -28,9 +28,11 @@ $(window).on('load', function() {
             .find(':selected')
             .val();
         if (project_slug_id !== '') {
+            //project_title = user_projects.filter( e => e.slug_id === project_slug_id )[0].title;
             project_title = user_projects.filter(
-                e => e.slug === project_slug_id
-            )[0].title;
+                e => e.slug_id === project_slug_id
+            )[0];
+            project_title = project_title.title || project_title.name;
         } else {
             project_title = '';
         }
