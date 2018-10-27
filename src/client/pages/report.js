@@ -452,7 +452,7 @@ $(window).on('load', async function() {
         try {
             let data = await Promise.resolve(
                 $.get(
-                    'http://localhost/api/featured_reports/project/' +
+                    '/api/featured_reports/project/' +
                         window.project_slug_id +
                         '/' +
                         permlink
