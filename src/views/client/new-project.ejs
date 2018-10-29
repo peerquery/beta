@@ -114,26 +114,33 @@
       <div class="field" id="nameField"><label>Name*</label>
         <input type="text" id="projectName" name="" placeholder="">
       </div>
-      <div class="field"><label>Location</label>
-        <input id="projectLocation" type="text" name="" placeholder="">
-      </div>
-      <div class="field"><label>Founder</label>
-        <input readonly="" id="projectFounder" type="text" name="" placeholder="">
-      </div>
-    </div>
+    
+  <div class="field">
+    <label>Title[Unique, 100 max alpha-numeric]*</label>
+    <input id="projectTitle" class="limitedText" maxlength="100"></input>
   </div>
   
-  <div class="field">
-   
-    <div class="fields"> 
-      <div class="eight wide field"><label>Profile image</label>
-        <input type="text" id="projectLogo" placeholder="">
-      </div>
-      <div class="eight wide field"> <label>Cover image</label>
-        <input type="text" id="projectCover" placeholder="">
-      </div>
+      
+    <div class="field" id="typeField">
+      <label>Type*</label>
+      <select id="projectType" class="ui fluid dropdown">
+        <option value="general">general</option>
+        <option value="curation">curation</option>
+        <option value="campaign">campaign</option>
+        <option value="support">support</option>
+        <option value="event">event</option>
+        <option value="forum">forum</option>
+        <option value="media">media</option>
+        <option value="movement">movement</option>
+        <option value="government">government</option>
+      </select>
     </div>
+      
+      
+    </div>
+    
   </div>
+  
 	
   <div class="field" id="descriptionField">
     <label>Brief description[Text only 160 characters max]*</label>
@@ -141,22 +148,8 @@
   </div>
   
   
-  <br/>
   
   <h4 class="ui dividing header">Definition</h4>
-  
-  
-  
-  <div class="field">
-    <label>Title[Unique, permanent, 100 max alpha-numeric characters]*</label>
-    <input id="projectTitle" class="limitedText" maxlength="100"></input>
-  </div>
-  
-  
-  <div class="field">
-    <label>Mission[Text only 160 characters max]</label>
-    <textarea id="projectMission" class="limitedText" maxlength="160" rows="2"></textarea>
-  </div>
   
   
   <div class="field" id="storyField">
@@ -165,71 +158,6 @@
   </div>
   
   
-  
-  <div class="field">
-    <div class="two fields">
-	
-	
-    <div class="field" id="stateField">
-      <label>State*</label>
-      <select id="projectState" class="ui fluid dropdown">
-    <option value="active">active</option>
-    <option value="hibernation">hibernation</option>
-      </select>
-    </div>
-	
-      <div class="field" id="tagField"><label>Tag*</label>
-        <input type="text" id="projectTag" name="" placeholder="">
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  <br/>
-  
-  
-		<h4 class="ui dividing header">Affiliations</h4>
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Website</label>
-        <input type="text" id="projectWebsite" name="" placeholder="">
-      </div>
-      <div class="field"><label>Steem</label>
-        <input type="text" id="projectSteem" name="" placeholder="">
-      </div>
-    </div>
-	
-  </div>
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Facebook</label>
-        <input type="text" id="projectFacebook" name="" placeholder="">
-      </div>
-      <div class="field"><label>Twitter</label>
-        <input type="text" id="projectTwitter" name="" placeholder="">
-      </div>
-    </div>
-	
-  </div>
-  
-  
-  
-  <div class="field">
-    <div class="two fields">
-      <div class="field"><label>Github</label>
-        <input type="text" id="projectGithub" name="" placeholder="">
-      </div>
-      <div class="field"><label>Chat</label>
-        <input type="text" id="projectChat" name="" placeholder="">
-      </div>
-    </div>
-	
-  </div>
   
   <br/>
   <br/>
@@ -257,7 +185,7 @@
 		  <div class="ui message">
 		  
 			<div class="ui bulleted list">
-				<div class="item">Fields marked * are required</div>
+				<div class="item">All fields are required</div>
 				<div class="item">Avoid impersonating an existing project</div>
 				<div class="item">Avoid using trademarked and copyrighted content and names</div>
 				<div class="item">Avoid starting a project whose intended purpose is against our community standards</div>

@@ -13,7 +13,6 @@ $(window).on('load', function() {
 });
 
 //$('#account_img').attr("src", "https://steemitimages.com/u/" + active_user + "/avatar");
-$('#projectFounder').val(active_user);
 
 $('#createBtn').on('click', function() {
     if (validateForm() == true) {
@@ -27,19 +26,18 @@ var data = {};
 
 function validateForm() {
     data.name = $('#projectName').val();
-    data.location = $('#projectLocation').val();
     //data.founder = active_user; //handled server side for thorough consistency
-    data.logo = $('#projectLogo').val();
-    data.cover = $('#projectCover').val();
     data.description = $('#projectDescription')
         .val()
         .substring(0, 160);
     data.title = $('#projectTitle')
         .val()
         .substring(0, 100);
-    data.mission = $('#projectMission')
-        .val()
-        .substring(0, 160);
+
+    data.type = $('#projectType')
+        .find(':selected')
+        .val();
+
     data.story = $('<div />')
         .html(Editor.setup.getMarkdown())
         .find('span')
@@ -48,28 +46,9 @@ function validateForm() {
         .end()
         .end()
         .html();
-    data.state = $('#projectState')
-        .find(':selected')
-        .val();
     data.tag = $('#projectTag').val();
-    data.website = $('#projectWebsite').val();
-    data.website =
-        data.website.indexOf('://') === -1
-            ? 'http://' + data.website
-            : data.website;
-    data.steem = $('#projectSteem').val();
-    data.facebook = $('#projectFacebook').val();
-    data.twitter = $('#projectTwitter').val();
-    data.github = $('#projectGithub').val();
-    data.chat = $('#projectChat').val();
 
-    var required = [
-        data.name,
-        data.description,
-        data.title,
-        data.state,
-        data.tag,
-    ];
+    var required = [data.name, data.description, data.title, data.type];
     var empty = '';
     var invalid = required.indexOf(empty);
 
@@ -91,12 +70,8 @@ function validateForm() {
             (id = 'projectTitle'), (field = 'titleField');
         }
         if (invalid == 3) {
-            name = 'State field';
-            (id = 'projectState'), (field = 'stateField');
-        }
-        if (invalid == 4) {
-            name = 'Tag field';
-            (id = 'projectTag'), (field = 'tagField');
+            name = 'Type field';
+            (id = 'projectType'), (field = 'typeField');
         }
 
         window.pqy_notify.warn(name + ' cannot be empty');
