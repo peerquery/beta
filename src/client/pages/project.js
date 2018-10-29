@@ -38,7 +38,7 @@ $('#main-menu-segment').addClass(randomClass());
                 response.members[0].role == 'owner';
 
             $('#membership').html('<i class="user times icon"></i>');
-            $('#membership').data('tooltip', 'Leave');
+            $('#membership').attr('data-tooltip', 'Leave');
 
             if (response.members[0].type == 'team') {
                 $('#message').addClass('disabled');
@@ -62,7 +62,7 @@ $('#main-menu-segment').addClass(randomClass());
                         new Date(response.members[0].created).toDateString()
                 );
 
-                $('#membership').data('tooltip', 'Leave');
+                $('#membership').attr('data-tooltip', 'Leave');
                 $('#membership').removeClass('disabled');
             }
         } else {
