@@ -3,7 +3,7 @@
 var project =
     '     ' +
     '   	  <div class="content">  ' +
-    '   		<a class="right floated ui red horizontal label"> {{ tag }} </a>  ' +
+    '   		<a class="right floated ui red horizontal label"> {{ type }} </a>  ' +
     '   		<img class="ui avatar image" src="{{logo}}"> <a href="/project/{{slug}}"> {{ slug }} </a> ' +
     '   	  </div>  ' +
     '   	  <div class="content">  ' +
