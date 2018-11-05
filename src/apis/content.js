@@ -20,7 +20,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let options = {
                     project_slug_id: { $nin: [null, ''] },
                     _id: { $gt: req.params.last_id },
@@ -51,7 +51,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await queries
                     .find()
                     .select(query)
@@ -78,7 +78,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await queries
                     .find()
                     .select(query)
@@ -105,7 +105,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await queries
                     .find()
                     .select(query)
@@ -135,7 +135,7 @@ module.exports = async function(app) {
         try {
             if (req.params.last_id == 0) {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let options = {
                     steem: { $nin: [null, ''] },
                     website: { $nin: [null, ''] },
@@ -149,7 +149,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let options = {
                     steem: { $nin: [null, ''] },
                     website: { $nin: [null, ''] },
@@ -173,7 +173,7 @@ module.exports = async function(app) {
         try {
             if (req.params.last_id == 0) {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find({ state: 'active' })
                     .select(query)
@@ -182,7 +182,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find({ state: 'active', _id: { $gt: req.params.last_id } })
                     .select(query)
@@ -203,7 +203,7 @@ module.exports = async function(app) {
         try {
             if (req.params.last_id == 0) {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find({ state: 'hibernation' })
                     .select(query)
@@ -212,7 +212,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find({
                         state: 'hibernation',
@@ -233,7 +233,7 @@ module.exports = async function(app) {
         try {
             if (req.params.last_id == 0) {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find()
                     .select(query)
@@ -242,7 +242,7 @@ module.exports = async function(app) {
                 res.status(200).json(results);
             } else {
                 let query =
-                    'name owner slug description logo location report_count member_count created state type';
+                    'name owner slug description logo location report_count member_count created state type color';
                 let results = await projects
                     .find({ _id: { $gt: req.params.last_id } })
                     .select(query)
@@ -259,7 +259,7 @@ module.exports = async function(app) {
     app.get('/api/fetch/projects/random/:last_id', async function(req, res) {
         try {
             let query =
-                'name owner slug description logo location report_count member_count created state type';
+                'name owner slug description logo location report_count member_count created state type color';
             let results = await projects.aggregate([{ $sample: { size: 20 } }]);
             res.status(200).json(results);
         } catch (err) {
@@ -385,10 +385,10 @@ module.exports = async function(app) {
                 .equals(req.active_user.account)
                 .select(query);
 
-            if (!results || results == '')
-                res.status(403).send(
-                    'Sorry, you have no right to access this route'
-                );
+            if (!results || results == '') return;
+            res.status(403).send(
+                'Sorry, you have no right to access this route'
+            );
 
             res.status(200).json(results);
         } catch (err) {
@@ -419,7 +419,8 @@ module.exports = async function(app) {
 
             results = results[0].memberships;
 
-            if (!results) res.status(403).send('Sorry, you have no projects');
+            if (!results)
+                return res.status(403).send('Sorry, you have no projects');
 
             res.status(200).json(results);
         } catch (err) {
