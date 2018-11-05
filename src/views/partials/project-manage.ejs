@@ -6,30 +6,145 @@
     <meta name="robots" itemprop="robots" content="noindex" />
 
     
+    
+  <h4 class="ui dividing header">Theme</h4>
+  
+    <div class="ui segment">
+	
+    <div class="ui bottom attached label">Form and look</div>
+	
+	<div class="ui form">
+    
+  <div class="two fields">
+      
+    <div class="field" id="typeField">
+      <label>Type</label>
+      <select id="projectType" class="ui fluid dropdown">
+        <option value="general">general</option>
+        <option value="curation">curation</option>
+        <option value="campaign">campaign</option>
+        <option value="support">support</option>
+        <option value="contest">contest</option>
+        <option value="event">event</option>
+        <option value="forum">forum</option>
+        <option value="media">media</option>
+        <option value="movement">movement</option>
+        <option value="government">government</option>
+      </select>
+    </div>
+      
+    <div class="field" id="colorField">
+      <label>Color</label>
+    <div class="ui fluid selection dropdown">
+        <input type="hidden" name="color" id="projectColor">
+        <i class="dropdown icon"></i>
+        <div class="default text"><%= data.color || "Select new color"%></div>
+            <div class="menu">
+                <div class="item" data-value="red">
+                    <div class="ui red empty circular label"></div>
+                    red
+                </div>
+                <div class="item" data-value="orange">
+                    <div class="ui orange empty circular label"></div>
+                    orange
+                </div>
+                <div class="item" data-value="yellow">
+                    <div class="ui yellow empty circular label"></div>
+                    yellow
+                </div>
+                <div class="item" data-value="olive">
+                    <div class="ui olive empty circular label"></div>
+                    olive
+                </div>
+                <div class="item" data-value="green">
+                    <div class="ui green empty circular label"></div>
+                    green
+                </div>
+                <div class="item" data-value="teal">
+                    <div class="ui teal empty circular label"></div>
+                    teal
+                </div>
+                <div class="item" data-value="blue">
+                    <div class="ui blue empty circular label"></div>
+                    blue
+                </div>
+                <div class="item" data-value="violet">
+                    <div class="ui violet empty circular label"></div>
+                    violet
+                </div>
+                <div class="item" data-value="purple">
+                    <div class="ui purple empty circular label"></div>
+                    purple
+                </div>
+                <div class="item" data-value="pink">
+                    <div class="ui pink empty circular label"></div>
+                    pink
+                </div>
+                <div class="item" data-value="brown">
+                    <div class="ui brown empty circular label"></div>
+                    brown
+                </div>
+                <div class="item" data-value="grey">
+                    <div class="ui grey empty circular label"></div>
+                    grey
+                </div>
+                <div class="item" data-value="black">
+                    <div class="ui black empty circular label"></div>
+                    black
+                </div>
+                <div class="item" data-value="none">
+                    <div class="ui none empty circular label"></div>
+                    none
+                </div>
+            </div>
+    </div>
+    
+      
+      
+    </div>
+      
+      
+    </div>
+    
+    <div class="compact ui right floated button" id="update_project_theme">Save</div>
+  
+    </div>
+    
+    </div>
+    
+    
+    
+    
+    
     <h4 class="ui dividing header">Action</h4>
     
     <div class="ui segment">
     
-<div class="ui bottom attached label">Call to action button</div>
+    <div class="ui bottom attached label">Call to action button</div>
     
     <div class="ui form">
-  <div class="two fields">
-    <div class="field">
-      <label>Message</label>
-      <input type="text" id="msg" placeholder="Delegate SP to us">
-    </div>
-    <div class="field">
-      <label>Link or URI</label>
-      <input type="text" id="uri" placeholder="https://steemconnect.com/sign...">
-    </div>
-  </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Message</label>
+                <input type="text" id="msg" placeholder="Delegate SP to us">
+            </div>
+            <div class="field">
+                <label>Link or URI</label>
+                <input type="text" id="uri" placeholder="https://steemconnect.com/sign...">
+            </div>
+        </div>
   
-  <div class="compact ui right floated button" id="update_action_button">Save</div>
+        <div class="compact ui right floated button" id="update_action_button">Save</div>
+  
     </div>
 
-
-
     </div>
+    
+    
+    
+    
+    
+    
     
     
     
@@ -69,7 +184,7 @@
    <div class="ui segment">
         <div class="field">
             <div class="ui toggle checkbox">
-                <label>Allow every mener of the project to approve join request.</label>
+                <label>Allow every member of the project to approve join request.</label>
             </div>
             <button class="compact ui right floated button">Save</button>
         </div>
@@ -81,6 +196,6 @@
 	
 </div>
 
-  
+    <script>window.onload = function () { $('#projectType').dropdown('set selected', '<%= data.type %>') };</script>
 	<script src="/build/dist/project_manage.js"></script>
   
