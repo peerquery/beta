@@ -25,6 +25,9 @@ var projectSchema = new Schema({
     created: { type: Date, required: true, default: Date.now },
     last_update: { type: Date, required: true, default: Date.now },
 
+    //theme
+    color: { type: String },
+
     //taxanomy
     type: { type: String, required: true },
     state: { type: String },
