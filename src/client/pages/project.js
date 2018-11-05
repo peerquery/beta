@@ -1,6 +1,5 @@
 'use strict';
 
-const randomClass = require('./../../lib/helpers/random-class');
 var membership;
 
 $('#home').attr('href', '/project/' + project_slug);
@@ -13,8 +12,6 @@ $('#messages').attr('href', '/project/' + project_slug + '/messages');
 $('#stats').attr('href', '/project/' + project_slug + '/stats');
 $('#edit').attr('href', '/project/' + project_slug + '/edit');
 $('#settings').attr('href', '/project/' + project_slug + '/settings');
-
-$('#main-menu-segment').addClass(randomClass());
 
 (async function() {
     try {
