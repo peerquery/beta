@@ -4,6 +4,7 @@ var sc2 = require('steemconnect'),
     dsteem = require('dsteem'),
     markup = require('markup-builder'),
     Editor = require('../../lib/editor'),
+    accounter = require('../../lib/helpers/account'),
     templator = require('../templator'),
     config = require('../../configs/config'),
     utils = require('../../lib/utils'),
@@ -37,7 +38,7 @@ const mk_opt = {
 };
 
 var permlink = window.location.pathname.split('/')[2];
-var author = permlink.split('-')[0];
+var author = accounter.extract(permlink);
 var report;
 var author_earnings;
 
@@ -48,7 +49,7 @@ $(window).on('load', async function() {
         //if (!report || report.author == '') {pqy_notify.warn('Sorry, could not load post.'); return;}
         if (!report || report.author == '') {
             var new_url = window.location.pathname.split('/')[2];
-            author = new_url.split('-')[0];
+            author = accounter.extract(new_url);
             permlink = new_url.replace(author + '-', '');
 
             report = await client.database.call('get_content', [
