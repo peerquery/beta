@@ -58,7 +58,7 @@ module.exports = function(app) {
     app.get('/project/:project', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             var results = await projects
                 .findOne({ slug: req.params.project })
                 .select(query);
@@ -78,7 +78,7 @@ module.exports = function(app) {
     app.get('/project/:project/reports', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -99,7 +99,7 @@ module.exports = function(app) {
     app.get('/project/:project/queries', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -120,7 +120,7 @@ module.exports = function(app) {
     app.get('/project/:project/members', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -141,7 +141,7 @@ module.exports = function(app) {
     app.get('/project/:project/requests', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -164,7 +164,7 @@ module.exports = function(app) {
     app.get('/project/:project/messages', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -187,7 +187,7 @@ module.exports = function(app) {
     app.get('/project/:project/stats', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -210,7 +210,7 @@ module.exports = function(app) {
     app.get('/project/:project/manage', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -233,7 +233,7 @@ module.exports = function(app) {
     app.get('/project/:project/edit', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
@@ -256,7 +256,7 @@ module.exports = function(app) {
     app.get('/project/:project/settings', async function(req, res) {
         try {
             var query =
-                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag act_msg act_uri -_id';
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
