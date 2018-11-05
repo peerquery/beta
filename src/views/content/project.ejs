@@ -57,7 +57,7 @@
 				<div style="margin-top:17rem">
 				
 					
-					<div class="ui yellow segment" id="main-menu-segment">
+					<div class="ui <%= data.color %> segment" id="main-menu-segment">
 					
 						<div class=" <%if (data.owner !== username) { %> four <% } else { %> five <% } %>   ui buttons">
 							<a id="home" class="ui button"><i class="thumbtack icon"></i><span class="desktop-only">About</span></a>
@@ -278,7 +278,7 @@
 
 				</div>
                 
-                <a class="ui bottom attached button" data-tooltip="Call to action" data-position="top center" href="<%= data.act_uri || '/project/' + data.slug + '/reports' %>" <%if (data.act_uri) { %> <%=  "target='_blank'" %> <% } %> >
+                <a class="ui bottom <%= data.color %> attached button" data-tooltip="Call to action" data-position="top center" href="<%= data.act_uri || '/project/' + data.slug + '/reports' %>" <%if (data.act_uri) { %> <%=  "target='_blank'" %> <% } %> >
                     <i class="star icon"></i>
                     <%= data.act_msg || 'Read about our progress' %>
                 </a>
