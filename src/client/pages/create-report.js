@@ -2,6 +2,7 @@
 
 var sc2 = require('steemconnect'),
     Editor = require('../../lib/editor'),
+    accounter = require('../../lib/helpers/account'),
     config = require('../../configs/config');
 
 //jquery is already universal through the `scripts.js` global file
@@ -44,7 +45,7 @@ $(window).on('load', function() {
             return;
         }
 
-        const author = active_user;
+        const author = accounter.build(active_user);
         const category = $('#reportCategory')
             .find(':selected')
             .val();
