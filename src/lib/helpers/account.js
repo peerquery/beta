@@ -15,9 +15,20 @@ module.exports = {
 
         if (!index1 && !index2) return url.split('-')[0];
 
-        let substring = url.substring(0, Math.max(index1, index2));
+        index1 = index1 + 3;
+        index2 = index2 + 4;
+
+        let index = Math.max(index1, index2);
+
+        let ind = url.indexOf('-', index);
+
+        let substring = url.substring(0, ind);
 
         return substring.replace(/---/g, '-').replace(/--/g, '.'); //replace '---' before '--' else ...
+    },
+
+    make: function(account) {
+        return account.replace(/---/g, '-').replace(/--/g, '.'); //replace '---' before '--' else ...
     },
 
     //validate: function(account) {}
