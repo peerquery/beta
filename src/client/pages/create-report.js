@@ -145,7 +145,7 @@ $(window).on('load', function() {
         steem_api.comment(
             '', // author, leave blank for new post
             category, // first tag
-            author, // username
+            accounter.make(author), // username
             permlink, // permlink
             title, // Title
             body, // Body of post
