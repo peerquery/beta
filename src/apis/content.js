@@ -385,10 +385,10 @@ module.exports = async function(app) {
                 .equals(req.active_user.account)
                 .select(query);
 
-            if (!results || results == '') return;
-            res.status(403).send(
-                'Sorry, you have no right to access this route'
-            );
+            if (!results || results == '')
+                return res
+                    .status(403)
+                    .send('Sorry, you have no right to access this route');
 
             res.status(200).json(results);
         } catch (err) {
