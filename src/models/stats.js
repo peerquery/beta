@@ -5,6 +5,22 @@ var mongoose = require('mongoose'),
 
 var statsSchema = new Schema(
     {
+        //basic counter
+        accounts_count: Number,
+        projects_count: Number,
+        reports_count: Number,
+        queries_count: Number,
+
+        curators_count: Number,
+        curations_count: Number,
+        curations_worth: Number,
+
+        login_count: Number,
+        project_views_count: Number,
+        report_views_count: Number,
+        queries_views_count: Number,
+
+        /*
         //accounts counter
         accounts_created: Number,
         accounts_deleted: Number,
@@ -47,6 +63,8 @@ var statsSchema = new Schema(
         total_team: Number,
         total_moderators: Number,
         total_curators: Number,
+        
+        */
     },
     {
         //has to be a single document
@@ -54,5 +72,7 @@ var statsSchema = new Schema(
         capped: { size: 1024, max: 1 },
     }
 );
+
+/*, { name: 'stats_index' }*/
 
 module.exports = mongoose.model('statsSchema', statsSchema);
