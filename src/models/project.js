@@ -91,20 +91,23 @@ var projectSchema = new Schema({
     follower_count: { type: Number, default: 0 },
 });
 
-projectSchema.index({
-    name: 1,
-    founder: 1,
-    owner: 1,
-    state: 1,
-    type: 1,
-    tag: 1,
-    verified: 1,
-    title: 1,
-    slug: 1,
-    slug_id: 1,
-    query_count: 1,
-    view_count: 1,
-    member_count: 1,
-});
+projectSchema.index(
+    {
+        name: 1,
+        founder: 1,
+        owner: 1,
+        state: 1,
+        type: 1,
+        tag: 1,
+        verified: 1,
+        title: 1,
+        slug: 1,
+        slug_id: 1,
+        query_count: 1,
+        view_count: 1,
+        member_count: 1,
+    },
+    { name: 'project_index' }
+);
 
 module.exports = mongoose.model('projectSchema', projectSchema);

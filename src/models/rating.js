@@ -15,6 +15,6 @@ var ratingSchema = new Schema({
     created: { type: Date, required: true, default: Date.now },
 });
 
-ratingSchema.index({ author: 1, slug: 1 });
+ratingSchema.index({ author: 1, slug: 1 }, { name: 'ratings_index' });
 
 module.exports = mongoose.model('ratingSchema', ratingSchema);

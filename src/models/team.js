@@ -26,9 +26,12 @@ var teamSchema = new Schema({
     github: String,
 });
 
-teamSchema.index({
-    name: 1,
-    role: 1,
-});
+teamSchema.index(
+    {
+        name: 1,
+        role: 1,
+    },
+    { name: 'team_index' }
+);
 
 module.exports = mongoose.model('teamSchema', teamSchema);

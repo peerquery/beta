@@ -35,4 +35,6 @@ var settingsSchema = new Schema({
     last_update: Date,
 });
 
+/*, { name: 'setings_index' } */
+
 module.exports = mongoose.model('settingsSchema', settingsSchema);

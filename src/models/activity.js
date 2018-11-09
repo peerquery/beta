@@ -19,6 +19,6 @@ var activitySchema = new Schema({
     created: { type: Date, required: true, default: Date.now },
 });
 
-activitySchema.index({ account: 1 });
+activitySchema.index({ account: 1 }, { name: 'activity_index' });
 
 module.exports = mongoose.model('activitySchema', activitySchema);

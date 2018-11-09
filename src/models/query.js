@@ -38,21 +38,24 @@ var querySchema = new Schema({
     comment_count: { type: Number, default: 0 },
 });
 
-querySchema.index({
-    title: 1,
-    url: 1,
-    author: 1,
-    category: 1,
-    permlink: 1,
-    label: 1,
-    type: 1,
-    deadline: 1,
-    reward: 1,
-    reward_form: 1,
-    project_slug_id: 1,
-    view_count: 1,
-    vote_count: 1,
-    comment_count: 1,
-});
+querySchema.index(
+    {
+        title: 1,
+        url: 1,
+        author: 1,
+        category: 1,
+        permlink: 1,
+        label: 1,
+        type: 1,
+        deadline: 1,
+        reward: 1,
+        reward_form: 1,
+        project_slug_id: 1,
+        view_count: 1,
+        vote_count: 1,
+        comment_count: 1,
+    },
+    { name: 'query_index' }
+);
 
 module.exports = mongoose.model('querySchema', querySchema);

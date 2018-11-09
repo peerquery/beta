@@ -77,6 +77,6 @@ var peerSchema = new Schema({
     followers_count: { type: Number, default: 0 },
 });
 
-peerSchema.index({ name: 1, curation_points: 1 });
+peerSchema.index({ name: 1, curation_points: 1 }, { name: 'peer_index' });
 
 module.exports = mongoose.model('peerSchema', peerSchema);

@@ -11,4 +11,6 @@ var notificationSchema = new Schema({
     updated_at: { type: Date, required: true },
 });
 
+/*, { name: 'notification_index' }*/
+
 module.exports = mongoose.model('notificationSchema', notificationSchema);
