@@ -11,7 +11,7 @@ var report_view =
     '   	<div class="ui grid">  ' +
     '   		<div class="row bottom aligned">  ' +
     '   		<div class="ten wide column">  ' +
-    '   				<a class="ui blue image label" id="author_href">  ' +
+    '   				<a class="ui blue image label" id="author_href" href="/peer/{{author}}">  ' +
     '   					<img id="author-img" src="{{author_img}}">  ' +
     '   						<span id="author">{{author}}</span>  ' +
     '   						<span id="author-rep"></span>  ' +
