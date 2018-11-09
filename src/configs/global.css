@@ -411,3 +411,18 @@ img:after {
 .text.blue {
     color: #3b83c0;
 }
+
+#post-body p,
+blockquote {
+    color: #555555;
+    line-height: 1.7;
+    letter-spacing: 0.25px;
+}
+
+#post-body p:first-of-type {
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #555555;
+    margin: 2rem 0rem 4rem 0rem;
+}
