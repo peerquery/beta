@@ -2,8 +2,7 @@
 
 var router = require('../../server/router'),
     address = require('../indexes/address'),
-    authorize = require('../auth/authorize'),
-    cookie = require('cookie-parser');
+    authorize = require('../auth/authorize');
 
 module.exports = function(app) {
     app.get('/login', function(req, res) {
