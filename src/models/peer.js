@@ -16,6 +16,11 @@ var peerSchema = new Schema({
 
     steem_json_metadata: { type: String },
 
+    //curation
+    curation_approvals: { type: Number },
+    curation_rejections: { type: Number },
+    curation_points: { type: Number },
+
     //projects
     memberships: [
         {
@@ -72,6 +77,6 @@ var peerSchema = new Schema({
     followers_count: { type: Number, default: 0 },
 });
 
-peerSchema.index({ projects: 1 });
+peerSchema.index({ name: 1, curation_points: 1 });
 
 module.exports = mongoose.model('peerSchema', peerSchema);
