@@ -22,6 +22,14 @@ address.client.new_report = 'client/new-report';
 address.client.new_query = 'client/new-query';
 address.client.new_project = 'client/new-project';
 
+//office views
+address.office = {};
+address.office.office = 'office/office';
+address.office.dashboard = 'office/dashboard';
+address.office.curation = 'office/curation';
+address.office.manage = 'office/manage';
+address.office.settings = 'office/settings';
+
 //static views
 address._static = {};
 address._static.create = 'static/create';
