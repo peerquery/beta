@@ -28,6 +28,7 @@ module.exports = function(app) {
                 project_slug_id: project_slug_id,
                 url: req.active_user.account + '/' + req.body.permlink,
                 view_count: 1,
+                curation_state: 0,
                 created: new Date(),
                 update_at: new Date(),
             });
