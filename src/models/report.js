@@ -23,6 +23,13 @@ var reportSchema = new Schema({
     project_title: { type: String },
     project_slug_id: { type: String },
 
+    //curation
+    curation_state: { type: Number }, //-1: rejected , 0: not viewed ,  1: viewed , 2: approved , 3: voted
+    curation_comments: { type: String },
+    curation_rate: { type: Number },
+    curation_curator: { type: String },
+    curation_time: { type: Date },
+
     //stats
     view_count: { type: Number, default: 0 },
     vote_count: { type: Number, default: 0 },
@@ -39,6 +46,10 @@ reportSchema.index({
     view_count: 1,
     vote_count: 1,
     comment_count: 1,
+    curation_comments: 1,
+    curation_curator: 1,
+    curation_rate: 1,
+    curation_time: 1,
 });
 
 module.exports = mongoose.model('reportSchema', reportSchema);
