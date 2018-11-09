@@ -79,7 +79,6 @@ module.exports = function(app) {
         try {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
-            //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
                 .select(query);
@@ -100,7 +99,6 @@ module.exports = function(app) {
         try {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
-            //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
                 .select(query);
@@ -121,7 +119,6 @@ module.exports = function(app) {
         try {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
-            //the below clause makes sure only the project owner can access this route
             var results = await projects
                 .findOne({ slug: req.params.project })
                 .select(query);
