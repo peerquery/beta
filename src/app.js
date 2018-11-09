@@ -5,8 +5,8 @@ require('dotenv').config();
 const mongoose = require('./configs/mongoose'),
     path = require('path'),
     favicon = require('serve-favicon'),
-    express = require('./server/server');
-//start = require('./server/init')();
+    express = require('./server/server'),
+    init = require('./server/init');
 
 try {
     var db = mongoose();
@@ -24,9 +24,14 @@ const node_env = process.env.NODE_ENV,
             ? server_port + 8001
             : server_port;
 
-if (!module.parent) app.listen(port);
-//start();
+async function start() {
+    var status = await init();
+    if (!status) return;
 
-console.log('\n\n\nServer running at port: ' + port);
+    if (!module.parent) app.listen(port);
+    console.log('\n\n\nServer running at port: ' + port);
+}
+
+start();
 
 module.exports = app;
