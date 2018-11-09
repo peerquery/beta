@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    activity = require('../models/activity'),
+var activity = require('../models/activity'),
     project = require('../models/project');
 //do not worry about sanitizing req.body; already done in the server!
 
