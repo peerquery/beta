@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    project = require('../models/project');
+var project = require('../models/project');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
