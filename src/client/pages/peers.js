@@ -18,7 +18,7 @@ async function display(type) {
     $('#user-container').html('');
     $('#loader').show();
 
-    var api = '/api/fetch/users/' + active_type + '/' + last_id;
+    var api = '/api/fetch/peers/' + active_type + '/' + last_id;
 
     try {
         var rate = await client.database.call(
