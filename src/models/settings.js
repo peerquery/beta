@@ -24,8 +24,21 @@ var settingsSchema = new Schema({
     bot_rest_day: String,
     bot_key: String,
 
+    //curation
+    curation_daily_limit: Number,
+    curation_rest_day1: String,
+    curation_rest_day2: String,
+    curation_vote_interval_minutes: Number,
+    curation_common_comment: String,
+
+    curation_curator_rate: Number,
+    curation_team_rate: Number,
+    curation_project_rate: Number,
+    curation_community_rate: Number,
+
     //basic team
     owner: String,
+    super_admin: String,
     admin: String,
 
     //uris
