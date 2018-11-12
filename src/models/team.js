@@ -12,7 +12,7 @@ var teamSchema = new Schema({
     about: String,
 
     //taxonomy
-    role: String, //owner, admin, moderator, curator, blogger, developer, supporter
+    role: String, //owner, super_admin, admin, moderator, curator, blogger, developer, supporter
     label: String,
 
     //stats
@@ -24,6 +24,12 @@ var teamSchema = new Schema({
     twitter: String,
     linkedin: String,
     github: String,
+
+    curation_approvals: Number,
+    curation_rejections: Number,
+
+    state: String,
+    enlister: String,
 });
 
 teamSchema.index(
