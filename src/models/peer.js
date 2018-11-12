@@ -17,9 +17,10 @@ var peerSchema = new Schema({
     steem_json_metadata: { type: String },
 
     //curation
-    curation_approvals: { type: Number },
-    curation_rejections: { type: Number },
+    curation_approves: { type: Number },
+    curation_rejects: { type: Number },
     curation_points: { type: Number },
+    curation_earnings: { type: Number },
 
     //projects
     memberships: [
@@ -77,6 +78,15 @@ var peerSchema = new Schema({
     followers_count: { type: Number, default: 0 },
 });
 
-peerSchema.index({ name: 1, curation_points: 1 }, { name: 'peer_index' });
+peerSchema.index(
+    {
+        name: 1,
+        curation_points: 1,
+        curation_approvals: 1,
+        curation_earnings: 1,
+        location: 1,
+    },
+    { name: 'peer_index' }
+);
 
 module.exports = mongoose.model('peerSchema', peerSchema);
