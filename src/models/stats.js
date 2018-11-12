@@ -6,19 +6,20 @@ var mongoose = require('mongoose'),
 var statsSchema = new Schema(
     {
         //basic counter
-        accounts_count: Number,
-        projects_count: Number,
-        reports_count: Number,
-        queries_count: Number,
+        peer_count: Number,
+        project_count: Number,
+        report_count: Number,
+        query_count: Number,
+        request_count: Number,
 
-        curators_count: Number,
-        curations_count: Number,
-        curations_worth: Number,
+        curator_count: Number,
+        curation_count: Number,
+        curation_worth: Number,
 
         login_count: Number,
         project_views_count: Number,
         report_views_count: Number,
-        queries_views_count: Number,
+        query_views_count: Number,
 
         /*
         //accounts counter
