@@ -5,7 +5,8 @@ var router = require('../../server/router'),
     reports = require('../../models/report'),
     queries = require('../../models/query'),
     projects = require('../../models/project'),
-    address = require('../indexes/address');
+    address = require('../indexes/address'),
+    accounter = require('../../lib/helpers/account');
 
 module.exports = function(app) {
     app.get('/', function(req, res) {
@@ -299,13 +300,19 @@ module.exports = function(app) {
 
     app.get('/@:username/:permLink', async function(req, res) {
         res.redirect(
-            '/report/' + req.params.username + '-' + req.params.permLink
+            '/report/' +
+                accounter.build(req.params.username) +
+                '-' +
+                req.params.permLink
         );
     });
 
     app.get('/:category/@:username/:permLink', function(req, res) {
         res.redirect(
-            '/report/' + req.params.username + '-' + req.params.permLink
+            '/report/' +
+                accounter.build(req.params.username) +
+                '-' +
+                req.params.permLink
         );
     });
 };
