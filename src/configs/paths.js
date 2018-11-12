@@ -40,6 +40,11 @@ module.exports = {
     project_settings: resolveApp(
         './src/client/pages/partials/project-settings.js'
     ),
+    //office
+    office_dashboard: resolveApp('./src/client/pages/office-dashboard.js'),
+    office_curation: resolveApp('./src/client/pages/office-curation.js'),
+    office_team: resolveApp('./src/client/pages/office-team.js'),
+    office_settings: resolveApp('./src/client/pages/office-settings.js'),
     peers: resolveApp('./src/client/pages/peers.js'),
     wallet: resolveApp('./src/client/pages/wallet.js'),
     peer: resolveApp('./src/client/pages/peer.js'),
