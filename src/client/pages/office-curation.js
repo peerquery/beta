@@ -31,6 +31,7 @@ $(document).ready(function() {
             } else {
                 post_obj = data;
 
+                $('#curation_percent').text(post_obj.percent);
                 $('#post_author').text('@' + post_obj.author);
                 $('#post_author').attr('href', '/peer/' + post_obj.author);
                 $('#full_post_view').attr(
@@ -54,8 +55,12 @@ $(document).ready(function() {
                 $('#curate_segment').removeClass('loading');
             }
         }).fail(function(data, textStatus, xhr) {
+            $('#curate_segment').removeClass('loading');
+
             if (data.status == 404)
-                pqy_notify.warn('Sorry, nothing to curate yet');
+                return pqy_notify.warn('Sorry, nothing to curate yet');
+
+            pqy_notify.warn(data.responseText);
         });
     }
 
