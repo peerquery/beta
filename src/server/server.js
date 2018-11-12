@@ -14,13 +14,12 @@ var express = require('express'),
     compression = require('compression'),
     cors = require('./cors'),
     vet = require('../routes/auth/vet'),
-    api_authorize = require('../apis/authorize'),
+    api_authorize = require('../apis/auth/authorize'),
     common_routes = require('../routes/indexes/common'),
     secure_routes = require('../routes/indexes/secure'),
     _500_route = require('../routes/routes/500'),
     _404_route = require('../routes/routes/404'),
-    common_apis = require('../apis/common'),
-    secure_apis = require('../apis/secure');
+    apis = require('../apis/index');
 
 module.exports = function(server) {
     var app = express();
@@ -57,10 +56,9 @@ module.exports = function(server) {
 
     //declared before csrf module since these routes do not need protection
     common_routes(app);
-    common_apis(app);
-
     secure_routes(app);
-    secure_apis(app);
+
+    apis(app);
 
     app.use(_500_route);
     app.use(_404_route);
