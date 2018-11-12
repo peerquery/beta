@@ -31,6 +31,10 @@ entry = {
     create_report: paths.create_report,
     create_query: paths.create_query,
     create_project: paths.create_project,
+    office_dashboard: paths.office_dashboard,
+    office_curation: paths.office_curation,
+    office_team: paths.office_team,
+    office_settings: paths.office_settings,
 };
 
 module.exports = entry;
