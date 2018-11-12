@@ -14,11 +14,16 @@ var activitySchema = new Schema({
     account: { type: String },
     description: { type: String },
     state: { type: String },
+    subject: { type: String },
+    value: { type: Number },
     likes: { type: Number },
     dislikes: { type: Number },
     created: { type: Date, required: true, default: Date.now },
 });
 
-activitySchema.index({ account: 1 }, { name: 'activity_index' });
+activitySchema.index(
+    { account: 1, subject: 1, type: 1, slug_id: 1, action: 1, created: 1 },
+    { name: 'activity_index' }
+);
 
 module.exports = mongoose.model('activitySchema', activitySchema);
