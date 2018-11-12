@@ -27,7 +27,7 @@ address.office = {};
 address.office.office = 'office/office';
 address.office.dashboard = 'office/dashboard';
 address.office.curation = 'office/curation';
-address.office.manage = 'office/manage';
+address.office.team = 'office/team';
 address.office.settings = 'office/settings';
 
 //static views
