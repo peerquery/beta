@@ -1,6 +1,7 @@
 'use strict';
 
-var settings = require('../models/settings'),
+var config = require('./config'),
+    settings = require('../models/settings'),
     team = require('../models/team');
 
 module.exports = async function(app) {
@@ -17,16 +18,25 @@ module.exports = async function(app) {
             identifier: 'default',
 
             //meta
-            name: 'Peer Query',
-            description: 'Peer to peer collaborations site powered by Steem',
+            name: config.site_name,
+            description: config.site_description,
 
             //basic team
-            owner: 'peerquery',
-            admin: 'dzivenu',
+            owner: config.steem_account,
+            super_admin: config.super_admin,
 
             //uris
-            domain: 'https://www.peerquery.com',
-            steem: 'peerquery',
+            domain: config.site_uri,
+            steem: config.steem_account,
+
+            //do not enable this else will set curation settings on every server re-start
+            /*
+            curation_vote_interval_minutes: config.curation_vote_interval_minutes,
+            curation_rest_day1: config.curation_rest_day1,
+            curation_rest_day2: config.curation_rest_day2,
+            curation_daily_limit: config.curation_daily_limit,
+            curation_common_comment: config.curation_common_comment,
+            */
 
             update_update: new Date(),
         };
@@ -46,8 +56,8 @@ module.exports = async function(app) {
         var team_query1 = { account: 'peerquery' };
 
         var updateTeam1 = {
-            name: 'Peer Query',
-            account: 'peerquery',
+            name: config.site_name,
+            account: config.steem_account,
             role: 'owner',
         };
 
@@ -66,9 +76,9 @@ module.exports = async function(app) {
         var team_query2 = { account: 'dzivenu' };
 
         var updateTeam2 = {
-            name: 'Makafui George Dzivenu',
-            account: 'dzivenu',
-            role: 'admin',
+            name: '',
+            account: config.super_admin,
+            role: 'super_admin',
         };
 
         var team_options2 = { upsert: true };
@@ -78,34 +88,6 @@ module.exports = async function(app) {
             updateTeam2,
             team_options2
         );
-
-        /*
-            //concise version, but only good at generating errors and wasting time
-            
-            var updateOwner = {
-                
-                name: "Peer Query",
-                account: "peerquery",
-                role: 'owner'
-                
-            };
-
-            var updateAdmin = {
-                
-                name: "Makafui George Dzivenu",
-                account: "dzivenu",
-                role: 'admin'
-                
-            };
-            
-            var options = { continueOnError: true, safe: true, ordered: false };
-            
-            console.log([ updateOwner, updateAdmin ])
-            
-            var team_status = await team.insertMany( [ updateOwner, updateAdmin ], options );
-            console.log(team_status)
-            
-            */
 
         console.log('\n\n\nDB setup successful, starting server... ');
 
