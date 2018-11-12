@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Standard Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- SEO Properties -->
+	<title>Office settings - Peer Query</title>
+	<meta name="description" content="">
+	<meta name="application-name" content="Peer Query">
+	
+	<!-- Open graph properties -->
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="Office settings - Peer Query">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-home.png"/>
+	<meta property="og:description" content="">
+	<meta property="fb:app_id" content="384491628645652">
+	
+	<!-- SEO robots -->
+	<meta name="robots" content="noindex, nofollow" />
+	
+	<link rel="stylesheet" href="/build/dist/styles.css">
+    
+</head>
+<body class="office">
+
+  <!-- ejs -->
+  
+  	<% include ../partials/navbar.ejs %>
+  
+  <!-- ejs -->
+  
+  
+
+
+<div class="ui container" style="margin-top:100px">
+
+<div class="ui stackable grid">
+
+	<div class="four wide column">
+	
+
+  <!-- ejs -->
+  
+  	<% include ../partials/office-sidebar.ejs %>
+  
+  <!-- ejs -->
+  
+	
+	</div>
+  
+  
+	<div class="twelve wide column">
+	
+	
+	<table class="ui very basic fixed table" id='settings-table'>
+  <thead>
+    <tr>
+      <th class="seven wide">Option</th>
+      <th class="seven wide">Value</th>
+      <th class="two wide">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> <div class="ui pointing below red label"> General </div> </td>
+      <td></td>
+      <td> <div class="ui red basic label"> <span class="text white"> Admins </span> </div> </td>
+    </tr>
+    <tr>
+      <td>Community rate</td>
+      <td> <%= data.curation_community_rate; %></td>
+		<td>
+			<a class='edit' href="javascript:void(0)" id='2edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='2save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='2cancel'><i class="cancel icon"></i></a>
+		</td>
+    </tr>
+    <tr>
+      <td>Team rate</td>
+      <td> <%= data.curation_team_rate; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='3edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='3save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='3cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>Project rate</td>
+      <td> <%= data.curation_project_rate; %></td>
+      <td> 
+			<a class='edit' href="javascript:void(0)" id='4edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='4save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='4cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>% per curation</td>
+      <td> <%= data.curation_curator_rate; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='5edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='5save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='5cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>Vote message</td>
+      <td> <%= data.curation_common_comment; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='6edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='6save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='6cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td> <div class="ui pointing below yellow label"> Bot rate </div> </td>
+      <td></td>
+      <td> <div class="ui yellow basic label"> <span class="text white"> Super admin </span> </div> </td>
+    </tr>
+    <tr>
+      <td>Holiday one</td>
+      <td> <%= data.curation_rest_day1; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='8edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='8save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='8cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>Holiday two</td>
+      <td> <%= data.curation_rest_day2; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='9edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='9save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='9cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>Daily curation</td>
+      <td> <%= data.curation_daily_limit; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='10edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='10save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='10cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+    <tr>
+      <td>Vote interval minutes</td>
+      <td> <%= data.curation_vote_interval_minutes; %></td>
+      <td>
+			<a class='edit' href="javascript:void(0)" id='11edit'><i class="id edit icon"></i> Edit</a>
+			<a class="ui save circular mini green icon button" style='display:none' href="javascript:void(0)" id='11save'><i class="check icon"></i></a>
+			<a class="ui cancel circular mini red icon button" style='display:none' href="javascript:void(0)" id='11cancel'><i class="cancel icon"></i></a>
+	  </td>
+    </tr>
+  </tbody>
+</table>
+	
+	
+    
+    <div class="ui basic clearing segment">
+        <div class="ui right floated button" id="reset_btn">Reset</div>
+    </div>
+
+    
+	</div>
+
+</div>
+
+</div>
+
+
+<!-- reset modal -->
+
+
+<div class="ui basic reset modal">
+	<div class="ui icon header">
+		<i class="cog icon"></i>
+		Reset to default settings?
+	</div>
+	<div class="content">
+		<p>Are you sure you want to reset all settings to their default values?</p>
+	</div>
+	<div class="actions">
+		<div class="ui red basic cancel inverted button" id="cancel_click">
+			<i class="remove icon"></i>
+			No
+		</div>
+		<div class="ui green inverted button" id="reset_click">
+			<i class="checkmark icon"></i>
+			Yes
+		</div>
+	</div>
+</div>
+
+
+<!-- modal end -->
+
+
+	
+	<script src="/build/dist/scripts.js"></script>
+	<script src="/build/dist/office_settings.js"></script><script>
+        window.load_is_done = function () {
+            $( '#reset_btn' ).click(function() {
+                $('.reset.modal').modal('show');
+            });
+        }
+    </script>
+  
+
+  <!-- ejs -->
+  
+  	<% include ../partials/footer.ejs %>
+  
+  <!-- ejs -->
+  
+  
+
+</body>
+
+</html>
