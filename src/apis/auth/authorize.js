@@ -1,7 +1,5 @@
 'use strict';
 
-var cookie = require('cookie-parser');
-
 module.exports = function(req, res, next) {
     if (!req.active_user) {
         res.status(401).send('unauthorized access');

@@ -1,11 +1,12 @@
 'use strict';
 
 var jwt = require('jsonwebtoken'),
-    encryptor = require('../lib/encryptor'),
+    encryptor = require('../../lib/encryptor'),
     sc2 = require('steemconnect'),
-    peer = require('../models/peer'),
-    activity = require('../models/activity'),
-    config = require('../configs/config'),
+    peer = require('../../models/peer'),
+    activity = require('../../models/activity'),
+    stats = require('../../models/stats'),
+    config = require('../../configs/config'),
     cookie = require('cookie-parser');
 
 let api = sc2.Initialize({
@@ -108,10 +109,14 @@ module.exports = function(app) {
                         last_project_title: '',
                     };
 
-                    var newest = await peer.findOneAndUpdate(
+                    await peer.updateOne(
                         { account: client_account },
-                        newestPeer,
-                        { fields: { id: 1 } }
+                        newestPeer
+                    );
+
+                    await stats.updateOne(
+                        { identifier: 'default' },
+                        { $inc: { peer_count: 1 } }
                     );
                 }
 

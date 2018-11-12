@@ -1,6 +1,6 @@
 'use strict';
 
-var activity = require('../models/activity');
+var activity = require('../../models/activity');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {

@@ -1,8 +1,8 @@
 'use strict';
 
-let activity = require('../models/activity'),
-    peer = require('../models/peer'),
-    project = require('../models/project');
+let activity = require('../../models/activity'),
+    peer = require('../../models/peer'),
+    project = require('../../models/project');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
