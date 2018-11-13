@@ -16,9 +16,6 @@ config.steem_rpc = 'https://api.steemit.com';
 config.steem_account = 'peerquery';
 config.community = 'peerquery';
 
-//bot account
-config.bot_account = 'peerquery';
-
 //sc2
 config.sc2_app_name = 'peerquery.app';
 config.sc2_scope = 'vote,comment,custom_json';
@@ -31,6 +28,7 @@ config.comment_attribution =
     '  \n\n- - -\n\n  Posted on [Peer Query](http://www.peerquery.com).';
 
 //curation
+config.curation_bot_account = 'peerquery';
 config.curation_curator_rate = 2;
 config.curation_project_rate = 20;
 config.curation_team_rate = 15;
