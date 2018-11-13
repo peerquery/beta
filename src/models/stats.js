@@ -15,6 +15,7 @@ var statsSchema = new Schema(
         curator_count: Number,
         curation_count: Number,
         curation_worth: Number,
+        bot_vote_count: Number,
 
         login_count: Number,
         project_views_count: Number,
