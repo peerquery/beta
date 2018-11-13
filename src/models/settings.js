@@ -18,13 +18,8 @@ var settingsSchema = new Schema({
     team: Number,
     project: Number,
 
-    //bot configs
-    bot_vote_interval: Number,
-    bot_comment_after_vote: Boolean,
-    bot_rest_day: String,
-    bot_key: String,
-
     //curation
+    curation_bot_account: String,
     curation_daily_limit: Number,
     curation_rest_day1: String,
     curation_rest_day2: String,
@@ -45,7 +40,7 @@ var settingsSchema = new Schema({
     domain: String,
     steem: String,
 
-    last_update: Date,
+    site_start_time: Date,
 });
 
 /*, { name: 'setings_index' } */
