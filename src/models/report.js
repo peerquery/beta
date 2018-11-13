@@ -29,6 +29,7 @@ var reportSchema = new Schema({
     curation_rate: { type: Number },
     curation_curator: { type: String },
     curation_time: { type: Date },
+    curation_worth: { type: Number },
 
     //stats
     view_count: { type: Number, default: 0 },
@@ -50,6 +51,7 @@ reportSchema.index(
         curation_curator: 1,
         curation_rate: 1,
         curation_time: 1,
+        curation_worth: 1,
     },
     { name: 'report_index' }
 );
