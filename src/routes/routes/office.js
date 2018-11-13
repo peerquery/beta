@@ -104,7 +104,7 @@ module.exports = function(app) {
 
         var find =
             'curation_community_rate curation_curator_rate curation_team_rate curation_project_rate curation_vote_interval_minutes ' +
-            ' curation_daily_limit curation_common_comment curation_rest_day1 curation_rest_day2 _id';
+            ' curation_daily_limit curation_common_comment curation_rest_day1 curation_rest_day2 curation_bot_account _id';
         var data = await settings
             .findOne({ identifier: 'default' })
             .select(find);
