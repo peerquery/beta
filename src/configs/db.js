@@ -10,8 +10,7 @@ module.exports = async function(app) {
         //set the site's basic details
         //
 
-        //static id - to ensure there is always only one 'settings' document
-        var settings_query = { identifier: 'default' };
+        //see if details exists, else set them
 
         var updateSettings = {
             //static id - to ensure there is always only one 'settings' document
@@ -29,24 +28,26 @@ module.exports = async function(app) {
             domain: config.site_uri,
             steem: config.steem_account,
 
-            //do not enable this else will set curation settings on every server re-start
-            /*
-            curation_vote_interval_minutes: config.curation_vote_interval_minutes,
+            curation_curator_rate: config.curation_curator_rate,
+            curation_team_rate: config.curation_team_rate,
+            curation_project_rate: config.curation_project_rate,
+            curation_community_rate: config.curation_community_rate,
+
+            curation_bot_account: config.curation_bot_account,
+            curation_vote_interval_minutes:
+                config.curation_vote_interval_minutes,
             curation_rest_day1: config.curation_rest_day1,
             curation_rest_day2: config.curation_rest_day2,
             curation_daily_limit: config.curation_daily_limit,
             curation_common_comment: config.curation_common_comment,
-            */
 
-            update_update: new Date(),
+            site_start_time: new Date(),
         };
 
-        var settings_options = { upsert: true };
-
-        var settings_status = await settings.updateOne(
-            settings_query,
-            updateSettings,
-            settings_options
+        await settings.updateOne(
+            { identifier: 'default' }, //static id - to ensure there is always only one 'settings' document
+            { $setOnInsert: updateSettings },
+            { upsert: true }
         );
 
         //
