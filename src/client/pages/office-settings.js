@@ -18,6 +18,8 @@ var original_value8 = document.getElementById('settings-table').rows[10]
     .cells[1].innerText;
 var original_value9 = document.getElementById('settings-table').rows[11]
     .cells[1].innerText;
+var original_value10 = document.getElementById('settings-table').rows[12]
+    .cells[1].innerText;
 
 function original_value(i) {
     if (i == 2) return original_value1;
@@ -29,6 +31,7 @@ function original_value(i) {
     if (i == 9) return original_value7;
     if (i == 10) return original_value8;
     if (i == 11) return original_value9;
+    if (i == 12) return original_value10;
 }
 
 function settings_api(i) {
@@ -41,6 +44,7 @@ function settings_api(i) {
     if (i == 9) return 'curation_rest_day2';
     if (i == 10) return 'curation_daily_limit';
     if (i == 11) return 'curation_vote_interval_minutes';
+    if (i == 12) return 'curation_bot_account';
 }
 
 function set_new_value(i, value) {
@@ -53,6 +57,7 @@ function set_new_value(i, value) {
     if (i == 9) original_value7 = value;
     if (i == 10) original_value8 = value;
     if (i == 11) original_value9 = value;
+    if (i == 12) original_value10 = value;
 }
 
 function post(i) {
