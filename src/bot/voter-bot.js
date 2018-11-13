@@ -94,7 +94,7 @@ module.exports = async function(obj) {
         //update report stats
         await reports.updateOne(
             { permlink: data.permlink },
-            { $inc: { curation_worth: vote_amount } }
+            { $inc: { curation_worth: vote_amount, curation_state: 1 } }
         );
 
         //update author stats
