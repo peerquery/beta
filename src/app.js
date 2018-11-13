@@ -6,7 +6,8 @@ const mongoose = require('./configs/mongoose'),
     path = require('path'),
     favicon = require('serve-favicon'),
     express = require('./server/server'),
-    init = require('./server/init');
+    init = require('./server/init'),
+    bot = require('./bot/index');
 
 try {
     var db = mongoose();
@@ -28,7 +29,10 @@ async function start() {
     var status = await init();
     if (!status) return;
 
-    if (!module.parent) app.listen(port);
+    if (!module.parent) {
+        app.listen(port);
+        bot();
+    }
     console.log('\n\n\nServer running at port: ' + port);
 }
 
