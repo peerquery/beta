@@ -26,6 +26,7 @@ module.exports = function(app) {
                     'curation_rest_day2',
                     'curation_vote_interval_minutes',
                     'curation_daily_limit',
+                    'curation_bot_account',
                 ].indexOf(req.body.setting);
                 var right = ['owner', 'super_admin'].indexOf(user_right.role);
 
@@ -92,6 +93,7 @@ module.exports = function(app) {
                     curation_vote_interval_minutes:
                         config.curation_vote_interval_minutes,
                     curation_common_comment: config.curation_common_comment,
+                    curation_bot_account: config.curation_bot_account,
                 };
 
                 await settings.updateOne(
