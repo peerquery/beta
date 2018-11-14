@@ -5,7 +5,7 @@ const config = require('../configs/config');
 const client = new dsteem.Client(config.steem_rpc);
 const settings = require('../models/settings');
 
-module.exports = async function() {
+module.exports = async function(type) {
     var config = {};
 
     //console.log('   fetching globals ');
@@ -58,5 +58,6 @@ module.exports = async function() {
 
     //console.log(config)
 
+    if (type) return config[type];
     return config;
 };
