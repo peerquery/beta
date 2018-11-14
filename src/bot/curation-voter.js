@@ -1,19 +1,21 @@
 'use strict';
 
-var reports = require('../models/report');
-
+const reports = require('../models/report');
 const config = require('../configs/config');
-const dsteem = require('dsteem');
-const client = new dsteem.Client(config.steem_rpc);
 
 module.exports = async function(global_settings) {
     var actions = 'vote_comment';
 
     //fetch team accounts including *project blog* but excluding *curators* and those *inactive*
     var results = await reports
-        .find({ curation_state: 2 })
-        .select('author permlink -_id')
-        .limit(1);
+        .findOneAndUpdate(
+            { curation_state: 2 },
+            { $inc: { curation_state: 1 } }
+        ) // increase curation state at once, so this post will not be fetched twice
+        .select(
+            'curation_rate curation_curator curation_remarks author permlink -_id'
+        ); // by the server's other versions in clusters or other EC2 instances
+    // the danger here is that if the voting bot fails, well the post will remain marked as voted
 
     if (!results || results == '') return;
 
@@ -36,12 +38,12 @@ module.exports = async function(global_settings) {
         '<b>Remarks</b>: <em>' +
         results.curation_remarks +
         '</em><br/><br/>' +
-        global_settings.common_comment;
+        global_settings.curation_common_comment;
     data.json_metadata =
         '{"app": "' +
-        global_settings.site_name +
+        config.site_name +
         '", "community":"' +
-        global_settings.community +
+        config.community +
         '"}';
     data.parent_author = results.author;
     data.parent_permlink = results.permlink;
