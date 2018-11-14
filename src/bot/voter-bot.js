@@ -1,14 +1,12 @@
 'use strict';
 
-const globals = require('./globals');
-const vote_worth = require('../lib/helpers/vote-worth');
-
 require('dotenv').config();
+
+const vote_worth = require('../lib/helpers/vote-worth');
 
 const dsteem = require('dsteem');
 const config = require('../configs/config');
 const client = new dsteem.Client(config.steem_rpc);
-
 const key = dsteem.PrivateKey.fromString(process.env.BOT_POSTING_KEY);
 
 var activity = require('../models/activity');
@@ -17,10 +15,12 @@ var peers = require('../models/peer');
 var stats = require('../models/stats');
 
 module.exports = async function(obj) {
+    if (!obj) return;
+
     var data = obj.data;
     var actions = obj.actions;
     var type = obj.type;
-    var global_settings = obj.global_settings;
+    var global_settings = obj.config;
 
     //set vote details
     var vote = {
@@ -94,7 +94,7 @@ module.exports = async function(obj) {
         //update report stats
         await reports.updateOne(
             { permlink: data.permlink },
-            { $inc: { curation_worth: vote_amount, curation_state: 1 } }
+            { $inc: { curation_worth: vote_amount } } //no need to increase the curation state to 3(voted, since its already done)
         );
 
         //update author stats
