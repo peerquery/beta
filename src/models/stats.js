@@ -5,6 +5,9 @@ var mongoose = require('mongoose'),
 
 var statsSchema = new Schema(
     {
+        //unique: identifier
+        identifier: { type: String, required: true, unique: true },
+
         //basic counter
         peer_count: Number,
         project_count: Number,
@@ -17,6 +20,7 @@ var statsSchema = new Schema(
         curation_worth: Number,
         bot_vote_count: Number,
 
+        site_up_count: Number,
         login_count: Number,
         project_views_count: Number,
         report_views_count: Number,
@@ -67,12 +71,14 @@ var statsSchema = new Schema(
         total_curators: Number,
         
         */
-    },
+    }
+    /*
     {
         //has to be a single document
         collection: 'statsSchema',
         capped: { size: 1024, max: 1 },
     }
+    */
 );
 
 /*, { name: 'stats_index' }*/
