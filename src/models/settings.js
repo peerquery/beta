@@ -13,11 +13,6 @@ var settingsSchema = new Schema({
     account: { type: String, required: true },
     email: { type: String },
 
-    //bot rates
-    community: Number,
-    team: Number,
-    project: Number,
-
     //curation
     curation_bot_account: String,
     curation_daily_limit: Number,
