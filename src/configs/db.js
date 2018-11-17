@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('./config'),
+    stats = require('../models/stats'),
     settings = require('../models/settings'),
     team = require('../models/team');
 
@@ -47,6 +48,12 @@ module.exports = async function(app) {
         await settings.updateOne(
             { identifier: 'default' }, //static id - to ensure there is always only one 'settings' document
             { $setOnInsert: updateSettings },
+            { upsert: true }
+        );
+
+        await stats.updateOne(
+            { identifier: 'default' }, //static id - to ensure there is always only one 'settings' document
+            { $inc: { site_up_count: 1 } },
             { upsert: true }
         );
 
