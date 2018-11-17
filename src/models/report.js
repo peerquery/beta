@@ -31,6 +31,8 @@ var reportSchema = new Schema({
     curation_time: { type: Date },
     curation_worth: { type: Number },
 
+    voted: { type: String },
+
     //stats
     view_count: { type: Number, default: 0 },
     vote_count: { type: Number, default: 0 },
