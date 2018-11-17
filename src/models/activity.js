@@ -7,6 +7,7 @@ var activitySchema = new Schema({
     //details
     title: { type: String },
     slug: { type: String },
+    indentifier: { type: String, unique: true },
     slug_id: { type: String },
     action: { type: String }, //eg: create, update, delete, rate, vote, follow
     type: { type: String }, //eg: project, report, user, query
