@@ -84,3 +84,8 @@ async function search() {
         console.log(err);
     }
 }
+
+$('#moreBtn').on('click', function() {
+    $(this).hide();
+    search();
+});
