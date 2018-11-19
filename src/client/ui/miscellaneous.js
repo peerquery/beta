@@ -10,6 +10,6 @@ module.exports = function() {
         document.getElementById('reports-page').classList.add('navbar-active');
     if (path == '/peers')
         document.getElementById('peers-page').classList.add('navbar-active');
-    if (path == '/steem')
-        document.getElementById('steem-page').classList.add('navbar-active');
+    if (path == '/curation')
+        document.getElementById('curation-page').classList.add('navbar-active');
 };
