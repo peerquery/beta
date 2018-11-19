@@ -2,7 +2,8 @@
 
 const project_template = require('./templates/project'),
     user_template = require('./templates/peer'),
-    report_view_template = require('./templates/report'),
+    report_template = require('./templates/report'),
+    search_template = require('./templates/search'),
     mtools = require('markup-tools');
 
 module.exports = {
@@ -28,7 +29,16 @@ module.exports = {
         var div = document.createElement('div');
         div.className = '';
 
-        div.innerHTML = mtools.build.template(report_view_template, data);
+        div.innerHTML = mtools.build.template(report_template, data);
+
+        return div;
+    },
+
+    search: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'event';
+
+        div.innerHTML = mtools.build.template(search_template, data);
 
         return div;
     },
