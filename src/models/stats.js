@@ -14,6 +14,7 @@ var statsSchema = new Schema(
         report_count: Number,
         query_count: Number,
         request_count: Number,
+        search_count: Number,
 
         curator_count: Number,
         curation_count: Number,
