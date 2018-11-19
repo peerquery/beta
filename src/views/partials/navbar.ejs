@@ -33,9 +33,9 @@
 					<i class="users icon"></i>
 					Peers
 				</a>
-				<a class="item" href="/steem" >
+				<a class="item" href="/curation" >
 					<i class="chevron circle up icon"></i>
-					Steem
+					Curation
 				</a>
 			</div>
 		</div>
@@ -70,9 +70,9 @@
 			<span class="desktop-only">Peers</span>
 		</a>
 		
-		<a href="/steem" id="steem-page" class="hide-on-tiny item" title="Steem">
+		<a href="/curation" id="curation-page" class="hide-on-tiny item" title="Curation">
 			<i class="chevron circle up icon" id=""></i>
-			<span class="desktop-only">Steem</span>
+			<span class="desktop-only">Curation</span>
 		</a>
 				
 		<a id="content">
@@ -95,6 +95,31 @@
 			
 			
 			
+			<span class="leftspace" id="desktop-search">
+			<div class="ui inline top right pointing dropdown">
+		
+				<div class="text">
+					<i class="search icon"></i>
+				</div>
+		
+				<i class="dropdown icon"></i>
+                
+                
+                <div class="menu">
+                    <div class="ui icon input">
+                        <i class="search icon"></i>
+                        <input type="text" name="search" id="topbar_search_input" placeholder="Search reports...">
+                    </div>
+                    <div class="divider"></div>
+                    <a class="item" href="/search">
+                        <i class="search plus icon"></i>
+                        Advanced search
+                    </a>
+                </div>
+            </div>
+            </span>
+		
+		
 			<span class="leftspace" id="loggedin-desktop-create" style="display:none">
 			<div class="ui inline top right pointing dropdown">
 		
@@ -162,6 +187,24 @@
   
 	<script>
         const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim();
+        
+        //hide on search pages
+        if(window.location.href.indexOf('/search')) document.getElementById('desktop-search').style.display = 'none';
+        
+        //document.getElementById('topbar_search_input').onkeypress = function(e){ //does NOT detect control keys!!!
+        document.getElementById('topbar_search_input').addEventListener("keyup", function(e) {
+        
+            if (!e) e = window.event;
+            var keyCode = e.keyCode || e.which;
+            
+            
+            if (keyCode == '13'){
+                // Enter pressed
+                
+                window.location.href = '/search?q=' + document.getElementById('topbar_search_input').value + '&type=reports';
+            }
+        })
+        
     </script>
 	
   
