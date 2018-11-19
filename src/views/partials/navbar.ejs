@@ -189,7 +189,7 @@
         const active_user = '<% if (typeof username == 'string' && username) { %> <%= username %> <% } %>'.trim();
         
         //hide on search pages
-        if(window.location.href.indexOf('/search')) document.getElementById('desktop-search').style.display = 'none';
+        if(window.location.href.indexOf('/search') > 0) document.getElementById('desktop-search').style.display = 'none';
         
         //document.getElementById('topbar_search_input').onkeypress = function(e){ //does NOT detect control keys!!!
         document.getElementById('topbar_search_input').addEventListener("keyup", function(e) {
