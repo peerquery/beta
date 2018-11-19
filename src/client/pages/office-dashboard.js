@@ -87,17 +87,26 @@ async function calc() {
             );
             return;
         } else {
-            $('#community_rate').text(results.bot.community_rate);
-            $('#team_rate').text(results.bot.team_rate);
-            $('#project_rate').text(results.bot.project_rate);
+            //console.log(results)
 
-            $('#curation_total').text(results.curation.total);
-            $('#curation_target').text(results.curation.target);
-            $('#curation_complete').text(results.curation.complete);
+            //bot rate
+            $('#community_rate').text(results.setting.curation_community_rate);
+            $('#team_rate').text(results.setting.curation_team_rate);
+            $('#project_rate').text(results.setting.curation_project_rate);
 
-            $('#curators_total').text(results.curators.total);
-            $('#curators_active').text(results.curators.active);
-            $('#curators_percent').text(results.curators.percent);
+            //curation
+            $('#curation_target').text(results.setting.curation_daily_limit);
+            $('#curation_total').text(results.reports_count);
+            $('#curation_complete').text(results.curated_count);
+
+            //stat
+            $('#projects_total').text(results.stat.project_count);
+            $('#reports_total').text(results.stat.report_count);
+            $('#queries_total').text(results.stat.query_count);
+
+            //community
+            $('#users_total').text(results.stat.peer_count);
+            $('#earnings_total').text(results.stat.curation_worth);
         }
 
         $('#main_segment').removeClass('loading');
