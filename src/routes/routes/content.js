@@ -5,6 +5,7 @@ var router = require('../../server/router'),
     reports = require('../../models/report'),
     queries = require('../../models/query'),
     projects = require('../../models/project'),
+    blog = require('../../models/blog'),
     address = require('../indexes/address'),
     accounter = require('../../lib/helpers/account');
 
@@ -272,6 +273,26 @@ module.exports = function(app) {
             console.log(err);
             return router(address._static._500, req, res);
         }
+    });
+
+    app.get('/search*', async function(req, res) {
+        return router(address.content.search, req, res);
+    });
+
+    app.get('/blog', async function(req, res) {
+        return router(address.content.blog, req, res);
+    });
+
+    app.get('/blog/:permLink', async function(req, res) {
+        var find = { permlink: req.params.report };
+        var report = await blog
+            .findOneAndUpdate(find, { $inc: { view_count: 1 } })
+            .select(
+                'title summary author view_count project_slug_id project_title -_id'
+            );
+        res.req_data = report;
+
+        return router(address.content.report, req, res);
     });
 
     app.get('/reports', function(req, res) {
