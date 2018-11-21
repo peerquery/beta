@@ -45,6 +45,12 @@ module.exports = {
     office_curation: resolveApp('./src/client/pages/office-curation.js'),
     office_team: resolveApp('./src/client/pages/office-team.js'),
     office_settings: resolveApp('./src/client/pages/office-settings.js'),
+    //static
+    statistics: resolveApp('./src/client/pages/statistics.js'),
+    //
+    search: resolveApp('./src/client/pages/search.js'),
+    blog: resolveApp('./src/client/pages/blog.js'),
+    curation: resolveApp('./src/client/pages/curation.js'),
     peers: resolveApp('./src/client/pages/peers.js'),
     wallet: resolveApp('./src/client/pages/wallet.js'),
     peer: resolveApp('./src/client/pages/peer.js'),
