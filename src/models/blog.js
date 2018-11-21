@@ -6,7 +6,8 @@ var Schema = mongoose.Schema;
 var blogSchema = new Schema({
     steemid: { type: String, required: true },
     title: { type: String, required: true },
-    author: { type: String, required: true },
+    account: { type: String, required: true }, //steem account post is published to, typically 'peerquery'
+    author: { type: String, required: true }, //this is a multi-author blog, so real author
     permlink: { type: String, required: true, unique: true },
     summary: { type: String, required: true },
     body: { type: String, required: true },
