@@ -13,6 +13,7 @@ address.content.query = 'content/query';
 address.content.reports = 'content/reports';
 address.content.report = 'content/report';
 address.content.wallet = 'content/wallet';
+address.content.search = 'content/search';
 
 //client views
 address.client = {};
@@ -33,10 +34,16 @@ address.office.settings = 'office/settings';
 //static views
 address._static = {};
 address._static.create = 'static/create';
+address._static.curation = 'static/curation';
+address._static.support = 'static/support';
+address._static.blog = 'static/blog';
+address._static.partners = 'static/partners';
+address._static.statistics = 'static/statistics';
+address._static.opensource = 'static/open-source';
 address._static._403 = 'static/403';
 address._static._404 = 'static/404';
 address._static._500 = 'static/500';
-address._static.create = 'static/create';
+address._static.about = 'static/about';
 address._static.contact = 'static/contact';
 address._static.faqs = 'static/faqs';
 address._static.team = 'static/team';
