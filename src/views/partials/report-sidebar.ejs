@@ -1,9 +1,11 @@
 
-	<div class="ui violet segment">
+	<div class="ui segments">
+        
+        <div class="ui violet segment">
 		
-      <a class="ui red ribbon label">Overview</a>
+            <a class="ui red ribbon label">Overview</a>
 	  
-		<div class="ui list">
+            <div class="ui list">
 		
             <a class="item">
                 <div class="header right floated" id="report_created"></div>
@@ -67,52 +69,62 @@
 		
 		</div>
         
-	</div>
+        </div>
 	
 	
-	<div class="ui purple segment" id="featured-reports-section" style="display:none">
+        <div class="ui secondary purple segment" id="featured-reports-section" style="display:none">
 	
-    <a class="ui red ribbon label" target="_blank" href="/project/<%= data.project_slug_id %>/reports">Related</a>
-	<div class="ui feed" id="featured_reports">
-	</div>
+            <a class="ui red ribbon label" target="_blank" href="/project/<%= data.project_slug_id %>/reports">Related</a>
+            <div class="ui feed" id="featured_reports">  </div>
 	
-	</div>
-	
-	
-	<div class="ui pink segment" id="from-blog" style="display:none">
-	
-      <a class="ui red ribbon label" href="/peer/peerquery" target="_blank">Our blog</a>
-		<br/><br/>
-		<div id="last-blog-post">		</div>
-		<br/>
-		<a href="https://discord.gg/rz9GwAa" class="positive fluid ui button" target="_blank">We're recruiting, join us!</a>
-	
-	</div>
-	
-	
-	<!--
+        </div>
     
-	<div class="ui fluid card">
-		<div class="content">
-			<div class="center aligned header">Delegate SP to Peer Query</div>
-			<div class="center aligned description">
-				<p>Help Peer Query reward quality contributors.</p>
-			</div>
-		</div>
-		
-		<div class="extra content">
-			<div class="center aligned author">
-				<p>Earn high ROI on your investment.</p>
-			</div>
-		</div>
-		<a class="ui green bottom attached button" href="/partner-with-us">
-			<i class="play icon"></i>
-			Learn more
-		</a>
 	</div>
-	
-    -->
     
+	<br/>
+    
+    
+        <div class="ui pink segment" id="from-blog" style="display:none">
+	
+            <a class="ui red ribbon label" href="/peer/peerquery" target="_blank">Our blog</a>
+            <br/><br/>
+            <div id="last-blog-post">		</div>
+            <br/>
+            <a href="https://discord.gg/rz9GwAa" class="positive fluid ui button" target="_blank">We're recruiting, join us!</a>
+            
+        </div>
+    
+            
+        <div class="ui fluid card">
+        
+            <div class="content">
+                <div class="center aligned header"><b>Delegate SP to Peer Query</b></div>
+                
+                <div class="center aligned description">
+                    <p>Help Peer Query reward quality contributors.</p>
+                </div>
+            </div>
+            
+            <div class="extra content">
+                <div class="center aligned author">
+                    <p>Earn high ROI on your investment.</p>
+                </div>
+            </div>
+            
+            <a class="ui green fluid button" href="/partners">
+                <i class="play icon"></i>
+                Learn more
+            </a>
+            
+        </div>
+    
+    
+	
+	
+	
+	
+    
+    <script>dhd.alert()</script>
     
 	<script>window.project_slug_id = "<%= data.project_slug_id %>"</script>
 	
