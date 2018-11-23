@@ -1,6 +1,6 @@
 {
   "name": "peerquery-beta",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "peer to peer collaboration powered by steem",
   "main": "./src/app.js",
   "private": true,
