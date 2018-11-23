@@ -16,7 +16,7 @@ async function calc() {
             );
         } else {
             //usage
-            $('#query_count').text(results.stat.peer_count);
+            $('#query_count').text(results.stat.query_count);
             $('#project_count').html(
                 num2str.process(results.stat.project_count)
             );
