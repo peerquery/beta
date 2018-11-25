@@ -436,3 +436,20 @@ blockquote {
     color: #555555;
     margin: 2rem 0rem 4rem 0rem;
 }
+
+.circled {
+    width: 150px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    margin: 1rem 0;
+    padding: 1em 1em;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    display: flex;
+}
