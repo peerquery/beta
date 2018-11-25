@@ -1,108 +1,125 @@
-'use strict';
+//
 
-var dsteem = require('dsteem'),
-    create = require('./../../../src/lib/content-creator'),
-    config = require('./../../../src/configs/config'),
-    client = new dsteem.Client(config.steem_api);
+//show edit button
+if (window.account == window.active_user) $('#edit_btn').show();
 
-var peer = window.location.pathname.split('/')[2];
-var last_id = 0;
-var metaData;
+//social media button hrefs
 
-async function display() {
+document.getElementById('fb-share').href =
+    'https://www.facebook.com/sharer/sharer.php?u=' + window.location;
+
+document.getElementById('twitter-share').href =
+    'http://twitter.com/share?text=' +
+    document.title +
+    '&url=' +
+    window.location +
+    '&hashtags=peerquery';
+
+document.getElementById('gplus-share').href =
+    'https://plus.google.com/share?url=' + window.location;
+
+document.getElementById('linkedin-share').href =
+    'https://www.linkedin.com/shareArticle?mini=true&url=' +
+    window.location +
+    '&title=' +
+    encodeURI(document.title) +
+    '&summary=&source=peerquery.com';
+
+$('#updateBtn').click(async function() {
     try {
-        $('#moreBtn').hide();
-        $('#item-container').html('');
-        $('#post-loader').show();
+        var data = {};
 
-        var results = await Promise.resolve(
-            $.get('/api/reports/user/' + peer + '/' + last_id)
+        $(this).addClass('disabled');
+        $('#editForm').addClass('loading');
+
+        data.first_name = $('#firstnameInput').val();
+        data.last_name = $('#lastnameInput').val();
+        data.about = $('#aboutInput').val();
+
+        data.skill = $('#skillInput')
+            .val()
+            .toLowerCase()
+            .trim();
+        data.skill = data.skill[0].toUpperCase() + data.skill.substring(1);
+
+        data.interest = $('#interestInput').val();
+        data.location = $('#locationInput').val();
+
+        data.position = $('#positionInput').val();
+        data.company = $('#companyInput').val();
+        data.industry = $('#industryInput').val();
+
+        data.email = $('#emailInput').val();
+        if (data.email) {
+            data.email =
+                data.email.indexOf('mailto:') < 0
+                    ? 'mailto:' + data.email
+                    : data.email;
+        }
+
+        data.website = $('#websiteInput').val();
+        if (data.website) {
+            data.website =
+                data.website.indexOf('://') === -1
+                    ? 'http://' + data.website
+                    : data.website;
+        }
+
+        //social
+        data.facebook = $('#facebookInput').val();
+        if (data.facebook) {
+            data.facebook =
+                data.facebook.indexOf('facebook.com/') === -1
+                    ? 'http://facebook.com/' + data.facebook
+                    : data.facebook;
+            data.facebook =
+                data.facebook.indexOf('://') === -1
+                    ? 'http://' + data.facebook
+                    : data.facebook;
+        }
+
+        data.twitter = $('#twitterInput').val();
+        if (data.twitter) {
+            data.twitter =
+                data.twitter.indexOf('twitter.com/') === -1
+                    ? 'http://twitter.com/' + data.twitter
+                    : data.twitter;
+            data.twitter =
+                data.twitter.indexOf('://') === -1
+                    ? 'http://' + data.twitter
+                    : data.twitter;
+        }
+
+        data.linkedin = $('#linkedinInput').val();
+        if (data.linkedin) {
+            data.linkedin =
+                data.linkedin.indexOf('linkedin.com/') === -1
+                    ? 'http://linkedin.com/' + data.linkedin
+                    : data.linkedin;
+            data.linkedin =
+                data.linkedin.indexOf('://') === -1
+                    ? 'http://' + data.linkedin
+                    : data.linkedin;
+        }
+
+        var status = await Promise.resolve(
+            $.post('/api/private/user/update', data)
         );
+        //console.log(status);
 
-        if (results.length == 0) {
-            $('#post-loader').hide();
-        } else {
-            const reports = await get_posts(results);
-
-            $('#post-loader').hide();
-
-            for (var x in reports) {
-                var post = await create.post(reports[x]);
-                $('#item-container').append(post);
-            }
-
-            if (results.length == 20) {
-                $('#moreBtn').show();
-                last_id = results[results.length - 1]._id;
-            }
-        }
+        window.set_updates(data);
     } catch (err) {
-        window.pqy_notify.warn('Sorry, error fetching account');
         console.log(err);
+        window.pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
     }
-}
-
-async function get_posts(data) {
-    var posts = [];
-
-    for (var x in data) {
-        var post = await client.database.call('get_content', [
-            data[x].author,
-            data[x].permlink,
-        ]);
-        if (post && post.author !== '') posts.push(post);
-    }
-
-    return posts;
-}
-
-(async function user() {
-    var acc = await client.database.getAccounts([peer]);
-    //console.log(acc);
-
-    if (acc == '' || acc[0] == '') {
-        window.pqy_notify.warn('Account does not exist!');
-        return;
-    } else {
-        acc = acc[0];
-
-        document.getElementById('created').innerText = new Date(
-            acc.created
-        ).toDateString();
-
-        if (acc.json_metadata) {
-            metaData = JSON.parse(acc.json_metadata);
-
-            if (metaData.profile) {
-                if (metaData.profile.about != undefined || '')
-                    document.getElementById('bio').innerText =
-                        metaData.profile.about;
-                if (metaData.profile.website != undefined || '')
-                    document.getElementById('website_btn').href =
-                        metaData.profile.website;
-                if (metaData.profile.location != undefined || '')
-                    document.getElementById('location').innerText =
-                        metaData.profile.location;
-            }
-        }
-    }
-
-    document.title = '@' + peer + ' - Peer Query';
-    document.getElementById('wallet_btn').href = '/peer/' + peer + '/wallet';
-    document.getElementById('steemit_btn').href = 'http://steemit.com/@' + peer;
-
-    document.getElementById('userImg').src =
-        'https://steemitimages.com/u/' + peer + '/avatar';
-    document.getElementById('userImg').onerror = function() {
-        this.src = '/assets/images/placeholder.png';
-        this.onerror = '';
-    };
-    document.getElementById('username').innerText = '@' + peer;
-})();
-
-$('#moreBtn').on('click', function() {
-    $(this).hide();
-    display();
 });
 
-display();
+$('.limitedText').on('keyup', function() {
+    var maxLength = $(this).attr('maxlength');
+    if (maxLength == $(this).val().length) {
+        window.pqy_notify.warn(
+            'You can\'t write more than ' + maxLength + ' characters'
+        );
+    }
+});
