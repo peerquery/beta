@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Standard Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- SEO Properties -->
+	<title><%= "@" + data.account + "'s" %> projects - Peer Query</title>
+	<meta name="description" content="Explore <%= "@" + data.account + "'s " + (data.project_count || 0) %> projects on Peer Query. See which projects you might want to support or join.">
+	<meta name="application-name" content="Peer Query">
+	
+	<!-- Open graph properties -->
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="<%= "@" + data.account + "'s" %> projects - Peer Query">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-home.png"/>
+	<meta property="og:description" content="Explore <%= "@" + data.account + "'s " + (data.project_count || 0) %> projects on Peer Query. See which projects you might want to support or join.">
+	<meta property="fb:app_id" content="384491628645652">
+	
+	<!-- SEO robots -->
+	<meta name="robots" content="index, follow" />
+	
+	<link rel="stylesheet" href="/build/dist/styles.css">
+    
+</head>
+<body>
+
+
+
+
+  
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+
+<div class="ui container">
+	
+	<div class="ui feed">
+	<div class="event">
+	<div class="label">
+		<img id="account_img" src="/assets/images/placeholder.png">
+	</div>
+	<div class="content">
+		<div class="summary">
+			<a id="user_account"></a>
+			<div class="date">
+				Projects
+			</div>
+			<div class="ui active inline tiny loader" id="spinner"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="ui dropdown">
+		<i class="sidebar icon"></i>
+			<div class="text">View</div>
+		<i class="dropdown icon"></i>
+		<div class="menu">
+			<a class="item" id="account_btn">
+				<i class="user icon"></i>
+				Account
+			</a>
+			<a class="item" id="reports_btn">
+				<i class="clipboard icon"></i>
+				Reports
+			</a>
+			<a class="item" id="queries_btn">
+				<i class="question icon"></i>
+				Queries
+			</a>
+			<a class="item" id="wallet_btn">
+				<i class="dollar icon"></i>
+				Wallet
+			</a>
+		</div>
+	</div>
+	
+	
+		
+</div>
+
+
+
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+<div class="ui stackable grid container">
+    
+        
+		
+		<div class="ui active centered inline loader" id="loader"></div>
+		
+		<div class="ui three stackable link cards" style="margin-top:5rem; margin-bottom:3rem; width: 100%; margin: auto" id="item-container">	 </div>
+	
+		<button class="ui right floated button" id="moreBtn" style="display:none; margin-top: 3rem">Load more</button>
+	
+	
+  
+  
+</div>  
+  
+  
+  
+  
+	<script src="/build/dist/scripts.js"></script>
+	<script src="/build/dist/peer_projects.js"></script>
+	
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+
+  
+  
+</body>
+
+</html>
