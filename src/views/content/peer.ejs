@@ -9,15 +9,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<!-- SEO Properties -->
-	<title>Peer - Peer Query</title>
-	<meta name="description" content="">
+	<title><%= "@" + data.account + "'s" %> profile - Peer Query</title>
+	<meta name="description" content="<%= "@" + data.account + " is on Peer Query with " + (data.project_count || 0) + " projects. Follow them, join their projects and support their work." %> ">
 	<meta name="application-name" content="Peer Query">
 	
 	<!-- Open graph properties -->
 	<meta property="og:site_name" content="Peer Query">
-	<meta property="og:title" content="Peer - Peer Query">
+	<meta property="og:title" content="<%= "@" + data.account + "'s" %> profile - Peer Query">
 	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-peers.png"/>
-	<meta property="og:description" content="">
+	<meta property="og:description" content="<%= "@" + data.account + " is on Peer Query with " + (data.project_count || 0) + " projects. Follow them, join their projects and support their work." %> ">
 	<meta property="fb:app_id" content="384491628645652">
 	
 	<!-- SEO robots -->
@@ -39,87 +39,551 @@
 
 <div class="ui container">
 	
-<div class="ui stackable grid">
-  <div class="four wide column">
-  
-  
-  <div class="ui cards">
-  <div class="card">
-    <div class="image">
-      <img id="userImg" src="/assets/images/placeholder.png">
-    </div>
-    <div class="content">
-      <div class="header" id="username"></div>
-      <div class="description" id="bio">
-      </div>
-    </div>
-	
-	<div class="extra content">
-	   <i class="history icon"></i>
-	   <span id="created">
-	   </span>
-	</div>
-	
-	<div class="extra content">
-	   <i class="marker icon"></i>
-	   <span id="location">
-	   </span>
-	</div>
-	
-	
-	
-	<div class="ui compact selection dropdown">
-		<i class="dropdown icon"></i>
-	<div class="text">View details</div>
-	<div class="menu">
-		<a class="item" id="wallet_btn">Wallet</a>
-		<a class="item" id="website_btn">Website</a>
-		<a class="item" target="_blank" href="" id="steemit_btn">Blog</a>
-	</div>
-	</div>
-	
-	
-	
-	
-	
-  </div>
-  
-  </div>
-  
-  
-  </div>
-  
-  
-  <div class="twelve wide column">
-  
-      <div class="ui pointing below label">
-		<span id="blog-label"></span>
-		<span>User's reports on Peer Query</span>
-	  </div>
-	<div class="ui relaxed divided items"  id="item-container">
+	<div class="ui stackable grid">
     
-	</div>
-	
-  
-    <div class="ui active centered inline loader" id="post-loader" style=""></div>
-  
-	
-	
-	  
-	<div class="row">
-		<div class="center aligned column">
-			<br/><br/>
-			<a class="ui button" id="moreBtn" style="display:none">Load more</a>
+		
+		<div class="four wide column" style="text-align: center">
+        
+        
+        
+            <div style = "display:inline-block" >
+                <img class="ui image" style="border-radius: 50%; height: 15rem; width: 15rem" src="https://steemitimages.com/u/<%= data.account %>/avatar">
+            </div>
+            
+            <br/>
+            <br/>
+            
+            <div>
+                <p>
+                    <b><%= "@" + data.account %></b>
+                </p>
+            </div>
+            
+            <br/>
+            
+            <div>
+                <div class="ui star massive rating" data-rating="0" data-max-rating="5"></div>
+            </div>
+            
+            <br/>
+            
+            
+            <div>
+                    
+                    <p><i class="history icon"></i>Joined <%= new Date(data.created).getUTCMonth() + 1 + "/" + new Date(data.created).getFullYear() %></p>
+                    <p><i class="marker icon"></i> <span id="locationField"> <%= data.location || "Somewhere" %> </span></p>
+                    
+            </div>
+            
+            
+            <br/>
+            
+            
+            <div>
+            
+                <button class="circular ui disabled icon button" data-tooltip="Follow">
+                    <i class="icon user plus"></i>
+                </button>
+                <button class="circular ui disabled icon button" data-tooltip="Message">
+                    <i class="icon envelope"></i>
+                </button>
+                <button class="circular ui disabled icon button" data-tooltip="Tip">
+                    <i class="icon money"></i>
+                </button>
+            
+            </div>
+            
+            
+            
+            
 		</div>
-	</div>
+			
+            
+		<div class="twelve wide column">
+			
+            
+            
+            
+            <br/>
+            <br/>
+            
+
+            <div>
+                
+            
+                <div>
+                    <a id="edit_btn" class="ui circular edit icon button" style="display: none; float:right" data-tooltip="Edit">
+                        <i class="edit icon"></i>
+                    </a>
+                </div>
+                
+                <br/>
+                
+                
+                <div class="ui stackable two column grid">
+                        
+                    <div class="twelve wide column">
+                    
+                        <div>
+                            <b>About <span id="firstnameField"><%= (data.first_name || "") %></span>  <span id="lastnameField"><%= (data.last_name || "") %></span> </b>
+                        </div>
+                
+                        <br/>
+                
+                        <div>
+                            <em><span id="positionField"><%= (data.position || "Works") %></span> at <span id="companyField"><%= (data.company || "Private") %></span></em>
+                        </div>
+                
+                        <br/>
+                
+                        <div>
+                            <p id="aboutField"><%= data.about || "User doesn't reveal  much about themselves." %> </p>
+                        </div>
+                        
+                        <br/>
+                        
+                
+                
+            
+                        <br/>
+                        <br/>
+            
+            
+                        <div class="ui stackable three column grid">
+            
+                            <div class="column">
+                
+                                <div class="ui list">
+            
+                                    <a class="item" href="#">
+                                        <i class="chess queen icon"></i>
+                                        <div class="content">
+                                            <div class="header" id="skillField"> <%= data.skill || "Searching" %></div>
+                                            <div class="description">Skill</div>
+                                        </div>
+                                    </a>
+                
+                                </div>
+            
+                            </div>
+                
+                            <div class="column">
+                
+                                <div class="ui list">
+            
+                                    <a class="item" href="#">
+                                        <i class="star icon"></i>
+                                        <div class="content">
+                                            <div class="header" id="interestField"> <%= data.interest || "Searching" %></div>
+                                            <div class="description">Interest</div>
+                                        </div>
+                                    </a>
+                
+                                </div>
+            
+                            </div>
+                
+                            <div class="column">
+                
+                                <div class="ui list">
+            
+                                    <a class="item" href="#">
+                                        <i class="industry icon"></i>
+                                        <div class="content">
+                                            <div class="header" id="industryField"> <%= data.industry || "Searching" %></div>
+                                            <div class="description">Industry</div>
+                                        </div>
+                                    </a>
+                
+                                </div>
+            
+                            </div>
+                
+                        </div>
+            
+            
+                    
+                    </div>
+                         
+                    <div class="four wide column">
+                    
+                    <div class="ui padded segment">
+                        <div>
+                            <b>Links</b>
+                        </div>
+                
+                        <br/>
+                
+                        <div>
+                            
+                            <div class="ui list">
+                            
+                                <a class="item" href="<%= "/peer/" + data.account + "/wallet" %>">
+                                    <i class="dollar icon"></i>
+                                    <div class="content">
+                                        Wallet
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" href="<%= "https://steemit.com/@" + data.account %>">
+                                    <i class="rss icon"></i>
+                                    <div class="content">
+                                        Steem
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" id="emailField" href="mailto:<%= data.email || "" %>">
+                                    <i class="envelope icon"></i>
+                                    <div class="content">
+                                        Email
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" id="websiteField" href="<%= data.website || "" %>">
+                                    <i class="linkify icon"></i>
+                                    <div class="content">
+                                        Website
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" id="facebookField" href="">
+                                    <i class="facebook icon"></i>
+                                    <div class="content">
+                                        Facebook
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" id="twitterField" href="">
+                                    <i class="twitter icon"></i>
+                                    <div class="content">
+                                        Twitter
+                                    </div>
+                                </a>
+                                
+                                <a class="item" target="_blank" id="linkedinField" href="">
+                                    <i class="linkedin icon"></i>
+                                    <div class="content">
+                                        LinkedIn
+                                    </div>
+                                </a>
+                                
+                            </div>
+                            
+                        </div>
+                    
+                    </div>
+                    
+                    </div>
+                         
+                        
+                </div>
+                
+                
+            </div>
+            
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            
+        
+                <div class="ui stackable four column grid">
+                    
+                    <div class="column">
+                    
+                        <a class="circled" href="/peer/<%= data.account + "/projects" %>">
+        
+                            <h2 class="ui header">
+                                <%= data.project_count || 0 %>
+                                <div class="sub header">Projects</div>
+                            </h2>
+        
+                        </a>
+                    
+                    </div>
+                    
+                    <div class="column">
+                    
+                        <a class="circled" href="/peer/<%= data.account + "/reports" %>">
+        
+                            <h2 class="ui header">
+                                <%= data.report_count || 0 %>
+                                <div class="sub header">Reports</div>
+                            </h2>
+        
+                        </a>
+                        
+                    </div>
+                    
+                    <div class="column">
+                    
+                        <a class="circled" href="/peer/<%= data.account + "/queries" %>">
+        
+                            <h2 class="ui header">
+                                <%= data.query_count || 0 %>
+                                <div class="sub header">Queries</div>
+                            </h2>
+        
+                        </a>
+                        
+                    </div>
+                    
+                    <div class="column">
+                    
+                        <a class="circled" href="/curation">
+        
+                            <h2 class="ui header">
+                                <%= data.curation_points || 0 %>
+                                <div class="sub header">Points</div>
+                            </h2>
+        
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+        
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            
+
+            
+            <div class="">
+                
+                <div class="ui three mini statistics">
+                
+                    <a class="statistic mini olive">
+                        <div class="value">
+                            <i class="users icon"></i> <%= data.followers || 0 %>
+                        </div>
+                        <div class="label">
+                            Followers
+                        </div>
+                    </a>
+                
+                    <a class="statistic mini green">
+                        <div class="value">
+                            <i class="user plus icon"></i> <%= data.following || 0 %>
+                        </div>
+                        <div class="label">
+                            Following
+                        </div>
+                    </a>
+                    
+                    <a class="statistic mini teal">
+                        <div class="value">
+                            <i class="eye icon"></i> <%= data.view_count || 0 %>
+                        </div>
+                        <div class="label">
+                            Views
+                        </div>
+                    </a>
+                
+                
+                </div>
+                
+            </div>
+            
+            
+            <br/>
+            <br/>
+            <br/>
+            
+            
+            
+            
+            
+            <div class="" style="text-align: right; margin: 10rem 0rem 5rem">
+                
+                <p>
+                    Share this profile on social media
+                </p>
+                
+                <a class="ui circular facebook icon button" target="_blank" id="fb-share">
+                    <i class="facebook icon"></i>
+                </a>
+                <a class="ui circular twitter icon button" target="_blank" id="twitter-share">
+                    <i class="twitter icon"></i>
+                </a>
+                <a class="ui circular linkedin icon button" target="_blank" id="linkedin-share">
+                    <i class="linkedin icon"></i>
+                </a>
+                <a class="ui circular google plus icon button" target="_blank" id="gplus-share">
+                    <i class="google plus icon"></i>
+                </a>
+            
+            </div>
+            
+            
+            <br/>
+            
+            
+		</div>
+		
+		
+    </div>
     
-
-  
-  </div>
+    
+    			
+			
+			<div class="ui tiny edit modal">
+				<div class="header">Edit your account</div>
+				
+				<div class="content">
+					<div class="ui form" id="editForm">
+                    
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Full Name</label>
+                            <input placeholder="First Name" class="limitedText" maxlength="25" type="text" id="firstnameInput" value="">
+                        </div>
+                        <div class="field">
+                            <label>Last Name</label>
+                            <input placeholder="Last Name" class="limitedText" maxlength="25" type="text" id="lastnameInput" value="">
+                        </div>
+                    </div>
+                    
+                    
+						<div class="field" id="">
+							<label>
+								<i class="info circle icon"></i>
+								Your story
+							</label>
+							<textarea id="aboutInput" rows="4" ></textarea>
+						</div>
+						
+                        
+                    <div class="two fields">
+                    
+                        <div class="field">
+                            <label>Position</label>
+                            <input placeholder="Developer" class="limitedText" maxlength="25" type="text" id="positionInput" value="">
+                        </div>
+				
+                        <div class="field">
+                            <label>Company</label>
+                            <input placeholder="ABC Inc." class="limitedText" maxlength="25" type="text" id="companyInput" value="">
+                        </div>
+				
+                    </div>
+                    
+                        
+                        
+                    <div class="two fields">
+                    
+                        <div class="field">
+                            <label>Skill</label>
+                            <input placeholder="Developer" class="limitedText" maxlength="25" type="text" id="skillInput" value="">
+                        </div>
+				
+                        <div class="field">
+                            <label>Email</label>
+                            <input placeholder="some@one.com" class="limitedText" maxlength="25" type="email" id="emailInput" value="">
+                        </div>
+				
+                    </div>
+                    
+                        
+                        
+                    <div class="two fields">
+                    
+                        <div class="field">
+                            <label>Industry</label>
+                            
+							<select class="ui industry dropdown" id="industryInput">
+								<option value="Construction" selected>Construction</option>
+								<option value="Education" selected>Education</option>
+								<option value="Energy">Energy</option>
+								<option value="Finance">Finance</option>
+								<option value="Manufacturing">Manufacturing</option>
+								<option value="Health">Health</option>
+								<option value="Internet">Internet</option>
+								<option value="Blockchain">Blockchain</option>
+								<option value="Transport">Transport</option>
+								<option value="Trade">Trade</option>
+								<option value="Media">Media</option>
+								<option value="Non-profit">Non profit</option>
+								<option value="Politics">Politics</option>
+								<option value="Entertainment">Entertainment</option>
+								<option value="Farming">Farming</option>
+								<option value="Religion">Religion</option>
+								<option value="Sport">Sport</option>
+								<option value="Governance">Governance</option>
+								<option value="Services">Services</option>
+								<option value="Agriculture">Agriculture</option>
+								<option value="Technology">Technology</option>
+								<option value="Trade">Trade</option>
+							</select>
+                            
+                        </div>
+                        
+                        <div class="field">
+                            <label>Interest</label>
+                            
+							<select class="ui interest dropdown" id="interestInput">
+								<option value="Networking" selected>Networking</option>
+								<option value="Partnership">Partnership</option>
+								<option value="Jobbing">Jobbing</option>
+								<option value="Reading">Reading</option>
+							</select>
+                            
+                        </div>
+				
+                    </div>
+                    
+                        
+                        
+                    <div class="two fields">
+                    
+                        <div class="field">
+                            <label>Website</label>
+                            <input placeholder="https://me.sh" type="text" id="websiteInput" value="">
+                        </div>
+                        <div class="field">
+                            <label>Location</label>
+                            <input placeholder="Accra" class="limitedText" maxlength="25" type="text" id="locationInput" value="">
+                        </div>
+                        
+                    </div>
+                    
+                        
+                    <div class="three fields">
+                    
+                        <div class="field">
+                            <label>Facebook</label>
+                            <input placeholder="Username" type="text" id="facebookInput" value="">
+                        </div>
+                        <div class="field">
+                            <label>Twitter</label>
+                            <input placeholder="No '@'" class="limitedText" maxlength="25" type="text" id="twitterInput" value="">
+                        </div>
+                        <div class="field">
+                            <label>LinkedIn</label>
+                            <input placeholder="Username" class="limitedText" maxlength="25" type="text" id="linkedinInput" value="">
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    
+					</div>
+				</div>
+				
+				<div class="actions">
+					<div class="ui green button" id="updateBtn">Update</div>
+					<div class="ui cancel button">Cancel</div>
+				</div>
+			</div>
+			
+			
+    
+    
+        
 </div>
-	
-</div>
-
+        
+        
 
 
 
@@ -128,40 +592,77 @@
   
 	
 	
-	
-<section name="modal for viewing posts">
-
-<div class="ui modal">
-	<i class="close icon"></i>
-	
-	<div class="header"><span id="modal_title"></span> <em> by <span id="modal_author"></span></em></div>
-	
-	
-	<div class="post_content scrolling content">
-		
-		<div class="description" id="modal_content">
-	
-		</div>
-	
-	</div>
-	
-	<div class="actions">
-		<a class="ui positive right positive labeled icon button" id="modal_href" >
-			View
-			<i class="window maximize outline icon"></i>
-		</a>
-		<div class="ui black right negative labeled icon button">
-			Close
-			<i class="window close icon"></i>
-		</div>
-	</div>
-</div>
-
-</section>
-  
-
   
 	<script src="/build/dist/scripts.js"></script>
+    <script>
+    //
+    
+    const account  = "<%= data.account %>";
+    
+    //set click listeners
+        
+        $('#edit_btn').click(function() {
+            $('.edit.modal').modal('show');
+        });
+        
+    $('.edit.modal')
+        .modal({
+            onShow  : function(){
+            
+                $('#editForm').attr('class', 'ui form');
+                
+                    
+                    $('#firstnameInput').val( $('#firstnameField').text() );
+                    $('#lastnameInput').val( $('#lastnameField').text() );
+                    $('#aboutInput').val( $('#aboutField').text() );
+                    $('#skillInput').val( $('#skillField').text() );
+                    $('#interestInput').dropdown('set selected', $('#interestField').text() );
+                    $('#locationInput').val( $('#locationField').text() );
+                    $('#websiteInput').val( $('#websiteField').attr('href') );
+                    $('#positionInput').val( $('#positionField').text() );
+                    $('#companyInput').val( $('#companyField').text() );
+                    $('#industryInput').dropdown('set selected', $('#industryField').text() );
+                    $('#emailInput').val( $('#emailField').attr('href') );
+                    
+                    $('#facebookInput').val( $('#facebookField').attr('href') );
+                    $('#twitterInput').val( $('#twitterField').attr('href') );
+                    $('#linkedinInput').val( $('#linkedinField').attr('href') );
+                    
+                
+                $('#updateBtn').removeClass('disabled');
+                
+            }
+        })
+    ;
+    
+    
+    function set_updates(data) {
+                
+                $('.edit.modal').modal('hide');
+                
+                $('#firstnameField').text(data.first_name);
+                $('#lastnameField').text(data.last_name);
+                $('#aboutField').text(data.about);
+                $('#skillField').text(data.skill);
+                $('#interestField').text(data.interest);
+                $('#locationField').text(data._location);
+                $('#positionField').text(data.position);
+                $('#companyField').text(data.company);
+                $('#industryField').text(data.industry);
+                
+                $('#websiteField').attr('href', data.website);
+                $('#emailField').attr('href', data.email);
+                
+                $('#facebookField').attr('href', data.facebook);
+                $('#twitterField').attr('href', data.twitter);
+                $('#linkedinField').attr('href', data.linkedin);
+                
+    }
+    
+    
+    $('.ui.rating').rating('disable');
+            
+    </script>
 	<script src="/build/dist/peer.js"></script>
   
 	<section class="footerSection">
