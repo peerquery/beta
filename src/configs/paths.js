@@ -47,6 +47,10 @@ module.exports = {
     office_settings: resolveApp('./src/client/pages/office-settings.js'),
     //static
     statistics: resolveApp('./src/client/pages/statistics.js'),
+    //peer
+    peer_projects: resolveApp('./src/client/pages/peer-projects.js'),
+    peer_reports: resolveApp('./src/client/pages/peer-reports.js'),
+    peer_queries: resolveApp('./src/client/pages/peer-queries.js'),
     //
     search: resolveApp('./src/client/pages/search.js'),
     blog: resolveApp('./src/client/pages/blog.js'),
