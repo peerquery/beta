@@ -15,6 +15,10 @@ address.content.report = 'content/report';
 address.content.wallet = 'content/wallet';
 address.content.search = 'content/search';
 
+address.content.peer_projects = 'content/peer-projects';
+address.content.peer_reports = 'content/peer-reports';
+address.content.peer_queries = 'content/peer-queries';
+
 //client views
 address.client = {};
 address.client.login = 'client/login';
