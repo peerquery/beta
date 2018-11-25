@@ -38,6 +38,18 @@ module.exports = async function() {
             'href',
             '/peer/' + active_user + '/wallet'
         );
+        $('#logged_in_user_reports').attr(
+            'href',
+            '/peer/' + active_user + '/reports'
+        );
+        $('#logged_in_user_queries').attr(
+            'href',
+            '/peer/' + active_user + '/queries'
+        );
+        $('#logged_in_user_projects').attr(
+            'href',
+            '/peer/' + active_user + '/projects'
+        );
     } else if (
         active_user &&
         active_user !== '' &&
