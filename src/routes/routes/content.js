@@ -24,11 +24,78 @@ module.exports = function(app) {
 
     app.get('/peer/:username', async function(req, res) {
         try {
-            //var query = 'account about report_count project_count created location -_id';
-            //var results = await peers.findOne({'account': req.params.username}).select(query);
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select(
+                    'account project_count report_count query_count following_count followers_count created location about first_name last_name ' +
+                        ' facebook twitter linkedin position company email industry website interest skill view_count curation_point -_id'
+                );
 
-            //res.req_data = results;
+            res.req_data = peer;
+
             return router(address.content.peer, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
+    app.get('/peer/:username/projects', async function(req, res) {
+        try {
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select('account project_count -_id');
+            res.req_data = peer;
+
+            return router(address.content.peer_projects, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
+    app.get('/peer/:username/reports', async function(req, res) {
+        try {
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select('account report_count -_id');
+            res.req_data = peer;
+
+            return router(address.content.peer_reports, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
+    app.get('/peer/:username/queries', async function(req, res) {
+        try {
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select('account query_count -_id');
+            res.req_data = peer;
+
+            return router(address.content.peer_queries, req, res);
         } catch (err) {
             console.log(err);
             return router(address._static._404, req, res);
@@ -39,7 +106,11 @@ module.exports = function(app) {
         try {
             var query = '';
             //var results = await query.findOne({'permlink': req.params.query}).select(query);
-            var results = await queries.findOne({ permlink: req.params.query });
+            var results = await queries.findOneAndUpdate(
+                { permlink: req.params.query },
+                { $inc: { view_count: 1 } },
+                { new: true }
+            );
 
             res.req_data = results;
             return router(address.content.query, req, res);
@@ -62,7 +133,11 @@ module.exports = function(app) {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .select(query);
 
             if (!results || results == '')
@@ -82,7 +157,11 @@ module.exports = function(app) {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .select(query);
 
             if (!results || results == '')
@@ -102,7 +181,11 @@ module.exports = function(app) {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .select(query);
 
             if (!results || results == '')
@@ -122,7 +205,11 @@ module.exports = function(app) {
             var query =
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .select(query);
 
             if (!results || results == '')
@@ -143,7 +230,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -166,7 +257,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -189,7 +284,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -212,7 +311,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -235,7 +338,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -258,7 +365,11 @@ module.exports = function(app) {
                 'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
             //the below clause makes sure only the project owner can access this route
             var results = await projects
-                .findOne({ slug: req.params.project })
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
                 .where('owner')
                 .equals(req.active_user.account)
                 .select(query);
@@ -303,7 +414,13 @@ module.exports = function(app) {
         return router(address.content.peers, req, res);
     });
 
-    app.get('/peer/:username/wallet', function(req, res) {
+    app.get('/peer/:username/wallet', async function(req, res) {
+        var find = { account: req.params.username };
+        var user = await peers
+            .findOneAndUpdate(find, { $inc: { view_count: 1 } })
+            .select('account -_id');
+        res.req_data = user;
+
         return router(address.content.wallet, req, res);
     });
 
