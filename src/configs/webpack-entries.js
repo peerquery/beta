@@ -39,6 +39,9 @@ entry = {
     search: paths.search,
     blog: paths.blog,
     curation: paths.curation,
+    peer_projects: paths.peer_projects,
+    peer_reports: paths.peer_reports,
+    peer_queries: paths.peer_queries,
 };
 
 module.exports = entry;
