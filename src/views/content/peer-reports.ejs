@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<!-- Standard Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- SEO Properties -->
+	<title><%= "@" + data.account + "'s" %> reports - Peer Query</title>
+	<meta name="description" content="Read from <%= "@" + data.account + "'s " + (data.report_count || 0) %> reports on Peer Query. Support them with your votes, engage them with discussions.">
+	<meta name="application-name" content="Peer Query">
+	
+	<!-- Open graph properties -->
+	<meta property="og:site_name" content="Peer Query">
+	<meta property="og:title" content="<%= "@" + data.account + "'s" %> reports - Peer Query">
+	<meta property="og:image" content="https://www.peerquery.com/assets/images/peerquery-reports.png"/>
+	<meta property="og:description" content="Read from <%= "@" + data.account + "'s " + (data.report_count || 0) %> reports on Peer Query. Support them with your votes, engage them with discussions.">
+	<meta property="fb:app_id" content="384491628645652">
+	
+	<!-- SEO robots -->
+	<meta name="robots" content="index, follow" />
+	
+	<link rel="stylesheet" href="/build/dist/styles.css">
+    
+</head>
+<body>
+
+
+<section class="navbarSection">
+	<% include ../partials/navbar.ejs %>
+</section>
+
+
+
+
+
+
+
+
+<div class="ui container">
+	
+	<div class="ui feed">
+	<div class="event">
+	<div class="label">
+		<img id="account_img" src="/assets/images/placeholder.png">
+	</div>
+	<div class="content">
+		<div class="summary">
+			<a id="user_account"></a>
+			<div class="date">
+				Reports
+			</div>
+			<div class="ui active inline tiny loader" id="spinner"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="ui dropdown">
+		<i class="sidebar icon"></i>
+			<div class="text">View</div>
+		<i class="dropdown icon"></i>
+		<div class="menu">
+			<a class="item" id="account_btn">
+				<i class="user icon"></i>
+				Account
+			</a>
+			<a class="item" id="queries_btn">
+				<i class="question icon"></i>
+				Queries
+			</a>
+			<a class="item" id="projects_btn">
+				<i class="coffee icon"></i>
+				Projects
+			</a>
+			<a class="item" id="wallet_btn">
+				<i class="dollar icon"></i>
+				Wallet
+			</a>
+		</div>
+	</div>
+	
+	
+		
+</div>
+
+
+
+
+	<br/>
+	
+	<div class="ui divider"></div>
+	
+	<br/><br/>
+	
+	
+
+	
+	
+
+<div class="ui stackable grid container">
+  
+	
+	
+ 
+ 
+      <div class="row">
+        <div class="ten wide column">
+		  
+		<br/>
+		  
+		  
+		  <div class="ui container">
+		  
+		
+		<div class="ui active centered inline loader" id="post-loader" style="display:none"></div>
+		
+		<div class="ui relaxed divided items"  id="item-container">  </div>
+		
+		
+		<button class="ui right floated button" id="moreBtn" style="display:none; margin-top: 3rem">Load more</button>
+	
+		<br/>
+	  
+    
+	</div>
+	
+	
+  </div>
+		  
+        <div class="six wide desktop-only right floated column">
+		  
+		  
+		  <div class="ui container">
+		
+				
+				<br/>
+				
+			
+			<div class="ui active centered inline loader" id="responses-loader" style="display:none"></div>
+				
+				
+					<div class="ui left pointing label grid" style="visibility:hidden" id="responses-label">
+						<div class="ui grid" style="width:100%">
+							
+							<div class="two wide column"><i class="big comments icon"></i></div>
+							<div class="fourteen wide column" id="responses-title"></div>
+							
+						</div>
+					</div>
+				
+				
+				<div class="ui comments" id="responses-container">
+	
+				</div>
+		
+		
+		</div>
+		  
+		  
+		  
+        </div>
+		
+      </div>
+	  
+		<div class="row">
+			<div class="center aligned column">
+				<br/><br/>
+				<a class="ui button" id="moreBtn" style="display:none">Load more</a>
+			</div>
+		</div>
+    
+  
+
+  
+</div>  
+  
+  
+  
+  
+  
+	
+	
+	
+<section name="modal for viewing posts">
+
+<div class="ui modal">
+	<i class="close icon"></i>
+	
+	<div class="header"><span id="modal_title"></span> <em> by <span id="modal_author"></span></em></div>
+	
+	
+	<div class="post_content scrolling content">
+		
+		<div class="description" id="modal_content">
+	
+		</div>
+	
+	</div>
+	
+	<div class="actions">
+		<a class="ui positive right positive labeled icon button" id="modal_href" >
+			View
+			<i class="window maximize outline icon"></i>
+		</a>
+		<div class="ui black right negative labeled icon button">
+			Close
+			<i class="window close icon"></i>
+		</div>
+	</div>
+</div>
+
+</section>
+
+
+
+	<script src="/build/dist/scripts.js"></script>
+	<script src="/build/dist/peer_reports.js"></script>
+  
+  
+	<section class="footerSection">
+		<% include ../partials/footer.ejs %>
+	</section>
+
+
+
+  
+</body>
+
+</html>
