@@ -16,6 +16,18 @@ var peerSchema = new Schema({
 
     steem_json_metadata: { type: String },
 
+    interest: { type: String },
+    skill: { type: String },
+    website: { type: String },
+
+    first_name: { type: String },
+    last_name: { type: String },
+
+    position: { type: String },
+    company: { type: String },
+    industry: { type: String },
+    email: { type: String },
+
     //curation
     curation_approves: { type: Number },
     curation_rejects: { type: Number },
