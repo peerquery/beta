@@ -1,7 +1,7 @@
 //
 
 //show edit button
-window.load = function() {
+window.onload = function() {
     if (window.account == window.active_user) $('#edit_btn').show();
 };
 
