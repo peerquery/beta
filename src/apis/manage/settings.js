@@ -54,7 +54,7 @@ module.exports = function(app) {
             //update new owner role on project
             let query3 = {
                 slug_id: req.body.slug_id,
-                'members.account': req.body.account,
+                'members.account': req.body.new_owner,
             };
             let update3 = { $set: { 'members.$.role': 'owner' } };
             let status3 = await project.updateOne(query3, update3);
@@ -67,15 +67,37 @@ module.exports = function(app) {
             let update4 = { $set: { role: 'admin' } };
             let status4 = await peer.updateOne(query4, update4);
 
-            //update new owner role on profile
+            //update previous owner project_count
             let query5 = {
                 account: req.active_user.account,
-                'memberships.slug_id': req.body.slug_id,
             };
-            let update5 = { $set: { role: 'owner' } };
+            let update5 = { $inc: { project_count: -1 } };
             let status5 = await peer.updateOne(query5, update5);
 
-            if (!status1 || !status2 || !status3 || !status4 || !status5)
+            //update new owner role on profile
+            let query6 = {
+                account: req.body.new_owner,
+                'memberships.slug_id': req.body.slug_id,
+            };
+            let update6 = { $set: { role: 'owner' } };
+            let status6 = await peer.updateOne(query6, update6);
+
+            //update new owner project_count
+            let query7 = {
+                account: req.body.new_owner,
+            };
+            let update7 = { $inc: { project_count: 1 } };
+            let status7 = await peer.updateOne(query7, update7);
+
+            if (
+                !status1 ||
+                !status2 ||
+                !status3 ||
+                !status4 ||
+                !status5 ||
+                !status6 ||
+                !status7
+            )
                 return res.sendStatus(500);
 
             res.sendStatus(200);
@@ -115,6 +137,7 @@ module.exports = function(app) {
             let query2 = { account: req.active_user.account };
             let update2 = {
                 $pull: { memberships: { slug_id: req.body.slug_id } },
+                $inc: { project_count: -1 },
             };
             let status2 = await peer.updateOne(query2, update2);
 
