@@ -36,7 +36,13 @@ module.exports = function(app) {
                         ' facebook twitter linkedin position company email industry website interest skill view_count curation_point -_id'
                 );
 
-            res.req_data = peer;
+            if (!peer) {
+                var _peer = {};
+                _peer.account = req.params.username;
+                _peer.created = new Date();
+            }
+
+            res.req_data = peer || _peer;
 
             return router(address.content.peer, req, res);
         } catch (err) {
