@@ -27,6 +27,8 @@ var statsSchema = new Schema(
         report_views_count: Number,
         query_views_count: Number,
 
+        project_delete_count: Number,
+
         /*
         //accounts counter
         accounts_created: Number,
