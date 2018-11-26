@@ -70,7 +70,7 @@
             
             <div>
                     
-                    <p><i class="history icon"></i>Joined <%= new Date(data.created).getUTCMonth() + 1 + "/" + new Date(data.created).getFullYear() %></p>
+                    <p><i class="history icon"></i>Joined <%= (new Date(data.created).getUTCMonth() + 1 || "Not ") + "/" + (new Date(data.created).getFullYear() || " yet") %></p>
                     <p><i class="marker icon"></i> <span id="locationField"> <%= data.location || "Somewhere" %> </span></p>
                     
             </div>

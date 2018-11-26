@@ -39,7 +39,6 @@ module.exports = function(app) {
             if (!peer) {
                 var _peer = {};
                 _peer.account = req.params.username;
-                _peer.created = new Date();
             }
 
             res.req_data = peer || _peer;
