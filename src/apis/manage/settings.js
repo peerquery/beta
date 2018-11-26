@@ -2,7 +2,8 @@
 
 let activity = require('../../models/activity'),
     peer = require('../../models/peer'),
-    project = require('../../models/project');
+    project = require('../../models/project'),
+    stats = require('../../models/stats');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
@@ -140,6 +141,12 @@ module.exports = function(app) {
                 $inc: { project_count: -1 },
             };
             let status2 = await peer.updateOne(query2, update2);
+
+            //reduce project count on stats
+            await stats.updateOne(
+                { identifier: 'default' },
+                { $inc: { project_delete_count: 1 } }
+            );
 
             res.sendStatus(200);
         } catch (err) {
