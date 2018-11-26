@@ -1,7 +1,9 @@
 //
 
 //show edit button
-if (window.account == window.active_user) $('#edit_btn').show();
+window.load = function() {
+    if (window.account == window.active_user) $('#edit_btn').show();
+};
 
 //social media button hrefs
 
