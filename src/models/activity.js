@@ -9,6 +9,7 @@ var activitySchema = new Schema({
     slug: { type: String },
     indentifier: { type: String, unique: true },
     slug_id: { type: String },
+    target: { type: String },
     action: { type: String }, //eg: create, update, delete, rate, vote, follow
     type: { type: String }, //eg: project, report, user, query
     source: { type: String }, //eg: project, report, user, query
@@ -23,7 +24,15 @@ var activitySchema = new Schema({
 });
 
 activitySchema.index(
-    { account: 1, subject: 1, type: 1, slug_id: 1, action: 1, created: 1 },
+    {
+        account: 1,
+        subject: 1,
+        type: 1,
+        slug_id: 1,
+        target: 1,
+        action: 1,
+        created: 1,
+    },
     { name: 'activity_index' }
 );
 
