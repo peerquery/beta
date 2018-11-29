@@ -2,12 +2,14 @@
 
 var shortid = require('shortid'),
     markup = require('markup-builder'),
+    uuid = require('../../lib/helpers/uuid'),
     activity = require('../../models/activity'),
     peer = require('../../models/peer'),
     stats = require('../../models/stats'),
     report = require('../../models/report'),
     query = require('../../models/query'),
-    project = require('../../models/project');
+    project = require('../../models/project'),
+    message = require('../../models/message');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
@@ -340,6 +342,76 @@ module.exports = function(app) {
                 { identifier: 'default' },
                 { $inc: { request_count: 1 } }
             );
+
+            res.status(200).send('success');
+        } catch (err) {
+            res.status(500).send(
+                'sorry, could not create request. please try again'
+            );
+            console.log(err);
+        }
+    });
+
+    app.post('/api/private/create/message', async function(req, res) {
+        try {
+            if (req.body.recipient == req.active_user.account)
+                return res
+                    .status(200)
+                    .send('sorry, you cannot message yourself');
+
+            let messaged_target;
+
+            if (req.body.target == 'user')
+                messaged_target = await peer.updateOne(
+                    { account: req.body.recipient },
+                    { $inc: { recieved_messages: 1 } }
+                );
+            if (req.body.target == 'project')
+                messaged_target = await peer.updateOne(
+                    { slug_id: req.body.recipient },
+                    { $inc: { recieved_messages: 1 } }
+                );
+
+            if (!messaged_target)
+                return res
+                    .status(200)
+                    .send('sorry, intended recipient does not exist');
+
+            const slug = uuid();
+
+            var newMessage = message({
+                slug_id: slug,
+
+                author: req.active_user.account,
+                recipient: req.body.recipient,
+
+                title: req.body.title,
+                body: req.body.body,
+
+                state: 'pending',
+                target: req.body.target,
+                created: Date.now(),
+            });
+
+            await newMessage.save();
+
+            var newActivity = activity({
+                target: req.body.recipient,
+                title: req.body.title,
+                slug_id: slug,
+                action: 'create',
+                type: 'message',
+                source: req.body.target,
+                account: req.active_user.account,
+                description:
+                    '@' +
+                    req.active_user.account +
+                    ' just sent a message to: ' +
+                    req.body.recipient,
+                created: Date.now(),
+            });
+
+            await newActivity.save();
 
             res.status(200).send('success');
         } catch (err) {
