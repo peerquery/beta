@@ -51,6 +51,7 @@ module.exports = {
     peer_projects: resolveApp('./src/client/pages/peer-projects.js'),
     peer_reports: resolveApp('./src/client/pages/peer-reports.js'),
     peer_queries: resolveApp('./src/client/pages/peer-queries.js'),
+    peer_inbox: resolveApp('./src/client/pages/peer-inbox.js'),
     //
     search: resolveApp('./src/client/pages/search.js'),
     blog: resolveApp('./src/client/pages/blog.js'),
