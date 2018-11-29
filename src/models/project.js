@@ -55,6 +55,9 @@ var projectSchema = new Schema({
     ratings_count: { type: Number },
     ratings_value: { type: Number },
 
+    recieved_messages: { type: Number },
+    viewed_messages: { type: Number },
+
     //social
     facebook: { type: String },
     twitter: { type: String },
