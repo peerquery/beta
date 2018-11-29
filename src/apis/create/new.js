@@ -364,12 +364,12 @@ module.exports = function(app) {
             if (req.body.target == 'user')
                 messaged_target = await peer.updateOne(
                     { account: req.body.recipient },
-                    { $inc: { recieved_messages: 1 } }
+                    { $inc: { received_messages: 1 } }
                 );
             if (req.body.target == 'project')
                 messaged_target = await peer.updateOne(
                     { slug_id: req.body.recipient },
-                    { $inc: { recieved_messages: 1 } }
+                    { $inc: { received_messages: 1 } }
                 );
 
             if (!messaged_target)

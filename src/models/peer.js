@@ -35,7 +35,7 @@ var peerSchema = new Schema({
     curation_earnings: { type: Number },
     curation_votes: { type: Number },
 
-    recieved_messages: { type: Number },
+    received_messages: { type: Number },
     viewed_messages: { type: Number },
 
     //projects
