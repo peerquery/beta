@@ -18,6 +18,7 @@ address.content.search = 'content/search';
 address.content.peer_projects = 'content/peer-projects';
 address.content.peer_reports = 'content/peer-reports';
 address.content.peer_queries = 'content/peer-queries';
+address.content.peer_inbox = 'content/peer-inbox';
 
 //client views
 address.client = {};
