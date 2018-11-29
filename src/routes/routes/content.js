@@ -107,6 +107,25 @@ module.exports = function(app) {
         }
     });
 
+    app.get('/peer/:username/inbox', async function(req, res) {
+        try {
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select('account query_count -_id');
+            res.req_data = peer;
+
+            return router(address.content.peer_inbox, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
     app.get('/query/:query', async function(req, res) {
         try {
             var query = '';
