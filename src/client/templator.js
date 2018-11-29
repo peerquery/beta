@@ -4,6 +4,7 @@ const project_template = require('./templates/project'),
     user_template = require('./templates/peer'),
     report_template = require('./templates/report'),
     search_template = require('./templates/search'),
+    message_template = require('./templates/message'),
     mtools = require('markup-tools');
 
 module.exports = {
@@ -39,6 +40,15 @@ module.exports = {
         div.className = 'event';
 
         div.innerHTML = mtools.build.template(search_template, data);
+
+        return div;
+    },
+
+    message: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'item';
+
+        div.innerHTML = mtools.build.template(message_template, data);
 
         return div;
     },
