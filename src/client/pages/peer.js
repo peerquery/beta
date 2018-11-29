@@ -117,6 +117,69 @@ $('#updateBtn').click(async function() {
     }
 });
 
+$('#sendBtn').click(async function() {
+    try {
+        var data = {};
+
+        data.recipient = window.created ? window.account : null;
+        data.title = $('#messagetitleInput').val();
+        data.body = $('#messagebodyInput').val();
+        data.target = 'user';
+
+        if (!data.recipient) {
+            pqy_notify.warn('User is not yet a member!');
+            window.close_modal('message');
+            $('#message_btn').addClass('disabled');
+            return;
+        } else if (!data.title) {
+            pqy_notify.warn('Title cannot be empty');
+            return;
+        } else if (!data.body) {
+            pqy_notify.warn('Body cannot be empty');
+            return;
+        } else {
+            $('#sendBtn').addClass('disabled');
+            $('#messageForm').addClass('loading');
+
+            var status = await Promise.resolve(
+                $.post('/api/private/create/message', data)
+            );
+            //console.log(status);
+
+            $('#messagetitleInput').val('');
+            $('#messagebodyInput').val('');
+
+            pqy_notify.success('Message sent successfully');
+            window.close_modal('message');
+        }
+    } catch (err) {
+        console.log(err);
+        window.pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
+    }
+});
+
+$('#signBtn').click(function() {
+    let amount = Number($('#tipamountInput').val());
+    let currency = $('#tipcurrencyInput').val();
+
+    amount = Number(amount);
+
+    if (amount <= 0) {
+        pqy_notify.inform('Must send an amount greater than 0');
+        return;
+    }
+
+    let sign_uri =
+        'https://steemconnect.com/sign/transfer?to=<%= data.account %>&amount=' +
+        amount +
+        '%20' +
+        currency.toUpperCase();
+    let sign = window.open(sign_uri, '_blank');
+
+    sign.location;
+});
+
 $('.limitedText').on('keyup', function() {
     var maxLength = $(this).attr('maxlength');
     if (maxLength == $(this).val().length) {
