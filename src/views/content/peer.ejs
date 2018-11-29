@@ -84,10 +84,10 @@
                 <button class="circular ui disabled icon button" data-tooltip="Follow">
                     <i class="icon user plus"></i>
                 </button>
-                <button class="circular ui disabled icon button" data-tooltip="Message">
+                <button class="circular ui disabled icon button" data-tooltip="Message" id="message_btn">
                     <i class="icon envelope"></i>
                 </button>
-                <button class="circular ui disabled icon button" data-tooltip="Tip">
+                <button class="circular ui disabled icon button" data-tooltip="Tip" id="tip_btn">
                     <i class="icon money"></i>
                 </button>
             
@@ -580,6 +580,104 @@
 			
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            <div class="ui message modal" id="messageModal">
+    
+				<div class="header">Send <em><%= "@" + data.account %></em> a message</div>
+				
+				<div class="content">
+                
+					<div class="ui form" id="messageForm">
+                    
+                        <div class="field">
+                            <label>Title</label>
+                            <input placeholder="" class="limitedText" maxlength="255" type="text" id="messagetitleInput" value="">
+                        </div>
+                    
+                    
+						<div class="field" id="">
+							<label>
+								<i class="info circle icon"></i>
+								Body
+							</label>
+							<textarea id="messagebodyInput" rows="8" ></textarea>
+						</div>
+                    
+                    </div>
+                    
+                </div>
+                    
+                    
+				<div class="actions">
+					<div class="ui green button" id="sendBtn">Send</div>
+					<div class="ui cancel button">Cancel</div>
+				</div>
+                    
+            </div>
+    
+    
+    
+    
+    
+    
+    
+            <div class="ui tip mini modal" id="tipModal">
+    
+				<div class="header">Send <em><%= "@" + data.account %></em> a tip</div>
+				
+				<div class="content">
+                
+					<div class="ui form" id="tipForm">
+                    
+                    <div class="two fields">
+                    
+                        <div class="field">
+                            <label>Amount</label>
+                            <input placeholder="" class="limitedText" maxlength="255" type="text" id="tipamountInput" value="">
+                        </div>
+                    
+                        <div class="field">
+                            <label>Currency</label>
+                            
+							<select class="ui compact currency dropdown" id="tipcurrencyInput">
+								<option value="sbd" selected>SBD</option>
+								<option value="steem">Steem</option>
+							</select>
+                            
+                        </div>
+				
+                    </div>
+                    
+                    </div>
+                    
+                </div>
+                    
+                    
+				<div class="actions">
+					<div class="ui green button" id="signBtn">Sign</div>
+					<div class="ui cancel button">Cancel</div>
+				</div>
+                    
+            </div>
+    
+    
+    
+    
+    
+    
+    
+    
         
 </div>
         
@@ -598,13 +696,51 @@
     //
     
     const account  = "<%= data.account %>";
+    const created  = "<%= data.created %>";
+    
+    if(created && active_user) {
+        if(active_user !== account) $('#message_btn').removeClass('disabled');
+        $('#tip_btn').removeClass('disabled');
+    }
     
     //set click listeners
         
-        $('#edit_btn').click(function() {
-            $('.edit.modal').modal('show');
-        });
+    $('#edit_btn').click(function() {
+        $('.edit.modal').modal('show');
+    });
         
+    $('#message_btn').click(function() {
+        $('.message.modal').modal('show');
+    });
+        
+    $('#tip_btn').click(function() {
+        $('.tip.modal').modal('show');
+    });  
+    
+        
+    $('.message.modal')
+        .modal({
+            onShow  : function(){
+            
+                $('#messageForm').attr('class', 'ui form');
+                $('#sendBtn').removeClass('disabled');
+                
+            }
+        })
+    ;
+    
+        
+    $('.tip.modal')
+        .modal({
+            onShow  : function(){
+            
+                    $('#tipamountInput').val( '25' );
+                    $('#tipcurrencyInput').dropdown('set selected', 'sbd' );
+                
+            }
+        })
+    ;
+    
     $('.edit.modal')
         .modal({
             onShow  : function(){
@@ -659,6 +795,9 @@
                 
     }
     
+    function close_modal(name) {
+        $('.' + name + '.modal').modal('hide');
+    }
     
     $('.ui.rating').rating('disable');
             
