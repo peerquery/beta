@@ -61,7 +61,7 @@ $('#upgrade_user_btn').on('click', async function() {
 
         $('#' + account + '-item').remove();
 
-        window.pqy_notify.inform('Successfully upgrading member');
+        window.pqy_notify.inform('Successfully upgraded member');
 
         //$('.ui.modal.manage').modal('hide');
     } catch (err) {
