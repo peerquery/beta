@@ -30,6 +30,7 @@ module.exports = {
         $: false,
         jQuery: false,
         Promise: false,
+        account: false,
         active_user: false,
         slug_id: false,
         project_slug: false,
