@@ -2,7 +2,7 @@
 
 //show edit button
 window.onload = function() {
-    if (window.account == window.active_user) $('#edit_btn').show();
+    if (account == active_user) $('#edit_btn').show();
 };
 
 //social media button hrefs
