@@ -38,6 +38,10 @@ var peerSchema = new Schema({
     received_messages: { type: Number },
     viewed_messages: { type: Number },
 
+    //settings
+    messaging: { type: String },
+    hiring: { type: String },
+
     //projects
     memberships: [
         {
