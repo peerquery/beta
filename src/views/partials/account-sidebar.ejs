@@ -1,0 +1,58 @@
+
+		<div class="ui basic segment">
+	
+			<img class="ui circular centered small image" id="user-image-sidebar" src="/assets/images/placeholder.png">
+		
+		
+			<div class="ui center aligned basic segment">
+				
+				<p id="user-account-sidebar"> </p>
+	
+			</div>
+			
+			
+			<div class="ui secondary borderless fluid vertical menu">
+				<a class="item" id="dashboard-menu" href="/account">
+					<i class="tachometer alternate icon"></i>
+					Dashboard
+				</a>
+				<a class="item" id="discussions-menu" href="/account/inbox">
+					<i class="envelope icon"></i>
+					Inbox
+				</a>
+				<a class="item" id="activity-menu" href="/account/activity">
+					<i class="history icon"></i>
+					Activity
+				</a>
+				<a class="item" id="activity-menu" href="/account/notifications">
+					<i class="exclamation icon"></i>
+					Notifications
+				</a>
+				<a class="item" id="settings-menu" href="/account/settings">
+					<i class="settings icon"></i>
+					Settings
+				</a>
+			</div>
+
+		</div>
+	
+	<script>
+    //
+    window.onload = function() {
+        var page = window.location.pathname;
+        if (page == '/account') $('#dashboard-menu').addClass('active');
+        if (page == '/account/activity') $('#activity-menu').addClass('active');
+        if (page == '/account/inbox') $('#inbox-menu').addClass('active');
+        if (page == '/account/notifications') $('#notifications-menu').addClass('active');
+        if (page == '/account/settings') $('#settings-menu').addClass('active');
+     
+        $('#user-account-sidebar').text('@' + active_user);
+        $('#user-image-sidebar').attr('src', 'https://steemitimages.com/u/' + active_user + '/avatar');
+        
+        //check if local page function exists, if so then call it
+        if (typeof window.load_is_done === "function") {
+            window.load_is_done();
+        }
+    }
+    </script>
+    
