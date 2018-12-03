@@ -45,10 +45,15 @@ module.exports = async function(app) {
                 .findOneAndUpdate(options, update)
                 .select(query);
 
-            await peer.updateOne(
-                { account: req.active_user.account },
-                { $inc: { viewed_messages: 1 } }
-            );
+            //do NOT return new updated document. return old document
+            //if the post was already 'read', then do not increment the viewed_messages count
+            //else then it is the first time read, so increment it!
+
+            if (results && results.state !== 'read')
+                await peer.updateOne(
+                    { account: req.active_user.account },
+                    { $inc: { viewed_messages: 1 } }
+                );
 
             res.status(200).json(results);
         } catch (err) {
