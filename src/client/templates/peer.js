@@ -16,7 +16,7 @@ var peer =
     '   			<a>{{about}}</a>  ' +
     '   		</div>  ' +
     '   		<div class="description">  ' +
-    '   			<i class="coffee icon"></i> Working on: <a href="/project/{{last_project_slug_id}}">{{last_project_title}}</a></div>  ' +
+    '   			<i class="coffee icon"></i> Building <a href="/project/{{last_project_slug_id}}">{{last_project_title}}</a></div>  ' +
     '   		</div>  ' +
     '   	<div class="extra content">  ' +
     '   		<span class="right floated" title=""></span>  ' +
