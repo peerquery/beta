@@ -13,14 +13,14 @@ var peer =
     '   			{{account}}  ' +
     '   		</div>  ' +
     '   		<div class="ui sub header">  ' +
-    '   			<a>{{about}}</a>  ' +
+    '   			{{about}}  ' +
     '   		</div>  ' +
     '   		<div class="description">  ' +
     '   			<i class="coffee icon"></i> Building <a href="/project/{{last_project_slug_id}}">{{last_project_title}}</a></div>  ' +
     '   		</div>  ' +
     '   	<div class="extra content">  ' +
     '   		<span class="right floated" title=""></span>  ' +
-    '   		<span><i class="history icon"></i>{{position}} at {{company}}</span>  ' +
+    '   		<span><i class="info icon"></i>{{position}} at {{company}}</span>  ' +
     '   	</div>  ' +
     '   	<a class="ui bottom attached button" href="/peer/{{account}}">  ' +
     '   		<i class="eye icon"></i>  ' +
