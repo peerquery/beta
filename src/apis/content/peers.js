@@ -191,7 +191,7 @@ module.exports = async function(app) {
         }
     });
 
-    app.get('/api/fetch/peers/new/:last_id', async function(req, res) {
+    app.get('/api/fetch/peers/fresh/:last_id', async function(req, res) {
         try {
             let query =
                 'account about last_project_slug_id last_project_title badge position company skill';
