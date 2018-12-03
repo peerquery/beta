@@ -1,9 +1,6 @@
 'use strict';
 
-var dsteem = require('dsteem'),
-    templator = require('../../client/templator'),
-    config = require('./../../../src/configs/config'),
-    client = new dsteem.Client(config.steem_api),
+var templator = require('../../client/templator'),
     timeago = require('timeago.js')();
 
 //jquery is already universal through the `ui.js` global file
@@ -21,28 +18,6 @@ async function display(type) {
     var api = '/api/fetch/peers/' + active_type + '/' + last_id;
 
     try {
-        var rate = await client.database.call(
-            'get_current_median_history_price'
-        );
-        $('#sbd-quote').text(rate.base);
-
-        var blog = await client.database.getDiscussions('blog', {
-            tag: config.steem_account,
-            limit: 1,
-        });
-        $('#last-blog-post').html(
-            '<a href=\'/' +
-                blog[0].parent_permlink +
-                '/@' +
-                blog[0].author +
-                '/' +
-                blog[0].permlink +
-                '\'>' +
-                blog[0].title +
-                '</a>'
-        );
-        $('#from-blog').show();
-
         var users = await Promise.resolve($.get(api));
 
         if (!users || users == '' || users.length == 0) {
@@ -56,24 +31,9 @@ async function display(type) {
         }
 
         for (var x in users) {
-            users[x].created = timeago.format(users[x].created);
-
-            if (!users[x].badge)
-                users[x].badge_div =
-                    '<div class="ui red horizontal label">observer</div>'; //incase users do not have badge
-
-            if (users[x].badge == 'observer')
-                users[x].badge_div =
-                    '<div class="ui red horizontal label">observer</div>';
-            if (users[x].badge == 'querant')
-                users[x].badge_div =
-                    '<div class="ui purple horizontal label">querant</div>';
-            if (users[x].badge == 'reporter')
-                users[x].badge_div =
-                    '<div class="ui blue horizontal label">reporter</div>';
-            if (users[x].badge == 'builder')
-                users[x].badge_div =
-                    '<div class="ui yellow horizontal label">builder</div>';
+            users[x].skill = users[x].skill || 'searching';
+            users[x].position = users[x].position || 'Works';
+            users[x].company = users[x].company || 'Private';
 
             var user = await templator.peer(users[x]);
             $('#user-container').append(user);
@@ -90,19 +50,19 @@ $('#moreBtn').on('click', function() {
     display(active_type);
 });
 
-$('#builders').on('click', function() {
+$('#features').on('click', function() {
     last_id = 0;
-    display('builders');
+    display(this.id);
 });
 
-$('#reporters').on('click', function() {
+$('#interesting').on('click', function() {
     last_id = 0;
-    display('reporters');
+    display(this.id);
 });
 
 $('#observers').on('click', function() {
     last_id = 0;
-    display('observers');
+    display(this.id);
 });
 
-display('builders');
+display('featured');
