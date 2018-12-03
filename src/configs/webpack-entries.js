@@ -42,7 +42,10 @@ entry = {
     peer_projects: paths.peer_projects,
     peer_reports: paths.peer_reports,
     peer_queries: paths.peer_queries,
-    peer_inbox: paths.peer_inbox,
+    account_inbox: paths.account_inbox,
+    account_activity: paths.account_activity,
+    account_settings: paths.account_settings,
+    account_notifications: paths.account_notifications,
 };
 
 module.exports = entry;
