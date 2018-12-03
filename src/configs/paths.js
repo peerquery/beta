@@ -51,7 +51,13 @@ module.exports = {
     peer_projects: resolveApp('./src/client/pages/peer-projects.js'),
     peer_reports: resolveApp('./src/client/pages/peer-reports.js'),
     peer_queries: resolveApp('./src/client/pages/peer-queries.js'),
-    peer_inbox: resolveApp('./src/client/pages/peer-inbox.js'),
+    //account
+    account_inbox: resolveApp('./src/client/pages/account-inbox.js'),
+    account_activity: resolveApp('./src/client/pages/account-activity.js'),
+    account_settings: resolveApp('./src/client/pages/account-settings.js'),
+    account_notifications: resolveApp(
+        './src/client/pages/account-notifications.js'
+    ),
     //
     search: resolveApp('./src/client/pages/search.js'),
     blog: resolveApp('./src/client/pages/blog.js'),
