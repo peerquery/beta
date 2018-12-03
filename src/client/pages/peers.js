@@ -35,7 +35,6 @@ async function display(type) {
                 users[x].last_project_title || ' the next?';
             users[x].last_project_slug_id =
                 users[x].last_project_slug_id || '#';
-            users[x].skill = users[x].skill || 'searching';
             users[x].position = users[x].position || 'Works';
             users[x].company = users[x].company || 'Private';
 
@@ -54,17 +53,20 @@ $('#moreBtn').on('click', function() {
     display(active_type);
 });
 
-$('#features').on('click', function() {
+$('#featured').on('click', function() {
+    active_type = this.id;
     last_id = 0;
     display(this.id);
 });
 
 $('#interesting').on('click', function() {
+    active_type = this.id;
     last_id = 0;
     display(this.id);
 });
 
-$('#observers').on('click', function() {
+$('#fresh').on('click', function() {
+    active_type = this.id;
     last_id = 0;
     display(this.id);
 });
