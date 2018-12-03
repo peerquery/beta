@@ -5,6 +5,8 @@ const project_template = require('./templates/project'),
     report_template = require('./templates/report'),
     search_template = require('./templates/search'),
     message_template = require('./templates/message'),
+    activity_template = require('./templates/activity'),
+    notification_template = require('./templates/notification'),
     mtools = require('markup-tools');
 
 module.exports = {
@@ -49,6 +51,24 @@ module.exports = {
         div.className = 'item';
 
         div.innerHTML = mtools.build.template(message_template, data);
+
+        return div;
+    },
+
+    activity: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'event';
+
+        div.innerHTML = mtools.build.template(activity_template, data);
+
+        return div;
+    },
+
+    notification: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'event';
+
+        div.innerHTML = mtools.build.template(notification_template, data);
 
         return div;
     },
