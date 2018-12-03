@@ -31,6 +31,10 @@ async function display(type) {
         }
 
         for (var x in users) {
+            users[x].last_project_title =
+                users[x].last_project_title || ' the next?';
+            users[x].last_project_slug_id =
+                users[x].last_project_slug_id || '#';
             users[x].skill = users[x].skill || 'searching';
             users[x].position = users[x].position || 'Works';
             users[x].company = users[x].company || 'Private';
