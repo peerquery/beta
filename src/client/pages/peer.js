@@ -171,7 +171,9 @@ $('#signBtn').click(function() {
     }
 
     let sign_uri =
-        'https://steemconnect.com/sign/transfer?to=<%= data.account %>&amount=' +
+        'https://steemconnect.com/sign/transfer?to=' +
+        account +
+        '&amount=' +
         amount +
         '%20' +
         currency.toUpperCase();
