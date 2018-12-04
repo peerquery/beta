@@ -105,6 +105,17 @@ module.exports = function(app) {
         }
     });
 
+    app.get('/account/wallet', function(req, res) {
+        if (!req.active_user.account) {
+            res.redirect('/login');
+            return;
+        }
+
+        res.status(302).redirect(
+            '/account/' + req.active_user.account + '/wallet'
+        );
+    });
+
     //re-direct for the former scheme, if bookmarked by some users
     app.get('/peer/:username/inbox', function(req, res) {
         res.status(301).redirect('/account/inbox');
