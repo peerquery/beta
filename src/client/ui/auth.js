@@ -33,27 +33,6 @@ module.exports = async function() {
 
         $('#loggedin-desktop-options').show();
         $('#loggedin-desktop-create').show();
-        $('#logged_in_user_href').attr('href', '/peer/' + active_user);
-        $('#logged_in_user_wallet').attr(
-            'href',
-            '/peer/' + active_user + '/wallet'
-        );
-        $('#logged_in_user_reports').attr(
-            'href',
-            '/peer/' + active_user + '/reports'
-        );
-        $('#logged_in_user_queries').attr(
-            'href',
-            '/peer/' + active_user + '/queries'
-        );
-        $('#logged_in_user_projects').attr(
-            'href',
-            '/peer/' + active_user + '/projects'
-        );
-        $('#logged_in_user_inbox').attr(
-            'href',
-            '/peer/' + active_user + '/inbox'
-        );
     } else if (
         active_user &&
         active_user !== '' &&
@@ -68,27 +47,6 @@ module.exports = async function() {
 
             $('#loggedin-desktop-options').show();
             $('#loggedin-desktop-create').show();
-            $('#logged_in_user_reports').attr(
-                'href',
-                '/peer/' + active_user + '/reports'
-            );
-            $('#logged_in_user_queries').attr(
-                'href',
-                '/peer/' + active_user + '/queries'
-            );
-            $('#logged_in_user_projects').attr(
-                'href',
-                '/peer/' + active_user + '/projects'
-            );
-            $('#logged_in_user_inbox').attr(
-                'href',
-                '/peer/' + active_user + '/inbox'
-            );
-            $('#logged_in_user_wallet').attr(
-                'href',
-                '/peer/' + active_user + '/wallet'
-            );
-            $('#logged_in_user_href').attr('href', '/peer/' + active_user);
         } catch (err) {
             window.pqy_notify.warn(
                 'Sorry, could not auth your account. Consider signing in again'
