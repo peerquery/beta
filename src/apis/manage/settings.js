@@ -3,7 +3,8 @@
 let activity = require('../../models/activity'),
     peer = require('../../models/peer'),
     project = require('../../models/project'),
-    stats = require('../../models/stats');
+    stats = require('../../models/stats'),
+    notification = require('../../models/notification');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
@@ -72,7 +73,9 @@ module.exports = function(app) {
             let query5 = {
                 account: req.active_user.account,
             };
-            let update5 = { $inc: { project_count: -1 } };
+            let update5 = {
+                $inc: { project_count: -1, project_membership_count: -1 },
+            };
             let status5 = await peer.updateOne(query5, update5);
 
             //update new owner role on profile
@@ -87,7 +90,9 @@ module.exports = function(app) {
             let query7 = {
                 account: req.body.new_owner,
             };
-            let update7 = { $inc: { project_count: 1 } };
+            let update7 = {
+                $inc: { project_count: 1, project_membership_count: 1 },
+            };
             let status7 = await peer.updateOne(query7, update7);
 
             if (
@@ -100,6 +105,18 @@ module.exports = function(app) {
                 !status7
             )
                 return res.sendStatus(500);
+
+            var newNotification = notification({
+                event: 'project_tranfer',
+                from: req.body.slug_id,
+                relation: 'project_2_user',
+                from_account: req.active_user.account,
+                to: req.body.new_owner,
+                status: 'pending',
+                created: Date.now(),
+            });
+
+            await newNotification.save();
 
             res.sendStatus(200);
         } catch (err) {
@@ -119,17 +136,9 @@ module.exports = function(app) {
 
             //update activity stream
             var newActivity = activity({
-                title: req.body.title,
-                slug_id: '/projects/' + req.body.slug_id,
-                action: 'delete',
-                type: 'project',
-                source: 'user',
+                slug_id: req.body.slug_id,
+                action: 'delete_project',
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just deleted their project: ' +
-                    req.body.title,
                 created: Date.now(),
             });
             await newActivity.save();
@@ -138,7 +147,7 @@ module.exports = function(app) {
             let query2 = { account: req.active_user.account };
             let update2 = {
                 $pull: { memberships: { slug_id: req.body.slug_id } },
-                $inc: { project_count: -1 },
+                $inc: { project_count: -1, project_membership_count: -1 },
             };
             let status2 = await peer.updateOne(query2, update2);
 
@@ -147,6 +156,18 @@ module.exports = function(app) {
                 { identifier: 'default' },
                 { $inc: { project_delete_count: 1 } }
             );
+
+            var newNotification = notification({
+                event: 'project_delete',
+                from: req.body.slug_id,
+                relation: 'project_2_user',
+                from_account: req.active_user.account,
+                to: req.active_user.account,
+                status: 'pending',
+                created: Date.now(),
+            });
+
+            await newNotification.save();
 
             res.sendStatus(200);
         } catch (err) {
