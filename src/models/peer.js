@@ -70,6 +70,17 @@ var peerSchema = new Schema({
     query_count: { type: Number },
     report_count: { type: Number },
     project_count: { type: Number },
+    reward_split_supporters: { type: Number },
+
+    //thankers
+    new_follower_message_title: String,
+    new_follower_message_body: String,
+
+    //thankers
+    new_reward_split_supporter_message_title: String,
+    new_reward_split_supporter_message_body: String,
+
+    project_membership_count: { type: Number },
 
     //social
     facebook: { type: String },
