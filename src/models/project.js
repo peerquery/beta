@@ -38,6 +38,14 @@ var projectSchema = new Schema({
     member_quering: { type: Boolean, default: false },
     member_approving: { type: Boolean, default: false },
 
+    //welcomers
+    new_member_message_title: String,
+    new_member_message_body: String,
+
+    //thankers
+    new_reward_split_supporter_message_title: { type: String },
+    new_reward_split_supporter_message_body: { type: String },
+
     //action button
     act_msg: { type: String },
     act_uri: { type: String },
@@ -50,6 +58,7 @@ var projectSchema = new Schema({
     view_count: { type: Number },
     report_count: { type: Number },
     query_count: { type: Number },
+    reward_split_supporter_count: Number,
 
     //ratings
     ratings_count: { type: Number },
