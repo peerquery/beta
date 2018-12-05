@@ -3,9 +3,13 @@
 var jwt = require('jsonwebtoken'),
     encryptor = require('../../lib/encryptor'),
     sc2 = require('steemconnect'),
+    uuid = require('../../lib/helpers/uuid'),
     peer = require('../../models/peer'),
     activity = require('../../models/activity'),
     stats = require('../../models/stats'),
+    settings = require('../../models/settings'),
+    notification = require('../../models/notification'),
+    message = require('../../models/message'),
     config = require('../../configs/config'),
     cookie = require('cookie-parser');
 
@@ -118,16 +122,34 @@ module.exports = function(app) {
                         { identifier: 'default' },
                         { $inc: { peer_count: 1 } }
                     );
+
+                    var setting = await settings
+                        .findOne({ identifier: 'default' })
+                        .select(
+                            'new_user_message_title new_user_message_body account'
+                        );
+
+                    var newMessage = message({
+                        slug_id: uuid(),
+
+                        author: setting.account,
+                        recipient: req.active_user.account,
+
+                        title: setting.new_user_message_title,
+                        body: setting.new_user_message_body,
+
+                        event: 'new_user_welcome',
+                        state: 'pending',
+                        relation: 'site_2_user',
+                        created: Date.now(),
+                    });
+
+                    await newMessage.save();
                 }
 
                 var newActivity = activity({
-                    title: 'New user signup',
-                    slug: '/@' + client_account,
                     action: action,
-                    type: 'user',
-                    source: 'user',
                     account: client_account,
-                    description: description,
                     created: Date.now(),
                 });
 
@@ -182,7 +204,7 @@ module.exports = function(app) {
         }
     });
 
-    app.get('/api/private/auth', async function(req, res) {
+    app.post('/api/private/auth', async function(req, res) {
         var access_token = await encryptor.decrypt(
             req.active_user.auth,
             process.env.RANDOM_KEY_SECRET
