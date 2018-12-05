@@ -5,7 +5,7 @@
 var messages = {};
 
 messages.new_user_welcome =
-    'Welcome to Peer Query! Please read our <a href="/support/faqs">FAQs</a> or visit our <a href="/support">support center</a> to get started.';
+    'Thank you for joining {{to}}. Please read our <a href="/support/faqs">FAQs</a> or visit our <a href="/support">support center</a> to get started.';
 messages.new_user_reward_supporter =
     'Wow, you just received a new post reward split support from @{{from}}.';
 messages.new_user_message = 'You have received a new message from @{{from}}.';
