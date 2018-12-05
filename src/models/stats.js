@@ -29,7 +29,8 @@ var statsSchema = new Schema(
 
         project_delete_count: Number,
 
-        project_support_count: Number,
+        project_reward_split_support_count: Number,
+        peer_reward_split_support_count: Number,
         peer_hire_count: Number,
 
         /*
