@@ -31,6 +31,17 @@ var settingsSchema = new Schema({
     super_admin: String,
     admin: String,
 
+    //welcomers
+    new_user_message_title: String,
+    new_user_message_body: String,
+
+    //informations
+    new_project_message_title: String,
+    new_project_message_body: String,
+
+    //global messages
+    global_notification: String,
+
     //uris
     domain: String,
     steem: String,
