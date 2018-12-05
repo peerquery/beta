@@ -9,7 +9,9 @@ var shortid = require('shortid'),
     report = require('../../models/report'),
     query = require('../../models/query'),
     project = require('../../models/project'),
-    message = require('../../models/message');
+    message = require('../../models/message'),
+    settings = require('../../models/settings'),
+    notification = require('../../models/notification');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = function(app) {
@@ -36,18 +38,9 @@ module.exports = function(app) {
             });
 
             var newActivity = activity({
-                title: req.body.title,
-                slug_id:
-                    '/@' + req.active_user.account + '/' + req.body.permlink,
-                action: 'create',
-                type: 'report',
-                source: 'user',
+                slug_id: req.body.permlink,
+                action: 'create_report',
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just published a new report: ' +
-                    req.body.title,
                 created: Date.now(),
             });
 
@@ -129,18 +122,9 @@ module.exports = function(app) {
             });
 
             var newActivity = activity({
-                title: req.body.title,
-                slug_id:
-                    '/@' + req.active_user.account + '/' + req.body.permlink,
-                action: 'create',
-                type: 'query',
-                source: 'user',
+                slug_id: req.body.permlink,
+                action: 'create_query',
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just published a new query: ' +
-                    req.body.title,
                 created: Date.now(),
             });
 
@@ -225,22 +209,14 @@ module.exports = function(app) {
             });
 
             var newActivity = activity({
-                title: req.body.title,
-                slug_id: '/project/' + slug,
-                action: 'create',
-                type: 'project',
-                source: 'user',
+                action: 'create_project',
+                slug_id: slug,
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just created a new project: ' +
-                    req.body.name,
                 created: Date.now(),
             });
 
             var updatePeer = {
-                $inc: { project_count: 1 },
+                $inc: { project_count: 1, project_membership_count: 1 },
                 badge: 'builder',
                 last_update: Date.now(),
                 last_project_slug_id: slug,
@@ -257,7 +233,7 @@ module.exports = function(app) {
                 },
             };
 
-            await newProject.save();
+            var saved = await newProject.save();
             await peer.updateOne(
                 { account: req.active_user.account },
                 updatePeer,
@@ -269,6 +245,31 @@ module.exports = function(app) {
                 { identifier: 'default' },
                 { $inc: { project_count: 1 } }
             );
+
+            if (saved) {
+                var setting = await settings
+                    .findOne({ identifier: 'default' })
+                    .select(
+                        'new_project_message_title new_project_message_body account'
+                    );
+
+                var newMessage = message({
+                    slug_id: uuid(),
+
+                    author: setting.account,
+                    recipient: req.active_user.account,
+
+                    title: setting.new_project_message_title,
+                    body: setting.new_project_message_body,
+
+                    event: 'create_project',
+                    state: 'pending',
+                    relation: 'site_2_user',
+                    created: Date.now(),
+                });
+
+                await newMessage.save();
+            }
 
             res.status(200).send(slug);
         } catch (err) {
@@ -292,17 +293,9 @@ module.exports = function(app) {
             };
 
             var newActivity = activity({
-                title: req.body.name,
-                slug_id: '/project/' + req.body.slug_id,
-                action: 'create',
-                type: 'request',
-                source: 'user',
+                slug_id: req.body.slug_id,
+                action: 'request_project_membrship',
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' asked to join: ' +
-                    req.body.name,
                 created: Date.now(),
             });
 
@@ -318,7 +311,7 @@ module.exports = function(app) {
                 },
             };
 
-            await project.updateOne(
+            var saved = await project.updateOne(
                 {
                     slug_id: req.body.slug_id,
                     'members.account': { $ne: req.active_user.account },
@@ -343,6 +336,19 @@ module.exports = function(app) {
                 { $inc: { request_count: 1 } }
             );
 
+            if (saved) {
+                var newNotification = notification({
+                    event: 'request_project_membership',
+                    from: req.active_user.account,
+                    to: req.body.slug_id,
+                    relation: 'user_2_project',
+                    status: 'pending',
+                    created: Date.now(),
+                });
+
+                await newNotification.save();
+            }
+
             res.status(200).send('success');
         } catch (err) {
             res.status(500).send(
@@ -356,7 +362,7 @@ module.exports = function(app) {
         try {
             if (req.body.recipient == req.active_user.account)
                 return res
-                    .status(200)
+                    .status(405)
                     .send('sorry, you cannot message yourself');
 
             let messaged_target;
@@ -374,13 +380,15 @@ module.exports = function(app) {
 
             if (!messaged_target)
                 return res
-                    .status(200)
+                    .status(404)
                     .send('sorry, intended recipient does not exist');
 
             const slug = uuid();
 
             var newMessage = message({
                 slug_id: slug,
+                event: 'message',
+                parent: req.body.parent ? req.body.parent : '',
 
                 author: req.active_user.account,
                 recipient: req.body.recipient,
@@ -389,25 +397,16 @@ module.exports = function(app) {
                 body: req.body.body,
 
                 state: 'pending',
-                target: req.body.target,
+                relation: 'user_2_' + req.body.target,
                 created: Date.now(),
             });
 
             await newMessage.save();
 
             var newActivity = activity({
+                action: 'create_user_message',
                 target: req.body.recipient,
-                title: req.body.title,
-                slug_id: slug,
-                action: 'create',
-                type: 'message',
-                source: req.body.target,
                 account: req.active_user.account,
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just sent a message to: ' +
-                    req.body.recipient,
                 created: Date.now(),
             });
 
