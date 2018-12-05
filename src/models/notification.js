@@ -9,11 +9,9 @@ var notificationSchema = new Schema({
     from: { type: String, required: true }, //source, may be a account, project(slug_id) or market
     from_name: { type: String }, //if a project, then the project's title
     from_account: { type: String }, //the user who acted on behalf of the project
-
     to: { type: String, required: true }, //receiving user account or project's slug_id
-    message: { type: String, required: true }, //typically set by projects to their new members, or to members during ban, upgrade or downgrade
 
-    source: { type: String, required: true }, //user, project
+    relation: { type: String, required: true }, //project_2_user, user_2_project, user_2_user, project_2_project, site_2_user, site_2_project
     status: { type: String }, //seen, pending
     created: { type: Date, default: Date.now, required: true },
 });
@@ -21,7 +19,7 @@ var notificationSchema = new Schema({
 notificationSchema.index(
     {
         event: 1,
-        from_account: 1,
+        relation: 1,
         from: 1,
         to: 1,
         source: 1,
@@ -37,21 +35,26 @@ module.exports = mongoose.model('notificationSchema', notificationSchema);
 
 standard recognized event types will be:
 
-new_user_welcome
-new_user_reward_supporter
-new_user_message
-new_user_follow
-new_user_hire
+user_reward_supporter           *pending
+message                         *set        //message first then notification //mongoose message model post save middleware
+new_user_follow                 *pending
+new_user_hire                   *pending
 
-new_project_membership_request
-new_project_member_welcome
-new_project_reward_supporter
-new_project_follow
+request_project_membership      *set 
+new_project_reward_supporter    *pending
+new_project_follow              *pending  
 
-new_project_creation_message
+project_membership_approved     *set//message first then notification //mongoose message model post save middleware
+project_membership_removed      *set
+project_membership_rejected     *set
+project_membership_left         *set
 
-project_membership_approved
-project_membership_declined
-project_membership_removed
+create_project                  *set        //message first then notification //mongoose model post save middleware
+transfer_project                *set
+delete_project                  *set
+
+sign_up                         *set         //message first then notification //mongoose message model post save middleware
+
+new_user_messages_reply         *pending
 
 */
