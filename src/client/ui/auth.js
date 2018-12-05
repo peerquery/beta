@@ -42,7 +42,7 @@ module.exports = async function() {
 
         //ping server for access_token and store in sessionStorage
         try {
-            const auth = await Promise.resolve($.get('/api/private/auth'));
+            const auth = await Promise.resolve($.post('/api/private/auth', {}));
             sessionStorage.access_token = auth.access_token;
 
             $('#loggedin-desktop-options').show();
