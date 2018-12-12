@@ -7,11 +7,9 @@ $(window).on('load', function() {
         try {
             $('#requests-loader').show();
 
-            var all_requests = await Promise.resolve(
+            var requests = await Promise.resolve(
                 $.get('/api/project/' + project_slug + '/requests')
             );
-
-            var requests = all_requests[0].requests;
 
             for (var x in requests) {
                 var request = await create_request(requests[x]);
@@ -20,7 +18,7 @@ $(window).on('load', function() {
 
             $('#requests-loader').hide();
         } catch (err) {
-            window.pqy_notify.warn('Sorry, error fetching requests');
+            pqy_notify.warn('Sorry, error fetching requests');
             $('#requests-loader').hide();
             console.log(err);
         }
@@ -45,9 +43,9 @@ $(window).on('load', function() {
 
             $('#' + account + '-item').remove();
 
-            window.pqy_notify.inform('Successfully added new member');
+            pqy_notify.inform('Successfully added new member');
         } catch (err) {
-            window.pqy_notify.warn('Sorry, error approving new member');
+            pqy_notify.warn('Sorry, error approving new member');
             console.log(err);
         }
     });
@@ -69,9 +67,9 @@ $(window).on('load', function() {
 
             $('#' + account + '-item').remove();
 
-            window.pqy_notify.warn('Successfully declined user request');
+            pqy_notify.warn('Successfully declined user request');
         } catch (err) {
-            window.pqy_notify.warn('Sorry, error rejecting user');
+            pqy_notify.warn('Sorry, error rejecting user');
             console.log(err);
         }
     });
