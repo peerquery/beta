@@ -49,7 +49,6 @@ $(window).on('load', function() {
             data.website.indexOf('://') === -1
                 ? 'http://' + data.website
                 : data.website;
-        data.steem = $('#projectSteem').val();
         data.facebook = $('#projectFacebook').val();
         data.twitter = $('#projectTwitter').val();
         data.github = $('#projectGithub').val();
@@ -81,14 +80,14 @@ $(window).on('load', function() {
                 (id = 'projectTag'), (field = 'tagField');
             }
 
-            window.pqy_notify.warn(name + ' cannot be empty');
+            pqy_notify.warn(name + ' cannot be empty');
             $('#' + id).focus();
             $('#' + field).addClass('error');
 
             return false;
         } else if (data.story == '') {
             //cannot enter empty body
-            window.pqy_notify.warn('Please enter story of your project.');
+            pqy_notify.warn('Please enter story of your project.');
             return false;
         } else {
             return true;
@@ -104,7 +103,7 @@ $(window).on('load', function() {
             window.location.href = '/project/' + status;
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             window.location.reload();
         }
     }
@@ -112,7 +111,7 @@ $(window).on('load', function() {
     $('.limitedText').on('keyup', function() {
         var maxLength = $(this).attr('maxlength');
         if (maxLength == $(this).val().length) {
-            window.pqy_notify.warn(
+            pqy_notify.warn(
                 'You can\'t write more than ' + maxLength + ' characters'
             );
         }
@@ -144,7 +143,6 @@ $(window).on('load', function() {
                 .change();
             $('#projectTag').val(response.tag);
             $('#projectWebsite').val(response.website);
-            $('#projectSteem').val(response.steem);
             $('#projectFacebook').val(response.facebook);
             $('#projectTwitter').val(response.twitter);
             $('#projectGithub').val(response.github);
@@ -153,7 +151,7 @@ $(window).on('load', function() {
             //console.log(response);
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             window.location.reload();
         }
     })();
