@@ -17,11 +17,11 @@ $(window).on('load', function() {
             let member_count = response.overview
                 ? response.overview.member_count || 0
                 : 0;
-            let pending_count = response.pending[0]
-                ? response.pending[0].pending_count || 0
+            let pending_count = response.overview
+                ? response.overview.pending_count || 0
                 : 0;
-            let team_count = response.team[0]
-                ? response.team[0].team_count || 0
+            let team_count = response.overview
+                ? response.overview.team_count || 0
                 : 0;
 
             //overview
@@ -38,7 +38,7 @@ $(window).on('load', function() {
             $('#stats-loader').hide();
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
         }
     })();
 });
