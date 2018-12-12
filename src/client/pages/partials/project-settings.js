@@ -5,7 +5,7 @@ $(window).on('load', function() {
 
     async function export_data(type) {
         try {
-            window.pqy_notify.inform('Fetching data, please wait');
+            pqy_notify.inform('Fetching data, please wait');
 
             let data = {
                 slug_id: project_slug,
@@ -17,18 +17,14 @@ $(window).on('load', function() {
             );
 
             if (!response)
-                return window.pqy_notify.warn(
-                    'Sorry, an error occured. Please again'
-                );
+                return pqy_notify.warn('Sorry, an error occured. Please again');
 
-            window.pqy_notify.inform(
-                'Successfully fetched data, now downloading'
-            );
+            pqy_notify.inform('Successfully fetched data, now downloading');
 
             downloader.json(response, slug_id);
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             window.location.reload();
         }
     }
@@ -55,18 +51,18 @@ $(window).on('load', function() {
                 slug_id: slug_id,
             };
 
-            window.pqy_notify.inform('Tranfering project, please wait');
+            pqy_notify.inform('Tranfering project, please wait');
 
             var response = await Promise.resolve(
                 $.post('/api/private/project/transfer', data)
             );
 
-            window.pqy_notify.inform('Successfully tranfered project');
+            pqy_notify.inform('Successfully tranfered project');
 
             window.location.href = '/project/' + project_slug;
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             //window.location.reload();
         }
     });
@@ -75,7 +71,7 @@ $(window).on('load', function() {
         try {
             $(this).addClass('disabled');
 
-            window.pqy_notify.inform('Deleting project, please wait');
+            pqy_notify.inform('Deleting project, please wait');
             let data = {
                 title: window.project_title,
                 slug_id: slug_id,
@@ -85,12 +81,12 @@ $(window).on('load', function() {
                 $.post('/api/private/project/delete', data)
             );
 
-            window.pqy_notify.inform('Successfully deleted project');
+            pqy_notify.inform('Successfully deleted project');
 
             window.location.href = '/projects';
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             //window.location.reload();
         }
     });

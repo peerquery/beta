@@ -4,7 +4,7 @@ $(window).on('load', function() {
     $('#update_project_theme').on('click', async function() {
         try {
             $(this).addClass('disabled');
-            window.pqy_notify.inform('Updating project, please wait');
+            pqy_notify.inform('Updating project, please wait');
 
             let data = {
                 slug_id: slug_id,
@@ -18,10 +18,10 @@ $(window).on('load', function() {
                 $.post('/api/private/update/project/project_theme', data)
             );
 
-            window.pqy_notify.success('Successfully updated project theme');
+            pqy_notify.success('Successfully updated project theme');
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             //window.location.reload();
         }
     });
@@ -29,7 +29,7 @@ $(window).on('load', function() {
     $('#update_action_button').on('click', async function() {
         try {
             $(this).addClass('disabled');
-            window.pqy_notify.inform('Updating project, please wait');
+            pqy_notify.inform('Updating project, please wait');
 
             let data = {
                 slug_id: slug_id,
@@ -41,10 +41,10 @@ $(window).on('load', function() {
                 $.post('/api/private/update/project/action_button', data)
             );
 
-            window.pqy_notify.success('Successfully updated action button');
+            pqy_notify.success('Successfully updated action button');
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn('Sorry, an error occured. Please again');
+            pqy_notify.warn('Sorry, an error occured. Please again');
             //window.location.reload();
         }
     });
