@@ -243,7 +243,7 @@ $(window).on('load', async function() {
             steem_api.vote(vter, athor, pmlink, weight, function(err, reslt) {
                 //console.log(err, reslt);
                 if (err) {
-                    window.pqy_notify.warn(err + '\n' + 'Please try again!');
+                    pqy_notify.warn(err + '\n' + 'Please try again!');
                     document.getElementById(elID).className = cClass; //re-enable the btn after OP is done
                     console.log(err);
                 } else {
@@ -372,14 +372,14 @@ $(window).on('load', async function() {
 
                     if (!err_description) {
                         console.log(err);
-                        window.pqy_notify.warn(
+                        pqy_notify.warn(
                             'Sorry, something went wrong. Please try again'
                         );
                         return;
                     }
 
                     if (err_description.indexOf('The comment is archived') > -1)
-                        window.pqy_notify.warn(
+                        pqy_notify.warn(
                             'Post with the same permlink already exists and is archived, please change your permlink.'
                         );
                     if (
@@ -387,7 +387,7 @@ $(window).on('load', async function() {
                             'You may only post once every 5'
                         ) > -1
                     )
-                        window.pqy_notify.warn(
+                        pqy_notify.warn(
                             'You may only post once every five minutes!'
                         );
                 } else {
@@ -603,7 +603,7 @@ $(window).on('load', async function() {
                 if (err) {
                     let err_description = JSON.stringify(err.error_description);
                     if (!err_description) {
-                        window.pqy_notify.warn(
+                        pqy_notify.warn(
                             'Sorry, something went wrong. Please try again'
                         );
                         return;
@@ -614,15 +614,13 @@ $(window).on('load', async function() {
                             'Account has already re-blogged this post'
                         ) > -1
                     ) {
-                        window.pqy_notify.inform(
+                        pqy_notify.inform(
                             'You have already reblogged this post'
                         );
                         console.log('Already re-blogged');
                     }
                 } else {
-                    window.pqy_notify.inform(
-                        'You have already reblogged this post'
-                    );
+                    pqy_notify.inform('You have already reblogged this post');
                     console.log('Resteemed!');
                 }
             }
@@ -641,7 +639,7 @@ $(window).on('load', async function() {
         var follower = active_user;
 
         if (follower == following) {
-            window.pqy_notify.warn('You cannot follow yourself!');
+            pqy_notify.warn('You cannot follow yourself!');
             return;
         }
 
