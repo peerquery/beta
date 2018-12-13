@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var messageSchema = new Schema({
     //details
     slug_id: { type: String, required: true, unique: true },
-    parent: { type: String, required: true },
+    parent: { type: String },
 
     author: { type: String, required: true },
     recipient: { type: String, required: true },
@@ -26,7 +26,7 @@ var messageSchema = new Schema({
 messageSchema.post('save', async function(next) {
     if (!this.event) return next();
 
-    var notification = this.model('notificationsSchema');
+    var notification = this.model('notificationSchema');
 
     var newNotification = notification({
         event: this.event,
