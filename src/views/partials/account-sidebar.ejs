@@ -16,17 +16,29 @@
 					<i class="tachometer alternate icon"></i>
 					Dashboard
 				</a>
-				<a class="item" id="discussions-menu" href="/account/inbox">
+				<a class="item" id="inbox-menu" href="/account/inbox">
 					<i class="envelope icon"></i>
 					Inbox
 				</a>
-				<a class="item" id="activity-menu" href="/account/activity">
-					<i class="history icon"></i>
-					Activity
+				<a class="item" id="hires-menu" href="/account/hires">
+					<i class="user icon"></i>
+					Hires
+				</a>
+				<a class="item" id="memberships-menu" href="/account/memberships">
+					<i class="users icon"></i>
+					Memberships
+				</a>
+				<a class="item" id="beneficiaries-menu" href="/account/beneficiaries">
+					<i class="percent icon"></i>
+					Beneficiaries
 				</a>
 				<a class="item" id="notifications-menu" href="/account/notifications">
 					<i class="exclamation icon"></i>
 					Notifications
+				</a>
+				<a class="item" id="activity-menu" href="/account/activity">
+					<i class="history icon"></i>
+					Activity
 				</a>
 				<a class="item" id="settings-menu" href="/account/settings">
 					<i class="settings icon"></i>
@@ -43,6 +55,9 @@
         if (page == '/account') $('#dashboard-menu').addClass('active');
         if (page == '/account/activity') $('#activity-menu').addClass('active');
         if (page == '/account/inbox') $('#inbox-menu').addClass('active');
+        if (page == '/account/hires') $('#hires-menu').addClass('active');
+        if (page == '/account/memberships') $('#memberships-menu').addClass('active');
+        if (page == '/account/beneficiaries') $('#beneficiaries-menu').addClass('active');
         if (page == '/account/notifications') $('#notifications-menu').addClass('active');
         if (page == '/account/settings') $('#settings-menu').addClass('active');
      
