@@ -2,7 +2,8 @@
 
 var router = require('../../server/router'),
     address = require('../indexes/address'),
-    authorize = require('../auth/authorize');
+    authorize = require('../auth/authorize'),
+    peers = require('../../models/peer');
 
 module.exports = function(app) {
     app.get('/login', function(req, res) {
@@ -11,7 +12,14 @@ module.exports = function(app) {
         return router(address.client.login, req, res);
     });
 
-    app.get('/create/report', authorize, function(req, res) {
+    app.get('/create/report', authorize, async function(req, res) {
+        var find = { account: req.active_user.account };
+        var peer = await peers
+            .findOne(find)
+            .select('beneficiaries_count beneficiaries_percentage ');
+
+        res.req_data = peer;
+
         return router(address.client.new_report, req, res);
     });
 
