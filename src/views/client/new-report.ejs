@@ -43,7 +43,7 @@
 	<div class="ui feed">
 	<div class="event">
 	<div class="label">
-		<img id="account_img" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>">
+		<img id="account_img" src="<% if (typeof username == "string" && username) { %> <%= "https://steemitimages.com/u/" + username + "/avatar" %> <% } %>">
 	</div>
 	<div class="content">
 		<div class="summary">
@@ -116,39 +116,57 @@
 		</div>
 		
 		
-		<div class="three fields">
+		<div class="two fields">
 		
-			<div class="three wide field">
-				<div class="field">
+				<div class="field four wide">
 					<label>Category</label>
 					<select id="reportCategory" class="ui fluid dropdown">
 						<option value="peerquery">peerquery</option>
 						<option value="utopian-io">utopian-io</option>
 					</select>
 				</div>
-			</div>
-			
-			
-		
-			<div class="seven wide field">
-				<div class="field">
+                
+                
+				<div class="field twelve wide">
 					<label>Relevant tags(only alpha-numeric characters)</label>
 					<input type="text" id="post-tags" placeholder="blog idea proposal">
 				</div>
-			</div>
 			
-			
-			<div class="six wide field">
-				<div class="field disabled" id="projectField">
+		
+		</div>
+		
+                
+		
+		<div class="two fields">
+		
+				<div class="field six wide">
+					<label>Reward</label>
+					<select id="reportReward" class="ui fluid dropdown">
+						<option value="50" selected>50% Steem Dollars / 50% Steem Power</option>
+						<option value="100">100% Steem Power payouts</option>
+						<option value="0">0% Decline payouts</option>
+					</select>
+				</div>
+                
+                
+				<div class="field disabled ten wide" id="projectField">
 					<label>Attach new report to your project</label>
 					<select class="ui fluid search dropdown" id="projectSelect">
 						<option value="">Select a project for this report</option>
 					</select>
 				</div>
-			</div>
 		
 		
 		</div>
+		
+                
+			<div class="field" id="beneficiariesField" style="display:none">
+                <div class="ui beneficiaries checkbox">
+                        <input type="checkbox" id="beneficiariesInput">
+                    <label id="beneficiariesLabel"></label>
+                </div>
+            </div>
+                
 		
 		
   <br/>
@@ -221,6 +239,26 @@
   
 	<script src="/build/dist/scripts.js"></script>
 	<script src="/build/dist/create_report.js"></script>
+	<script>
+    $('.beneficiaries.checkbox').checkbox('check');
+    
+    function get_beneficiaries_agreed() {
+        return $('.ui.checkbox.beneficiaries').checkbox('is checked');
+    }
+    
+    (async function () {
+        var beneficiaries_count = Number("<%= data.beneficiaries_count %>");
+        var beneficiaries_percentage = Number("<%= data.beneficiaries_percentage %>");
+        
+        
+        if(!beneficiaries_count || !beneficiaries_percentage) return;
+        if(beneficiaries_count > 90 || beneficiaries_percentage > 90) return;
+        
+        $('#beneficiariesField').show();
+        $('#beneficiariesLabel').html("Share <b>" + (Number(beneficiaries_percentage) + 10) + "%</b> of reward payouts with my <b>" + (Number(beneficiaries_count) + 1) + "</b> beneficiaries).");
+    })()
+        
+    </script>
   
 	<section class="footerSection">
 		<% include ../partials/footer.ejs %>
