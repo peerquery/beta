@@ -12,13 +12,15 @@ const pathname = window.location.pathname;
 const account = pathname.split('/peer/')[1].split('/')[0];
 
 (async function() {
-    document.getElementById('account_btn').href = '/peer/' + account;
+    document.getElementById('profile_btn').href = '/peer/' + account;
     document.getElementById('queries_btn').href =
         '/peer/' + account + '/queries';
     document.getElementById('reports_btn').href =
         '/peer/' + account + '/reports';
     document.getElementById('projects_btn').href =
         '/peer/' + account + '/projects';
+    document.getElementById('community_btn').href =
+        '/peer/' + account + '/community';
 
     document.getElementById('user_account').innerText = account.toUpperCase();
     document.getElementById('user_account').href = '/peer/' + account;
