@@ -42,7 +42,7 @@
 	<div class="ui feed">
 	<div class="event">
 	<div class="label">
-		<img id="account_img" src="<% if (typeof username == 'string' && username) { %> <%= 'https://steemitimages.com/u/' + username + '/avatar' %> <% } %>">
+		<img id="account_img" src="<% if (typeof username == "string" && username) { %> <%= "https://steemitimages.com/u/" + username + "/avatar" %> <% } %>">
 	</div>
 	<div class="content">
 		<div class="summary">
@@ -102,7 +102,7 @@
 			<h4 class="ui dividing header">General</h4>
 		
 		<div class="field">
-			<label>Enter title of your query</label>
+			<label>Enter title of your query*</label>
 			<input type="text" id="query-title" placeholder="Enter title of query">
 		</div>
 		
@@ -114,7 +114,7 @@
 		
 		
 		<div class="field">
-			<label>Description[Text only 160 characters max]</label>
+			<label>Description[Text only 160 characters max]*</label>
 			<textarea id="queryDescription" class="limitedText" maxlength="160" rows="2"></textarea>
 		</div>
 		
@@ -125,15 +125,42 @@
 		
 		
 		<div class="field">
-			<label>Details[This content is to Steem]</label>
+			<label>Details</label>
 			<div id="editor"></div>
+		</div>
+		
+        
+        
+		
+		<div class="two fields">
+		
+				<div class="field" id="rewardFormField">
+					<label>Reward form*</label>
+					<select id="queryRewardForm" class="ui fluid dropdown">
+						<option value="upvote">Upvote</option>
+						<option value="payout">Post payout</option>
+						<option value="tokens">Tokens</option>
+						<option value="saflt">SAFLT</option>
+						<option value="tbd">To be Decided</option>
+					</select>
+				</div>
+			
+			
+				<div class="field disabled" id="projectField">
+					<label>Attach new query to your project</label>
+					<select class="ui fluid search dropdown" id="projectSelect">
+						<option value="">Select a project for this query</option>
+					</select>
+				</div>
+		
+		
 		</div>
 		
 		
 		<div class="three fields">
 	
 				<div class="field" id="stateField">
-					<label>Type</label>
+					<label>Type*</label>
 					<select id="queryType" class="ui fluid dropdown">
 						<option value="gig">Gig</option>
 						<option value="job">Job</option>
@@ -142,14 +169,14 @@
 				</div>
 	
 	
-				<div class="field" id="labelField"><label>Label</label>
+				<div class="field" id="labelField"><label>Label*</label>
 					<input type="text" id="queryLabel" name="" placeholder="dev, marketing, authoring, ...">
 				</div>
 				
 			
 				<div class="field">
 				
-						<label>Query deadline</label>
+						<label>Query deadline*</label>
 						<div class="ui calendar" id="queryDeadline">
 							<div class="ui input left icon">
 							<i class="calendar icon"></i>
@@ -161,6 +188,14 @@
 				</div>
 			
 		</div>
+		
+  
+		<br/>
+		
+			<h4 class="ui dividing header">Contact[You will receive messages if left blank]</h4>
+		
+  
+		
 		
 		
 		<div class="three fields">
@@ -178,72 +213,6 @@
 				</div>
 				
 		</div>
-		
-  
-		<br/>
-		
-			<h4 class="ui dividing header">Terms</h4>
-		
-  	
-		<div class="field">
-			<label>Terms[Text only]</label>
-			<textarea id="queryTerms" rows="2"></textarea>
-		</div>
-		
-		<div class="two fields">
-	
-				<div class="field" id="rewardField"><label>Reward worth[in $$$]</label>
-					<input type="text" id="queryReward" name="" placeholder="$$$/TBD">
-				</div>
-				
-			
-				<div class="field" id="rewardFormField">
-					<label>Reward form</label>
-					<select id="queryRewardForm" class="ui fluid dropdown">
-						<option value="upvote">Upvote</option>
-						<option value="payout">Post payout</option>
-						<option value="tokens">Tokens</option>
-						<option value="saflt">SAFLT</option>
-						<option value="tbd">To be Decided</option>
-					</select>
-				</div>
-			
-			
-		</div>
-  
-  
-		
-		
-		<div class="three fields">
-		
-			<div class="two wide field">
-				<div class="field">
-					<label>Category</label>
-					<input placeholder="peerquery" readonly="" type="text">
-				</div>
-			</div>
-  
-		
-			<div class="eight wide field">
-				<div class="field">
-					<label>Relevant tags(only alpha-numeric characters)</label>
-					<input type="text" id="query-tags" placeholder="">
-				</div>
-			</div>
-			
-			
-			<div class="six wide field">
-				<div class="field disabled" id="projectField">
-					<label>Attach new query to your project</label>
-					<select class="ui fluid search dropdown" id="projectSelect">
-						<option value="">Select a project for this query</option>
-					</select>
-				</div>
-			</div>
-		
-		
-		</div>
-		
 		
 		
 		
@@ -285,7 +254,7 @@
 		  <div class="ui message">
 		  
 			<div class="ui bulleted list">
-				<div class="item">All fields are required</div>
+				<div class="item">Fields marked * are required</div>
 				<div class="item">A copy of this report is published to your Steem account</div>
 				<div class="item">Be original and concise</div>
 				<div class="item">Avoid using trademarked and copyrighted content and names</div>
@@ -312,6 +281,7 @@
 	<script src="/assets/js/semantic-ui-calendar.js"></script>
 	<script src="/build/dist/create_query.js"></script>
 	<script>
+            $('#queryDeadline').calendar('set startDate', new Date());
             var now = new Date(); now.setDate(now.getDate() + 14);
             window.deadline = deadline;
             $('#queryDeadline').calendar(); var deadline = now;

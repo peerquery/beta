@@ -27,100 +27,81 @@ $(window).on('load', async function() {
             .val();
         if (project_slug_id !== '') {
             project_title = user_projects.filter(
-                e => e.slug === project_slug_id
-            )[0].title;
+                e => e.slug_id === project_slug_id
+            )[0];
+
+            project_title = project_title.title || project_title.name;
         } else {
             project_title = '';
         }
 
         const title = document.getElementById('query-title').value;
         if (title == '') {
-            window.pqy_notify.warn('Please enter title');
+            pqy_notify.warn('Please enter title');
             document.getElementById('query-title').focus();
             return;
         }
 
-        const image = document.getElementById('queryImage').value;
-        if (image == '') {
-            window.pqy_notify.warn('Please enter image');
-            document.getElementById('queryImage').focus();
-            return;
-        }
+        var image = document.getElementById('queryImage').value;
+        if (image)
+            image = image.indexOf('://') === -1 ? 'http://' + image : image;
 
         const description = document.getElementById('queryDescription').value;
         if (description == '') {
-            window.pqy_notify.warn('Please enter description');
+            pqy_notify.warn('Please enter description');
             document.getElementById('queryDescription').focus();
             return;
         }
 
         const telephone = document.getElementById('queryTelephone').value;
-        if (telephone == '') {
-            window.pqy_notify.warn('Please telephone');
-            document.getElementById('queryTelephone').focus();
-            return;
-        }
 
         const email = document.getElementById('queryEmail').value;
-        if (email == '') {
-            window.pqy_notify.warn('Please enter email');
-            document.getElementById('queryEmail').focus();
-            return;
-        }
 
         var website = document.getElementById('queryWebsite').value;
-        if (website == '') {
-            window.pqy_notify.warn('Please enter website');
-            document.getElementById('queryWebsite').focus();
-            return;
-        }
-        website = website.indexOf('://') === -1 ? 'http://' + website : website;
-
-        const terms = document.getElementById('queryTerms').value;
-        if (terms == '') {
-            window.pqy_notify.warn('Please enter terms');
-            document.getElementById('queryTerms').focus();
-            return;
-        }
+        if (website)
+            website =
+                website.indexOf('://') === -1 ? 'http://' + website : website;
 
         const type = document.getElementById('queryType').value;
         if (type == '') {
-            window.pqy_notify.warn('Please enter type');
+            pqy_notify.warn('Please enter type');
             document.getElementById('queryType').focus();
             return;
         }
 
-        const label = document.getElementById('queryLabel').value;
+        const rewardForm = document.getElementById('queryRewardForm').value;
+        if (rewardForm == '') {
+            pqy_notify.warn('Please enter reward form');
+            document.getElementById('queryRewardForm').focus();
+            return;
+        }
+
+        const label = document
+            .getElementById('queryLabel')
+            .value.toLowerCase()
+            .replace(/\W+/g, ' ')
+            .split(' ')[0];
         if (label == '') {
-            window.pqy_notify.warn('Please enter label');
+            pqy_notify.warn('Please enter label');
             document.getElementById('queryLabel').focus();
             return;
         }
 
         //const deadline = document.getElementById('queryDeadline').value;        //deadline is assigned from the script on the page itself
         if (deadline == '') {
-            window.pqy_notify.warn('Please enter deadline');
+            pqy_notify.warn('Please enter deadline');
             document.getElementById('queryDeadline').focus();
             return;
+        } else {
+            let temp = new Date(deadline);
+            if (temp <= new Date()) {
+                pqy_notify.warn('Deadline must be older than current time');
+                document.getElementById('queryDeadline').focus();
+                return;
+            }
         }
-        const reward =
-            Number(document.getElementById('queryReward').value) || 0;
 
-        if (reward == '') {
-            window.pqy_notify.warn('Please enter reward in numeric form');
-            document.getElementById('queryReward').focus();
-            return;
-        }
-        const reward_form = document.getElementById('queryRewardForm').value;
-
-        if (reward_form == '') {
-            window.pqy_notify.warn('Please enter reward form');
-            document.getElementById('queryRewardForm').focus();
-            return;
-        }
         const author = active_user;
-
-        const category = 'peerquery';
 
         const tlink = title
             .replace(/\W+/g, ' ')
@@ -143,26 +124,9 @@ $(window).on('load', async function() {
             .end()
             .end()
             .html();
-        if (body == '') {
-            window.pqy_notify.warn('Please enter query body');
-            return;
-        }
-
-        const tagString = document
-            .getElementById('query-tags')
-            .value.toLowerCase()
-            .replace(/\W+/g, ' ');
-        if (tagString == '') {
-            window.pqy_notify.warn('Please enter atleast one tag');
-            document.getElementById('query-tags').focus();
-            return;
-        }
-
-        const tags = tagString.split(' ', 3);
-        tags.unshift(category);
 
         if (title.length < 5) {
-            window.pqy_notify.warn('Please enter a longer title!');
+            pqy_notify.warn('Please enter a longer title!');
             return;
         }
 
@@ -170,20 +134,16 @@ $(window).on('load', async function() {
 
         $('#publish').addClass('disabled');
         do_publish(
-            category,
             author,
             permlink,
             title,
             body,
-            tags,
             project_slug_id,
             project_title,
-            terms,
             email,
             telephone,
+            rewardForm,
             website,
-            reward,
-            reward_form,
             label,
             type,
             deadline,
@@ -193,20 +153,16 @@ $(window).on('load', async function() {
     }
 
     async function do_publish(
-        category,
         author,
         permlink,
         title,
         body,
-        tags,
         project_slug_id,
         project_title,
-        terms,
         email,
         telephone,
+        rewardForm,
         website,
-        reward,
-        reward_form,
         label,
         type,
         deadline,
@@ -220,15 +176,12 @@ $(window).on('load', async function() {
             if (project_slug_id !== '') data.project_slug_id = project_slug_id;
             if (project_title !== '') data.project_title = project_title;
             data.title = title;
-            data.category = category;
             data.body = body;
             data.permlink = permlink;
-            data.terms = terms;
             data.telephone = telephone;
             data.email = email;
             data.website = website;
-            data.reward = reward;
-            data.reward_form = reward_form;
+            data.rewardForm = rewardForm;
             data.label = label;
             data.type = type;
             data.deadline = deadline;
@@ -248,7 +201,7 @@ $(window).on('load', async function() {
             window.location.href = '/query/' + permlink;
         } catch (err) {
             console.log(err);
-            window.pqy_notify.warn(
+            pqy_notify.warn(
                 'Sorry, an error occured updating the server. However, the query has been successfully published to your Steem account.'
             );
             window.location.href = '/query/' + permlink;
@@ -256,7 +209,7 @@ $(window).on('load', async function() {
     }
 
     (async function() {
-        $.getJSON('/api/private/projects/list', null, function(data) {
+        $.getJSON('/api/private/projects/team/list', null, function(data) {
             user_projects = data;
             //$("#projectSelect option").remove(); // Remove all <option> child tags.
 
@@ -266,8 +219,8 @@ $(window).on('load', async function() {
                 $('#projectSelect').append(
                     // Append an object to the inside of the select box
                     $('<option></option>') // Yes you can do this.
-                        .text(item.name)
-                        .val(item.slug)
+                        .text(item.name || item.title)
+                        .val(item.slug_id)
                 );
             });
         });
@@ -276,7 +229,7 @@ $(window).on('load', async function() {
     $('.limitedText').on('keyup', function() {
         var maxLength = $(this).attr('maxlength');
         if (maxLength == $(this).val().length) {
-            window.pqy_notify.warn(
+            pqy_notify.warn(
                 'You can\'t write more than ' + maxLength + ' characters'
             );
         }
