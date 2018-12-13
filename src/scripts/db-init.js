@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('./config'),
+var config = require('../configs/config'),
     stats = require('../models/stats'),
     settings = require('../models/settings'),
     team = require('../models/team');
