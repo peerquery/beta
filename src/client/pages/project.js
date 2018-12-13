@@ -11,6 +11,7 @@ $('#manage').attr('href', '/project/' + project_slug + '/manage');
 $('#messages').attr('href', '/project/' + project_slug + '/messages');
 $('#stats').attr('href', '/project/' + project_slug + '/stats');
 $('#edit').attr('href', '/project/' + project_slug + '/edit');
+$('#compliments').attr('href', '/project/' + project_slug + '/compliments');
 $('#settings').attr('href', '/project/' + project_slug + '/settings');
 
 (async function() {
@@ -26,37 +27,32 @@ $('#settings').attr('href', '/project/' + project_slug + '/settings');
             $.get('/api/project/' + window.slug_id + '/membership', data)
         );
 
-        if (response.members && response.members.length) {
+        if (response) {
             //is a member
             membership = true;
 
             window.is_admin =
-                response.members[0].role == 'admin' ||
-                response.members[0].role == 'owner';
+                response.role == 'admin' || response.role == 'owner';
 
             $('#membership').html('<i class="user times icon"></i>');
             $('#membership').attr('data-tooltip', 'Leave');
 
-            if (response.members[0].type == 'team') {
+            if (response.type == 'team') {
                 $('#message').addClass('disabled');
                 $('#membership').addClass('disabled');
             }
 
-            if (
-                response.members[0].state == 'active' &&
-                response.members[0].type == 'member'
-            ) {
-                window.pqy_notify.inform(
-                    'Member since: ' +
-                        new Date(response.members[0].created).toDateString()
+            if (response.state == 'active' && response.type == 'member') {
+                pqy_notify.inform(
+                    'Member since: ' + new Date(response.created).toDateString()
                 );
 
                 $('#membership').removeClass('disabled');
             }
-            if (response.members[0].state == 'pending') {
-                window.pqy_notify.inform(
+            if (response.state == 'pending') {
+                pqy_notify.inform(
                     'Awaiting membership approval since: ' +
-                        new Date(response.members[0].created).toDateString()
+                        new Date(response.created).toDateString()
                 );
 
                 $('#membership').attr('data-tooltip', 'Leave');
@@ -69,7 +65,7 @@ $('#settings').attr('href', '/project/' + project_slug + '/settings');
             $('#membership').removeClass('disabled');
         }
     } catch (err) {
-        window.pqy_notify.warn('Sorry, getting membership');
+        pqy_notify.warn('Sorry, getting membership');
         console.log(err);
     }
 })();
@@ -88,9 +84,9 @@ $('#membership').on('click', async function() {
                 $.post('/api/private/create/request', data)
             );
 
-            window.pqy_notify.inform('Request sent successfully');
+            pqy_notify.inform('Request sent successfully');
         } catch (err) {
-            window.pqy_notify.warn('Sorry, error sending request');
+            pqy_notify.warn('Sorry, error sending request');
             console.log(err);
         }
     } else {
@@ -103,9 +99,9 @@ $('#membership').on('click', async function() {
                 $.post('/api/private/project/leave_membership', data)
             );
 
-            window.pqy_notify.inform('Left project successfully');
+            pqy_notify.inform('Left project successfully');
         } catch (err) {
-            window.pqy_notify.warn('Sorry, error leaving project');
+            pqy_notify.warn('Sorry, error leaving project');
             console.log(err);
         }
     }
