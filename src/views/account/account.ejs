@@ -91,7 +91,7 @@
                     
                     <div class="column">
                     
-                        <a class="circled" href="/peer/<%= data.account + "/projects" %>">
+                        <a class="circled" href="/peer/<%= data.account %>/projects">
         
                             <h2 class="ui header">
                                 <%= data.project_count || 0 %>
@@ -104,7 +104,7 @@
                     
                     <div class="column">
                     
-                        <a class="circled" href="/peer/<%= data.account + "/reports" %>">
+                        <a class="circled" href="/peer/<%= data.account %>/reports">
         
                             <h2 class="ui header">
                                 <%= data.report_count || 0 %>
@@ -117,7 +117,7 @@
                     
                     <div class="column">
                     
-                        <a class="circled" href="/peer/<%= data.account + "/queries" %>">
+                        <a class="circled" href="/peer/<%= data.account %>/queries">
         
                             <h2 class="ui header">
                                 <%= data.query_count || 0 %>
@@ -154,18 +154,18 @@
                 
                 <div class="ui three mini statistics">
                 
-                    <a class="statistic mini olive">
+                    <a class="statistic mini olive" href="/peer/<%= data.account %>/community">
                         <div class="value">
-                            <i class="users icon"></i> <%= data.followers || 0 %>
+                            <i class="users icon"></i> <%= data.followers_count || 0 %>
                         </div>
                         <div class="label">
                             Followers
                         </div>
                     </a>
                 
-                    <a class="statistic mini green">
+                    <a class="statistic mini green" href="/peer/<%= data.account %>/community">
                         <div class="value">
-                            <i class="user plus icon"></i> <%= data.following || 0 %>
+                            <i class="user plus icon"></i> <%= data.following_count || 0 %>
                         </div>
                         <div class="label">
                             Following
@@ -199,9 +199,13 @@
                 
                 <h4> See your public profile </h4>
                 
-                    <a class="ui left attached button" href="/peer/<%= data.account %>">Profile</a>
-                    <a class="ui right attached button" href="/peer/<%= data.account + "/wallet" %>">Wallet</a>
+                <div class="ui basic buttons">
+                
+                    <a class="ui basic button" href="/peer/<%= data.account %>">Profile</a>
+                    <a class="ui basic button" href="/peer/<%= data.account %>/wallet">Wallet</a>
             
+                </div>
+                
             </div>
             
             
