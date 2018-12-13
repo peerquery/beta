@@ -13,9 +13,9 @@ const markup = require('markup-builder'),
         $('#temp').remove();
 
         //list popular_queries in sidebar
-        var api = '/api/fetch/queries/popular/short';
+        let popular_api = '/api/fetch/queries/popular/short';
 
-        var popular_queries = await Promise.resolve($.get(api));
+        var popular_queries = await Promise.resolve($.get(popular_api));
 
         if (
             !popular_queries ||
@@ -26,7 +26,7 @@ const markup = require('markup-builder'),
             return;
         }
 
-        for (var x in popular_queries) {
+        for (let x in popular_queries) {
             popular_queries[x].created = timeago.format(
                 popular_queries[x].created
             );
@@ -35,30 +35,30 @@ const markup = require('markup-builder'),
                 popular_queries[x].title =
                     popular_queries[x].title.substr(0, 70) + '...';
 
-            var query = await templator.sidebar_query(popular_queries[x]);
+            let query = await templator.sidebar_query(popular_queries[x]);
             $('#popular-container').append(query);
         }
 
         $('#loader').hide();
 
         //list new_queries in sidebar
-        var api = '/api/fetch/queries/new/short';
+        var new_api = '/api/fetch/queries/new/short';
 
-        var new_queries = await Promise.resolve($.get(api));
+        var new_queries = await Promise.resolve($.get(new_api));
 
         if (!new_queries || new_queries == '' || new_queries.length == 0) {
             $('#loader').hide();
             return;
         }
 
-        for (var x in new_queries) {
+        for (let x in new_queries) {
             new_queries[x].created = timeago.format(new_queries[x].created);
 
             if (new_queries[x].title.length > 70)
                 new_queries[x].title =
                     new_queries[x].title.substr(0, 70) + '...';
 
-            var query = await templator.sidebar_query(new_queries[x]);
+            let query = await templator.sidebar_query(new_queries[x]);
             $('#new-container').append(query);
         }
 
