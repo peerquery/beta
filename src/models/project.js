@@ -21,7 +21,7 @@ var projectSchema = new Schema({
     verified: { type: Boolean, default: false },
     website: { type: String },
     location: { type: String },
-    steem: { type: String },
+    steem: { type: String, required: true },
     created: { type: Date, required: true, default: Date.now },
     last_update: { type: Date, required: true, default: Date.now },
 
@@ -43,8 +43,8 @@ var projectSchema = new Schema({
     new_member_message_body: String,
 
     //thankers
-    new_reward_split_supporter_message_title: { type: String },
-    new_reward_split_supporter_message_body: { type: String },
+    new_benefactor_message_title: { type: String },
+    new_benefactor_message_body: { type: String },
 
     //action button
     act_msg: { type: String },
@@ -55,10 +55,11 @@ var projectSchema = new Schema({
     last_report: { type: Number },
 
     //stats
+    pending_count: { type: Number },
     view_count: { type: Number },
     report_count: { type: Number },
     query_count: { type: Number },
-    reward_split_supporter_count: Number,
+    benefactors_count: Number,
 
     //ratings
     ratings_count: { type: Number },
@@ -73,13 +74,11 @@ var projectSchema = new Schema({
     github: { type: String },
     chat: { type: String },
 
-    //community
-    sponsors: [
-        {
-            account: { type: String, required: true },
-            created: { type: Date, default: Date.now },
-        },
-    ],
+    //projects memberships
+    //membership: [{ type: Schema.Types.ObjectId, ref: 'membershipSchema' }],
+
+    //legacy memberships
+
     members: [
         {
             account: { type: String, required: true },
@@ -88,19 +87,14 @@ var projectSchema = new Schema({
             type: { type: String },
             role: { type: String },
             comment: { type: String },
-        },
-    ],
-    followers: [
-        {
-            account: { type: String, required: true },
-            created: { type: Date, default: Date.now },
+            benefactor_rate: { type: Number }, //if greater than 0, then is an active benefactor
+            benefactor_created: { type: Date },
+            benefactor_message: { type: String },
         },
     ],
 
     //community_stats
-    sponsor_count: { type: Number, default: 0 },
     member_count: { type: Number, default: 0 },
-    follower_count: { type: Number, default: 0 },
 });
 
 projectSchema.index(
