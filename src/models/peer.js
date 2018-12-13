@@ -35,14 +35,23 @@ var peerSchema = new Schema({
     curation_earnings: { type: Number },
     curation_votes: { type: Number },
 
+    //messages
     received_messages: { type: Number },
     viewed_messages: { type: Number },
+
+    //hires
+    received_hires: { type: Number },
+    sent_hires: { type: Number },
 
     //settings
     messaging: { type: String },
     hiring: { type: String },
 
-    //projects
+    //project memberships
+    //membership: [{ type: Schema.Types.ObjectId, ref: 'membershipSchema' }],
+
+    //legacy memberships
+
     memberships: [
         {
             name: { type: String, required: true },
@@ -51,6 +60,9 @@ var peerSchema = new Schema({
             role: { type: String },
             type: { type: String },
             created: { type: Date, default: Date.now },
+            benefactor_rate: { type: Number }, //if greater than 0, then is an active benefactor
+            benefactor_created: { type: Date },
+            benefactor_label: { type: String }, //only the peer has this
         },
     ],
 
@@ -70,15 +82,17 @@ var peerSchema = new Schema({
     query_count: { type: Number },
     report_count: { type: Number },
     project_count: { type: Number },
-    reward_split_supporters: { type: Number },
+    benefactors_count: { type: Number }, //user who have made this user their beneficiary
+    beneficiaries_count: { type: Number }, //users who this user has made his/her beneficiaries
+    beneficiaries_percentage: { type: Number }, //the total amount of percentage that of reward split that this user gives away
 
     //thankers
     new_follower_message_title: String,
     new_follower_message_body: String,
 
     //thankers
-    new_reward_split_supporter_message_title: String,
-    new_reward_split_supporter_message_body: String,
+    new_benefactor_message_title: String,
+    new_benefactor_message_body: String,
 
     project_membership_count: { type: Number },
 
@@ -88,21 +102,11 @@ var peerSchema = new Schema({
     linkedin: { type: String },
     github: { type: String },
 
-    //community
-    following: [
-        {
-            id: { type: String },
-            url: { type: String },
-            created: { type: Date, default: Date.now },
-        },
-    ],
-    followers: [
-        {
-            id: { type: String },
-            url: { type: String },
-            created: { type: Date, default: Date.now },
-        },
-    ],
+    //legacy community
+    /*
+    following: [{ type: Schema.Types.ObjectId, ref: 'peerSchema' }],
+    followers: [{ type: Schema.Types.ObjectId, ref: 'peerSchema' }],
+    */
 
     //community_stats
     following_count: { type: Number, default: 0 },
