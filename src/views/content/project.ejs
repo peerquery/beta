@@ -16,8 +16,8 @@
 	<!-- Open graph properties -->
 	<meta property="og:site_name" content="Peer Query">
 	<meta property="og:title" content="<%= data.name %>">
-	<meta property="og:image" content="<%= data.cover || 'https://www.peerquery.com/assets/images/peerquery-home.png' %>"/>
-	<meta property="og:description" content="<%= data.description %> Join <%= data.member_count || '0' %> members." >
+	<meta property="og:image" content="<%= data.cover || "https://www.peerquery.com/assets/images/peerquery-home.png"%>"/>
+	<meta property="og:description" content="<%= data.description %> Join <%= data.member_count || "0" %> members." >
 	<meta property="fb:app_id" content="384491628645652">
 	
 	<!-- SEO robots -->
@@ -92,6 +92,10 @@
                                     <a id="edit" class="item">
                                         <i class="edit icon"></i>
                                         Edit
+                                    </a>
+                                    <a id="compliments" class="item">
+                                        <i class="paperclip icon"></i>
+                                        Compliments
                                     </a>
                                     <a id="settings" class="item">
                                         <i class="cog icon"></i>
@@ -226,6 +230,8 @@
 				<% include ../partials/project-stats.ejs %>
 			<% } else if (data.path == '/edit') { %>
 				<% include ../partials/project-edit.ejs %>
+			<% } else if (data.path == '/compliments') { %>
+				<% include ../partials/project-compliments.ejs %>
 			<% } else if (data.path == '/settings') { %>
 				<% include ../partials/project-settings.ejs %>
 			<% } %>
