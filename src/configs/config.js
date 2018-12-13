@@ -61,7 +61,4 @@ config.curation_vote_interval_minutes = 20;
 config.curation_common_comment =
     'Nice work! Consider delegating Steem power to support Peer Query in its bit to support peer to peer collaborations.';
 
-//config.migrate_memberships = true;
-config.migrate_memberships = true;
-
 module.exports = config;
