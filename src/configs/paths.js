@@ -37,9 +37,13 @@ module.exports = {
         './src/client/pages/partials/project-messages.js'
     ),
     project_edit: resolveApp('./src/client/pages/partials/project-edit.js'),
+    project_compliments: resolveApp(
+        './src/client/pages/partials/project-compliments.js'
+    ),
     project_settings: resolveApp(
         './src/client/pages/partials/project-settings.js'
     ),
+    edit_query: resolveApp('./src/client/pages/edit-query.js'),
     //office
     office_dashboard: resolveApp('./src/client/pages/office-dashboard.js'),
     office_curation: resolveApp('./src/client/pages/office-curation.js'),
@@ -51,8 +55,16 @@ module.exports = {
     peer_projects: resolveApp('./src/client/pages/peer-projects.js'),
     peer_reports: resolveApp('./src/client/pages/peer-reports.js'),
     peer_queries: resolveApp('./src/client/pages/peer-queries.js'),
+    peer_community: resolveApp('./src/client/pages/peer-community.js'),
     //account
     account_inbox: resolveApp('./src/client/pages/account-inbox.js'),
+    account_hires: resolveApp('./src/client/pages/account-hires.js'),
+    account_memberships: resolveApp(
+        './src/client/pages/account-memberships.js'
+    ),
+    account_beneficiaries: resolveApp(
+        './src/client/pages/account-beneficiaries.js'
+    ),
     account_activity: resolveApp('./src/client/pages/account-activity.js'),
     account_settings: resolveApp('./src/client/pages/account-settings.js'),
     account_notifications: resolveApp(

@@ -19,10 +19,12 @@ entry = {
     project_requests: paths.project_requests,
     project_stats: paths.project_stats,
     project_edit: paths.project_edit,
+    project_compliments: paths.project_compliments,
     project_settings: paths.project_settings,
     project_queries: paths.project_queries,
     reports: paths.reports,
     query: paths.query,
+    edit_query: paths.edit_query,
     peers: paths.peers,
     peer: paths.peer,
     steem: paths.steem,
@@ -43,9 +45,13 @@ entry = {
     peer_reports: paths.peer_reports,
     peer_queries: paths.peer_queries,
     account_inbox: paths.account_inbox,
+    account_hires: paths.account_hires,
+    account_memberships: paths.account_memberships,
+    account_beneficiaries: paths.account_beneficiaries,
     account_activity: paths.account_activity,
     account_settings: paths.account_settings,
     account_notifications: paths.account_notifications,
+    peer_community: paths.peer_community,
 };
 
 module.exports = entry;
