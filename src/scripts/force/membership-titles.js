@@ -15,7 +15,7 @@ module.exports = async function() {
 
         let updates = [];
 
-        var results = await Promise.akk(
+        var results = await Promise.all(
             memberships.map(async function(member_ship) {
                 //console.log(membership)
 
