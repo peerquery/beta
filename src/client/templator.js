@@ -7,6 +7,10 @@ const project_template = require('./templates/project'),
     message_template = require('./templates/message'),
     activity_template = require('./templates/activity'),
     notification_template = require('./templates/notification'),
+    community_template = require('./templates/community'),
+    membership_template = require('./templates/membership'),
+    hire_template = require('./templates/hire'),
+    sidebar_query_template = require('./templates/sidebar_query'),
     mtools = require('markup-tools');
 
 module.exports = {
@@ -69,6 +73,42 @@ module.exports = {
         div.className = 'event';
 
         div.innerHTML = mtools.build.template(notification_template, data);
+
+        return div;
+    },
+
+    membership: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'ui card';
+
+        div.innerHTML = mtools.build.template(membership_template, data);
+
+        return div;
+    },
+
+    community: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'ui card';
+
+        div.innerHTML = mtools.build.template(community_template, data);
+
+        return div;
+    },
+
+    hire: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'item';
+
+        div.innerHTML = mtools.build.template(hire_template, data);
+
+        return div;
+    },
+
+    sidebar_query: async function(data) {
+        var div = document.createElement('div');
+        div.className = 'event';
+
+        div.innerHTML = mtools.build.template(sidebar_query_template, data);
 
         return div;
     },
