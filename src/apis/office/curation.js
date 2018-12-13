@@ -230,6 +230,7 @@ module.exports = function(app) {
 
                 var query = {
                     curation_state: 0,
+                    category: 'peerquery', //curate only content meant for the PQ community
                     created: { $gt: five_days_ago },
                 }; //only posts within last 5 days
                 var update = {
