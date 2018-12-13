@@ -37,7 +37,7 @@ async function display() {
             }
         }
     } catch (err) {
-        window.pqy_notify.warn('Sorry, error fetching account');
+        pqy_notify.warn('Sorry, error fetching account');
         console.log(err);
     }
 }
