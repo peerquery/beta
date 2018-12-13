@@ -111,7 +111,7 @@ async function calc() {
         );
         */
     } catch (err) {
-        window.pqy_notify.warn('Sorry, error getting stats');
+        pqy_notify.warn('Sorry, error getting stats');
         console.log(err);
     }
 }
