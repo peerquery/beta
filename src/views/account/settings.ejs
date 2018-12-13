@@ -79,16 +79,37 @@
 	
         
             <br/>
+
+            <h4 class="ui dividing header">Thank you message for new benefactors</h4>
+
+        <div class="ui clearing segment">
+
+            <div class="ui form">
+                <div class="field">
+                    <label>Title</label>
+                    <input type="text" id="benefactormessageTitle" value="<%= data.new_benefactor_message_title %>">
+                </div>
+                <div class="field">
+                    <label>Body</label>
+                    <textarea rows="2" id="benefactormessageBody"><%= data.new_benefactor_message_body %></textarea>
+                </div>
+                
+                <div class="ui right floated button" id="benefactormessageBtn">Save</div>
+            </div>    
+            
+        
+        </div>
+        
+        
             <br/>
-            
-            
-            
+            <br/>
+                
 
         <div>
 
             <h4 class="ui dividing header">Available for hire</h4>
 
-            <div class="ui segment">
+            <div class="ui clearing segment">
                 <div class="field">
                     <div class="ui toggle checkbox hiring">
                         <input type="checkbox" id="hiringInput">
@@ -100,7 +121,7 @@
   
             <h4 class="ui dividing header">Turn off messaging</h4>
 
-            <div class="ui segment">
+            <div class="ui clearing segment">
                 <div class="field">
                     <div class="ui toggle checkbox messaging">
                         <input type="checkbox" id="messagingInput">
@@ -144,9 +165,6 @@
     //the input fields do not work. they always return 'on'
     
     $('.ui.toggle').checkbox();
-    
-    
-    <%= data.project_count %>
     
     var current_messaging = '<%= data.messaging %>'
     var current_hiring = '<%= data.hiring %>'
