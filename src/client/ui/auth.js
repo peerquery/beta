@@ -12,7 +12,7 @@ module.exports = async function() {
         '&redirect_uri=http%3A%2F%2F' +
         window.location.hostname +
         '%2Flogin' +
-        //"&scope=vote,comment,custom_json" +
+        //"&scope=vote,comment,comment_options,custom_json" +
         '&scope=' +
         config.sc2_scope +
         '&state=%2F' +
@@ -22,7 +22,7 @@ module.exports = async function() {
 
     //check is sessionStorage is supported or not. if not - alert the user that their browser is NOT supported
     if (typeof Storage == 'undefined') {
-        window.pqy_notify.warn(
+        pqy_notify.warn(
             'Sorry your browser is NOT supported. Please upgrade or switch to a modern broswer.'
         );
         return;
@@ -48,11 +48,14 @@ module.exports = async function() {
             $('#loggedin-desktop-options').show();
             $('#loggedin-desktop-create').show();
         } catch (err) {
-            window.pqy_notify.warn(
+            pqy_notify.warn(
                 'Sorry, could not auth your account. Consider signing in again'
             );
             console.log(err);
-            if (window.location.pathname !== '/login')
+            if (
+                window.location.pathname !== '/login' &&
+                window.location.pathname.indexOf('/peer/') == -1
+            )
                 window.location.href = '/login';
         }
     } else if (!active_user || active_user == '') {
