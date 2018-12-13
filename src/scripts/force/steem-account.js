@@ -1,7 +1,7 @@
 'use strict';
 
-var membership = require('../models/membership');
-var project = require('../models/project');
+var membership = require('../../models/membership');
+var project = require('../../models/project');
 //do not worry about sanitizing req.body; already done in the server!
 
 module.exports = async function() {
