@@ -4,9 +4,6 @@
 #npm modules
 node_modules/
 
-#scripts folder
-scripts/
-
 #archive files
 *.zip
 
