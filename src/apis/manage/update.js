@@ -19,7 +19,6 @@ module.exports = function(app) {
                 state: req.body.state,
                 tag: req.body.tag,
                 website: req.body.website,
-                steem: req.body.steem,
                 facebook: req.body.facebook,
                 twitter: req.body.twitter,
                 github: req.body.github,
@@ -28,15 +27,9 @@ module.exports = function(app) {
             };
 
             var newActivity = activity({
-                title: 'Update to: ' + req.body.name,
-                slug: '/project/' + req.body.slug,
-                action: 'update',
-                type: 'project',
-                description:
-                    '@' +
-                    req.active_user.account +
-                    ' just updated their project: ' +
-                    req.body.name,
+                slug: req.body.slug,
+                action: 'update_project',
+                account: req.active_user.user,
                 created: Date.now(),
             });
 
