@@ -33,7 +33,7 @@ module.exports = function(app) {
                 )
                 .select(
                     'account project_count report_count query_count following_count followers_count created location about first_name last_name ' +
-                        ' facebook twitter linkedin position company email industry website interest skill view_count curation_point -_id'
+                        ' hiring messaging facebook twitter linkedin position company email industry website interest skill view_count curation_point -_id'
                 );
 
             if (!peer) {
@@ -107,18 +107,54 @@ module.exports = function(app) {
         }
     });
 
+    app.get('/peer/:username/community', async function(req, res) {
+        try {
+            var find = { account: req.params.username };
+            var peer = await peers
+                .findOneAndUpdate(
+                    find,
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .select(
+                    'account followers_count following_count benefactors_count -_id'
+                );
+            res.req_data = peer;
+
+            return router(address.content.peer_community, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
     app.get('/query/:query', async function(req, res) {
         try {
-            var query = '';
-            //var results = await query.findOne({'permlink': req.params.query}).select(query);
             var results = await queries.findOneAndUpdate(
                 { permlink: req.params.query },
-                { $inc: { view_count: 1 } },
-                { new: true }
+                { $inc: { view_count: 1 } }
             );
+
+            if (!results || results == '')
+                return router(address._static._404, req, res);
 
             res.req_data = results;
             return router(address.content.query, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._404, req, res);
+        }
+    });
+
+    app.get('/query/:query/edit', async function(req, res) {
+        try {
+            var results = await queries.findOne({
+                permlink: req.params.query,
+                author: req.active_user.account,
+            });
+
+            res.req_data = results;
+            return router(address.content.edit_query, req, res);
         } catch (err) {
             console.log(err);
             return router(address._static._404, req, res);
@@ -356,6 +392,33 @@ module.exports = function(app) {
                 return router(address._static._403, req, res);
 
             results.path = '/edit';
+            res.req_data = results;
+            return router(address.content.project, req, res);
+        } catch (err) {
+            console.log(err);
+            return router(address._static._500, req, res);
+        }
+    });
+
+    app.get('/project/:project/compliments', async function(req, res) {
+        try {
+            var query =
+                'name logo cover mission founder location website owner slug slug_id story description member_count created state tag type act_msg act_uri color -_id';
+            //the below clause makes sure only the project owner can access this route
+            var results = await projects
+                .findOneAndUpdate(
+                    { slug: req.params.project },
+                    { $inc: { view_count: 1 } },
+                    { new: true }
+                )
+                .where('owner')
+                .equals(req.active_user.account)
+                .select(query);
+
+            if (!results || results == '')
+                return router(address._static._403, req, res);
+
+            results.path = '/compliments';
             res.req_data = results;
             return router(address.content.project, req, res);
         } catch (err) {
