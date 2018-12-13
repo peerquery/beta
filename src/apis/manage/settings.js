@@ -3,6 +3,7 @@
 let activity = require('../../models/activity'),
     peer = require('../../models/peer'),
     project = require('../../models/project'),
+    membership = require('../../models/membership'),
     stats = require('../../models/stats'),
     notification = require('../../models/notification');
 //do not worry about sanitizing req.body; already done in the server!
@@ -12,13 +13,9 @@ module.exports = function(app) {
         try {
             let query = {
                 slug_id: req.body.slug_id,
-                members: {
-                    $elemMatch: {
-                        account: req.active_user.account,
-                        type: 'team',
-                    },
-                },
+                owner: req.active_user.account,
             };
+
             let type = req.body.type;
 
             let response = await project.findOne(query, { _id: 0 });
@@ -34,77 +31,45 @@ module.exports = function(app) {
 
     app.post('/api/private/project/transfer', async function(req, res) {
         try {
-            //change ownership on project
-            let query1 = {
-                slug_id: req.body.slug_id,
-                owner: req.active_user.account,
-                members: {
-                    $elemMatch: { account: req.body.new_owner, type: 'team' },
+            if (req.active_user.account == req.body.new_owner)
+                return res.sendStatus(405);
+
+            //change owners in membership
+            var success = await membership.updateOne(
+                {
+                    identifier: req.new_owner.account + '_' + req.body.slug_id,
+                    type: 'team',
                 },
-            };
-            let update1 = { $set: { owner: req.body.new_owner } };
-            let status1 = await project.updateOne(query1, update1);
+                { $set: { role: 'owner' } }
+            );
 
-            //update previous owner role on project
-            let query2 = {
-                slug_id: req.body.slug_id,
-                'members.account': req.active_user.account,
-            };
-            let update2 = { $set: { 'members.$.role': 'admin' } };
-            let status2 = await project.updateOne(query2, update2);
+            //if user is not a team member of the project!
+            if (!success) return res.sendStatus(405);
 
-            //update new owner role on project
-            let query3 = {
-                slug_id: req.body.slug_id,
-                'members.account': req.body.new_owner,
-            };
-            let update3 = { $set: { 'members.$.role': 'owner' } };
-            let status3 = await project.updateOne(query3, update3);
+            //change ownership on project
+            await project.updateOne(
+                { slug_id: req.body.slug_id, owner: req.active_user.account },
+                { $set: { owner: req.active_user.account } }
+            );
 
-            //update previous owner role on profile
-            let query4 = {
-                account: req.active_user.account,
-                'memberships.slug_id': req.body.slug_id,
-            };
-            let update4 = { $set: { role: 'admin' } };
-            let status4 = await peer.updateOne(query4, update4);
+            //change old owner in membership
+            await membership.updateOne(
+                {
+                    identifier:
+                        req.active_user.account + '_' + req.body.slug_id,
+                },
+                { $set: { role: 'team' } }
+            );
 
-            //update previous owner project_count
-            let query5 = {
-                account: req.active_user.account,
-            };
-            let update5 = {
-                $inc: { project_count: -1, project_membership_count: -1 },
-            };
-            let status5 = await peer.updateOne(query5, update5);
-
-            //update new owner role on profile
-            let query6 = {
-                account: req.body.new_owner,
-                'memberships.slug_id': req.body.slug_id,
-            };
-            let update6 = { $set: { role: 'owner' } };
-            let status6 = await peer.updateOne(query6, update6);
-
-            //update new owner project_count
-            let query7 = {
-                account: req.body.new_owner,
-            };
-            let update7 = {
-                $inc: { project_count: 1, project_membership_count: 1 },
-            };
-            let status7 = await peer.updateOne(query7, update7);
-
-            if (
-                !status1 ||
-                !status2 ||
-                !status3 ||
-                !status4 ||
-                !status5 ||
-                !status6 ||
-                !status7
-            )
-                return res.sendStatus(500);
+            //update user accounts
+            await peer.updateOne(
+                { account: req.new_owner.account },
+                { $inc: { project_count: 1 } }
+            );
+            await peer.updateOne(
+                { account: req.active_user.account },
+                { $inc: { project_count: -1 } }
+            );
 
             var newNotification = notification({
                 event: 'project_tranfer',
@@ -129,10 +94,16 @@ module.exports = function(app) {
         try {
             //delete project
 
-            let status1 = await project.findOneAndDelete({
+            await project.findOneAndDelete({
                 slug_id: req.body.slug_id,
                 owner: req.active_user.account,
             });
+            let membership_info = membership
+                .findOneAndDelete({
+                    identifier:
+                        req.active_user.account + '_' + req.body.slug_id,
+                })
+                .select('benefactor_rate');
 
             //update activity stream
             var newActivity = activity({
@@ -144,12 +115,23 @@ module.exports = function(app) {
             await newActivity.save();
 
             //delete project listing from user profile
-            let query2 = { account: req.active_user.account };
-            let update2 = {
-                $pull: { memberships: { slug_id: req.body.slug_id } },
-                $inc: { project_count: -1, project_membership_count: -1 },
+            let userQuery = { account: req.active_user.account };
+            let userUpdate = {};
+
+            userUpdate.$inc = {
+                project_count: -1,
+                project_membership_count: -1,
+                beneficiaries_count: -1,
             };
-            let status2 = await peer.updateOne(query2, update2);
+            if (membership_info.benefactor_rate > 0)
+                userUpdate.$inc = {
+                    project_count: -1,
+                    project_membership_count: -1,
+                    beneficiaries_count: -1,
+                    beneficiaries_percentage: -membership_info.benefactor_rate,
+                };
+
+            await peer.updateOne(userQuery, userUpdate);
 
             //reduce project count on stats
             await stats.updateOne(
