@@ -522,8 +522,11 @@ module.exports = {
         var divImg = document.createElement('img');
         divImg.className = 'ui image';
         divImg.style.height = '80px';
-        divImg.src =
-            'https://steemitimages.com/0x0/https://cdn.steemitimages.com/DQmWWKC7DTZsHSLCGiAi8rqkqpBfuv9xCewqzjMvpQUqcsH/pq%20core%20open%20source.png';
+        divImg.src = 'https://steemitimages.com/u/' + data.image + '/avatar';
+        divImg.onerror = function() {
+            this.src = '/assets/images/placeholder.png';
+            this.onerror = '';
+        };
         divHeader.appendChild(divImg);
 
         var divPrimaryContent = document.createElement('div');
@@ -532,7 +535,11 @@ module.exports = {
         var authorImg = document.createElement('img');
         authorImg.className = 'ui avatar image';
         authorImg.src =
-            'https://steemitimages.com/128x128/https://cdn.steemitimages.com/DQmXK14D1vgJ7SEKgvrJvdRzLrML1U1rfPnhqGzTHeoZAMF/a.jpg';
+            'https://steemitimages.com/u/' + data.author + '/avatar';
+        authorImg.onerror = function() {
+            this.src = '/assets/images/placeholder.png';
+            this.onerror = '';
+        };
 
         var authorSpan = document.createElement('a');
         authorSpan.href = '/peer/' + data.author;
@@ -593,12 +600,7 @@ module.exports = {
         divStatsSummary.appendChild(iStats);
 
         var spanStats = document.createElement('span');
-        spanStats.innerHTML =
-            '<a>$' +
-            data.reward +
-            '</a> <a>' +
-            data.reward_form +
-            '</a> rewards';
+        spanStats.innerHTML = '<a>' + data.reward_form + '</a> rewards';
         divStatsSummary.appendChild(spanStats);
 
         divStatsContent.appendChild(divStatsSummary);
