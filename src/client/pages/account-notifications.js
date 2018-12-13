@@ -38,24 +38,30 @@ async function display() {
         for (var x in notifications) {
             notifications[x].created = timeago.format(notifications[x].created);
 
-            if (!notifications[x].messsage) {
-                let template = templates[notifications[x].event];
-                notifications[x].messsage = mtools.build.template(
-                    template(notifications[x])
+            let template = templates[notifications[x].event];
+
+            if (template)
+                notifications[x].message = mtools.build.template(
+                    template,
+                    notifications[x]
                 );
-            }
 
-            notifications[x].messsage = mtools.build.mentions(
-                notifications[x].message
-            );
+            if (
+                !notifications[x].message ||
+                notifications[x].message == undefined ||
+                notifications[x].message == 'undefined'
+            )
+                notifications[x].message =
+                    notifications[x].event + ': ' + notifications[x].from;
 
-            if (notifications[x].source == 'user')
+            if (notifications[x].from_account) {
                 notifications[x].graphics =
                     '<img src="https://steemitimages.com/u/' +
-                    notification[x].from +
-                    '/avatar">';
-            if (notifications[x].action == 'project')
+                        notification[x].from ||
+                    notification[x].from_account + '/avatar">';
+            } else {
                 notifications[x].graphics = '<i class="coffee icon"></i>';
+            }
 
             var notification = await templator.notification(notifications[x]);
             $('#item-container').append(notification);
