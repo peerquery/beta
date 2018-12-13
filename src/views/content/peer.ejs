@@ -81,8 +81,8 @@
             
             <div>
             
-                <button class="circular ui disabled icon button" data-tooltip="Follow">
-                    <i class="icon user plus"></i>
+                <button class="circular ui disabled icon button" data-tooltip="Follow" id="follow_btn">
+                    <i class="icon user plus" id="follow_icon"></i>
                 </button>
                 <button class="circular ui disabled icon button" data-tooltip="Message" id="message_btn">
                     <i class="icon envelope"></i>
@@ -93,7 +93,10 @@
             
             </div>
             
+            <br/>
+            <br/>
             
+            <button class="ui basic fluid hiring primary button" style="display:none" id="hire_btn"> Hire me! </button>
             
             
 		</div>
@@ -354,18 +357,18 @@
                 
                 <div class="ui three mini statistics">
                 
-                    <a class="statistic mini olive">
+                    <a class="statistic mini olive" href="/peer/<%= data.account %>/community">
                         <div class="value">
-                            <i class="users icon"></i> <%= data.followers || 0 %>
+                            <i class="users icon"></i> <%= data.followers_count || 0 %>
                         </div>
                         <div class="label">
                             Followers
                         </div>
                     </a>
                 
-                    <a class="statistic mini green">
+                    <a class="statistic mini green" href="/peer/<%= data.account %>/community">
                         <div class="value">
-                            <i class="user plus icon"></i> <%= data.following || 0 %>
+                            <i class="user plus icon"></i> <%= data.following_count || 0 %>
                         </div>
                         <div class="label">
                             Following
@@ -678,6 +681,46 @@
     
     
     
+    
+    
+            <div class="ui hire tiny modal" id="hireModal">
+    
+				<div class="header">Hire <em><%= "@" + data.account %></em> for a query</div>
+				
+				<div class="content">
+                
+					<div class="ui form" id="hireForm">
+                    
+                    
+                        <div class="field">
+                            <label>Query ID</label>
+                            <input placeholder="" class="limitedText" maxlength="255" type="text" id="queryidInput" value="">
+                        </div>
+                        
+							<label>
+								<i class="info circle icon"></i>
+								Must be a valid ID of a query authored by you.
+							</label>
+                    
+                    </div>
+                    
+                </div>
+                    
+                    
+				<div class="actions">
+					<div class="ui green button" id="hireBtn">Send</div>
+					<div class="ui cancel button">Cancel</div>
+				</div>
+                    
+            </div>
+    
+    
+    
+    
+    
+    
+    
+    
         
 </div>
         
@@ -695,11 +738,15 @@
     <script>
     //
     
-    const account  = "<%= data.account %>";
-    const created  = "<%= data.created %>";
+    window.account  = "<%= data.account %>";
+    window.created  = "<%= data.created %>";
+    window.hiring  = ("<%= data.hiring %>" == "true") ? true : null;
+    window.messaging  = ("<%= data.messaging %>" == "true") ? true : null;
     
     if(created && active_user) {
-        if(active_user !== account) $('#message_btn').removeClass('disabled');
+        if(active_user !== account && messaging) $('#message_btn').removeClass('disabled');
+        if(active_user !== account && hiring) $('#hire_btn').removeClass('disabled').show();
+        if(active_user !== account) $('#follow_btn').show();
         $('#tip_btn').removeClass('disabled');
     }
     
@@ -715,6 +762,10 @@
         
     $('#tip_btn').click(function() {
         $('.tip.modal').modal('show');
+    });  
+    
+    $('#hire_btn').click(function() {
+        $('.hire.modal').modal('show');
     });  
     
         
@@ -736,6 +787,17 @@
             
                     $('#tipamountInput').val( '25' );
                     $('#tipcurrencyInput').dropdown('set selected', 'sbd' );
+                
+            }
+        })
+    ;
+    
+    $('.hire.modal')
+        .modal({
+            onShow  : function(){
+            
+                $('#hireForm').attr('class', 'ui form');
+                $('#hireBtn').removeClass('disabled');
                 
             }
         })
