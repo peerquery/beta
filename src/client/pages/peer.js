@@ -1,8 +1,26 @@
+/*global is_following:true*/
+
 //
+window.is_following;
 
 //show edit button
-window.onload = function() {
+window.onload = async function() {
     if (account == active_user) $('#edit_btn').show();
+
+    if (!active_user || !account || active_user == account) return;
+
+    var status = await Promise.resolve($.get('/api/relation/' + account));
+
+    if (status && status.state && status.state == 'active') {
+        is_following = true;
+        $('#follow_icon')
+            .removeClass('plus')
+            .addClass('times');
+        $('#follow_btn').removeClass('disabled');
+    } else if (!status || !status.state || status.state !== 'active') {
+        is_following = false;
+        $('#follow_btn').removeClass('disabled');
+    }
 };
 
 //social media button hrefs
@@ -112,7 +130,7 @@ $('#updateBtn').click(async function() {
         window.set_updates(data);
     } catch (err) {
         console.log(err);
-        window.pqy_notify.warn('Sorry, an error occured. Please again');
+        pqy_notify.warn('Sorry, an error occured. Please again');
         //window.location.reload();
     }
 });
@@ -154,7 +172,104 @@ $('#sendBtn').click(async function() {
         }
     } catch (err) {
         console.log(err);
-        window.pqy_notify.warn('Sorry, an error occured. Please again');
+        pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
+    }
+});
+
+$('#follow_btn').click(async function() {
+    try {
+        $(this).addClass('disabled');
+
+        var data = {};
+
+        data.account = window.created ? window.account : null;
+
+        if (!data.account) {
+            pqy_notify.warn('User is not yet a member!');
+            return;
+        } else {
+            if (!window.is_following) follow(data);
+            if (window.is_following) unfollow(data);
+        }
+    } catch (err) {
+        console.log(err);
+        pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
+    }
+});
+
+async function follow(data) {
+    try {
+        var status = await Promise.resolve(
+            $.post('/api/relations/follow', data)
+        );
+        //console.log(status);
+
+        pqy_notify.success('Successfully followed peer');
+
+        $('#follow_icon')
+            .removeClass('disabled times')
+            .addClass('plus');
+
+        is_following = true;
+    } catch (err) {
+        console.log(err);
+        pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
+    }
+}
+
+async function unfollow(data) {
+    try {
+        var status = await Promise.resolve(
+            $.post('/api/relations/unfollow', data)
+        );
+        //console.log(status);
+
+        pqy_notify.success('Successfully unfollowed peer');
+
+        $('#follow_icon')
+            .removeClass('disabled plus')
+            .addClass('times');
+
+        is_following = false;
+    } catch (err) {
+        console.log(err);
+        pqy_notify.warn('Sorry, an error occured. Please again');
+        //window.location.reload();
+    }
+}
+
+$('#hireBtn').click(async function() {
+    try {
+        var data = {};
+
+        data.recipient = window.created ? window.account : null;
+        data.query_id = $('#queryidInput').val();
+
+        if (!data.recipient) {
+            pqy_notify.warn('User is not yet a member!');
+            window.close_modal('hire');
+            $('#hire_btn').addClass('disabled');
+            return;
+        } else {
+            $('#hireBtn').addClass('disabled');
+            $('#hireForm').addClass('loading');
+
+            var status = await Promise.resolve(
+                $.post('/api/private/create/hire', data)
+            );
+            //console.log(status);
+
+            $('#queryidInput').val('');
+
+            pqy_notify.success('Hire sent successfully');
+            window.close_modal('hire');
+        }
+    } catch (err) {
+        console.log(err);
+        pqy_notify.warn('Sorry, an error occured. Please again');
         //window.location.reload();
     }
 });
@@ -185,7 +300,7 @@ $('#signBtn').click(function() {
 $('.limitedText').on('keyup', function() {
     var maxLength = $(this).attr('maxlength');
     if (maxLength == $(this).val().length) {
-        window.pqy_notify.warn(
+        pqy_notify.warn(
             'You can\'t write more than ' + maxLength + ' characters'
         );
     }
