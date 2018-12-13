@@ -14,10 +14,12 @@ address.content.reports = 'content/reports';
 address.content.report = 'content/report';
 address.content.wallet = 'content/wallet';
 address.content.search = 'content/search';
+address.content.edit_query = 'content/edit-query';
 
 address.content.peer_projects = 'content/peer-projects';
 address.content.peer_reports = 'content/peer-reports';
 address.content.peer_queries = 'content/peer-queries';
+address.content.peer_community = 'content/peer-community';
 
 //client views
 address.client = {};
@@ -31,6 +33,9 @@ address.client.new_project = 'client/new-project';
 address.account = {};
 address.account.account = 'account/account';
 address.account.inbox = 'account/inbox';
+address.account.hires = 'account/hires';
+address.account.memberships = 'account/memberships';
+address.account.beneficiaries = 'account/beneficiaries';
 address.account.notifications = 'account/notifications';
 address.account.activity = 'account/activity';
 address.account.settings = 'account/settings';
