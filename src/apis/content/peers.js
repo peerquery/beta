@@ -1,9 +1,11 @@
 'use strict';
 
-var peers = require('../../models/peer');
-var projects = require('../../models/project');
-var reports = require('../../models/report');
-var queries = require('../../models/query');
+const peers = require('../../models/peer'),
+    projects = require('../../models/project'),
+    reports = require('../../models/report'),
+    queries = require('../../models/query'),
+    membership = require('../../models/membership'),
+    relation = require('../../models/relation');
 
 module.exports = async function(app) {
     app.post('/api/private/user/update', async function(req, res) {
@@ -210,6 +212,45 @@ module.exports = async function(app) {
                 .select(query)
                 .limit(20)
                 .sort({ _id: -1 });
+
+            res.status(200).json(results);
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+
+    app.get('/api/private/beneficiaries/list', async function(req, res) {
+        try {
+            let membership_query = 'steem benefactor_rate -_id';
+
+            let membership_options = {
+                account: req.active_user.account,
+                benefactor_rate: { $gt: 0 },
+            };
+
+            let membership_results = await membership
+                .find(membership_options)
+                .select(membership_query);
+
+            let relation_query = 'following benefactor_rate -_id';
+
+            let relation_options = {
+                follower: req.active_user.account,
+                benefactor_rate: { $gt: 0 },
+            };
+
+            let relation_results = await relation
+                .find(relation_options)
+                .select(relation_query);
+
+            if (!membership_results || !relation_results)
+                return res.status(404).send('Sorry, you have no beneficiaries');
+
+            let results = {
+                membership: relation_results,
+                relation: membership_results,
+            };
 
             res.status(200).json(results);
         } catch (err) {
