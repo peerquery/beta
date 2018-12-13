@@ -43,26 +43,54 @@
 <div class="two column stackable ui grid">
 	
 	<section name="main content" class="eleven wide column">
-	
+            
+            
+            
+            
+        <div class="ui large breadcrumb">
+            <a class="section" href="/queries">Queries</a>
+            <div class="divider"> / </div>
+            <a class="section" href="/queries/<%= data.type %>"><%= data.type %></a>
+            <div class="divider"> / </div>
+            <a class="section" href="/queries/<%= data.type %>/<%= data.label %>"><%= data.label %></a>
+            <i class="right arrow icon divider"></i>
+            <div class="active section"><a><%= data.title %></a></div>
+        </div>
+
+
+<br/>
+<br/>
 		
 		<div class="ui segments">
 		
-			<div class="ui segment">
+			<div class="ui clearing segment" id="first_segment">
 			
-				<h2 class="ui header"><%= data.title %></h2>
-	
-			</div>
-			
-			<div class="ui segment">
-			
+                
+                <% if (data.image && data.image !== "http://") { %>
+                
 				<div class="ui image">
-					<img style="height:400px; width:100%" src="<%= data.image %>">
+					<img style="height:400px; width:100%" src="<%= data.image %>" onError="this.onerror=null;this.src='/assets/images/placeholder.png';">
 				</div>
+                
+                <% } %>
 		
 			</div>
 			
+			
+			<div class="ui clearing segment" id="state_segment">
+                
+				<h3 class="ui header"><%= data.title %></h3>
+               
+			
+				<h4><%= data.description %></h4>
+		
+			</div>
+			
+			
+			
 			<div class="ui segment">
-				
+                
+               
 				<div class="ui feed">
 					<div class="event">
 						<div class="label">
@@ -70,33 +98,27 @@
 						</div>
 						<div class="content">
 							<div class="summary">
-								<a href="/peer/<%= data.author %>"><%= data.author %></a> created this <a><%= data.type %></a>.
+								<a href="/peer/<%= data.author %>"><%= data.author %></a> created this <a><%= data.type %></a> in <a><%= data.label %></a>.
 								<div class="date">
-									<%= new Date(data.created).toDateString() %>
+									<%= new Date(data.created).toDateString() %> 
+                                    <i class="long arrow alternate right icon"></i> 
+                                    <span id="deadline" style="padding-right: 0.5rem"></span> 
+                                    <i class="eye icon"></i> 
+                                     <%= data.view_count %> views
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			
-			</div>
-			
-			<div class="ui segment">
 		
-				<h4><%= data.description %></h4>
 		
 			</div>
 			
-			<div class="ui segment">
-				
-				<div id="body"></div>
-				<div id="temp" style="display:none"><%- data.body %></div>
-				
-			</div>
 			
 			<div class="ui segment">
 			  
-			  
+			  <br/>
 			  
 				<div class="ui vertically divided grid">
 					<div class="two column row">
@@ -106,26 +128,27 @@
 							<div class="ui list">
 							
 								<div class="item">
-									<i class="money icon"></i>
+									<i class="linkify icon"></i>
 									<div class="content">
-										<a class="header">Bounty</a>
-										<a class="description"><%= '$' + data.reward %></a>
-									</div>
-								</div>
-							
-								<div class="item">
-									<i class="handshake outline icon"></i>
-									<div class="content">
-										<a class="header">Reward form</a>
-										<a class="description"><%= data.reward_form %></a>
+										<a class="header" href="/project/<%= data.project_slug_id || "#" %>"><%= data.project_title || "None" %></a>
+										<small>Affiliation</small>
 									</div>
 								</div>
 							
 								<div class="item">
 									<i class="calendar times icon"></i>
 									<div class="content">
-										<a class="header">Deadline</a>
-										<a class="description"><%= new Date(data.deadline).toDateString() %></a>
+										<a class="header"><%= new Date(data.deadline).toDateString() %></a>
+                                        
+										<small>Deadline</small>
+									</div>
+								</div>
+							
+								<div class="item">
+									<i class="handshake outline icon"></i>
+									<div class="content">
+										<a class="header"><%= data.reward_form %></a>
+										<small>Reward form</small>
 									</div>
 								</div>
 							
@@ -141,24 +164,24 @@
 								<div class="item">
 									<i class="phone icon"></i>
 									<div class="content">
-										<a class="header">Telephone</a>
-										<a class="description"><%= data.telephone %></a>
+										<a class="header"><%= data.telephone %></a>
+										<small>Telephone</small>
 									</div>
 								</div>
 							
 								<div class="item">
 									<i class="envelope outline icon"></i>
 									<div class="content">
-										<a class="header">Email</a>
-										<a class="description"><%= data.email %></a>
+										<a class="header"><%= data.email %></a>
+										<small>Email</small>
 									</div>
 								</div>
 							
 								<div class="item">
 									<i class="globe icon"></i>
 									<div class="content">
-										<a class="header">Website</a>
-										<a target="_blank" href="<%= data.website %>" class="description"><%= data.website %></a>
+										<a target="_blank" href="<%= data.website %>" class="header"><%= data.website %></a>
+										<small>Website</small>
 									</div>
 								</div>
 							
@@ -171,24 +194,29 @@
 			</div>
 			
 			
-			
-
-			<div class="ui segment">
-			  
-				<div class="ui right pointing red label">
-					Tagged in
-				</div>
-				<a class="ui orange label"><%= data.label %></a>
-					
-			</div>
-
 	
-			<div class="ui secondary segment">
+			<div class="ui secondary clearing segment">
 			
-				<span class="ui red horizontal label">Author and subject agreement</span>
+                <div class="ui top right attached label">About</div>
 					
-				<p><%= data.terms %></p>
+                    <br/>
+                    <br/>
+                    
+                    <div id="body"></div>
+                    <div id="temp" style="display:none"><%- data.body %></div>
+                    
+                    <br/>
 					
+                    <div style="float: right">
+                        
+                        <div class="ui label">
+                            Query ID
+                            <div class="detail"><%= data.query_id %></div>
+                        </div>
+                        
+                    </div>
+                    
+                    
 			</div>
 
 		</div>
@@ -200,6 +228,37 @@
 	
 	<section name="sidebar" class="five wide column">
 		
+        <div class="ui basic segment">
+        
+        
+                
+            <div class="ui pointing below label">
+                Most popular queries
+            </div>
+        
+        
+        
+            <div class="ui active centered inline loader" style="margin-top:2rem" id="loader"></div>
+		
+            <div class="ui feed" id="popular-container"> </div>
+        
+        
+        </div>
+        
+        
+        <div class="ui basic segment" style="display: none" id="new_segment">
+        
+        
+            <div class="ui pointing below label">
+                New queries
+            </div>
+            
+            <div class="ui feed" id="new-container"> </div>
+            
+        
+        
+        </div>
+        
 	</section>
 	
 	
@@ -209,6 +268,27 @@
 	
 
 	<script src="/build/dist/scripts.js"></script>
+    <script>
+        var deadline = "<%= data.deadline %>";
+        if(!deadline) {
+            deadline = "No deadline specified";
+            $('#state_segment').prepend('<a class="ui circular green label"  data-tooltip="Still open to submissions" data-position="top center" style="float: right" <i class="check icon"></i>Active</a>');
+        } else {
+            deadline = new Date(deadline).toDateString();
+            if(new Date(deadline) <= new Date()) {
+                $('#state_segment').prepend('<a class="ui circular red label"  data-tooltip="Closed to submissions" data-position="top center" style="float: right" <i class="check icon"></i>Inactive</a>');
+            } else {
+                $('#state_segment').prepend('<a class="ui circular green label"  data-tooltip="Still open to submissions" data-position="top center" style="float: right" <i class="check icon"></i>Active</a>');
+            }
+        }
+        $('#deadline').text( deadline );
+        
+        window.onload = function() {
+            var author = "<%= data.author %>";
+            if(author == active_user) $('#first_segment').prepend('<a class="ui circular label"  data-tooltip="Edit" data-position="top center" style="float: right" href="/query/<%= data.permlink %>/edit"> <i class="edit icon"></i>Edit</a>');
+        }
+        
+    </script>
 	<script src="/build/dist/query.js"></script>
 	
 	
