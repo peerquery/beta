@@ -26,6 +26,7 @@ var data = {};
 
 function validateForm() {
     data.name = $('#projectName').val();
+    data.steem = $('#projectSteem').val();
     //data.founder = active_user; //handled server side for thorough consistency
     data.description = $('#projectDescription')
         .val()
@@ -48,7 +49,13 @@ function validateForm() {
         .html();
     data.tag = $('#projectTag').val();
 
-    var required = [data.name, data.description, data.title, data.type];
+    var required = [
+        data.name,
+        data.steem,
+        data.description,
+        data.title,
+        data.type,
+    ];
     var empty = '';
     var invalid = required.indexOf(empty);
 
@@ -62,19 +69,23 @@ function validateForm() {
             (id = 'projectName'), (field = 'nameField');
         }
         if (invalid == 1) {
+            name = 'Steem field';
+            (id = 'projectSteem'), (field = 'steemField');
+        }
+        if (invalid == 2) {
             name = 'Description field';
             (id = 'projectDescription'), (field = 'descriptionField');
         }
-        if (invalid == 2) {
+        if (invalid == 3) {
             name = 'Title field';
             (id = 'projectTitle'), (field = 'titleField');
         }
-        if (invalid == 3) {
+        if (invalid == 4) {
             name = 'Type field';
             (id = 'projectType'), (field = 'typeField');
         }
 
-        window.pqy_notify.warn(name + ' cannot be empty');
+        pqy_notify.warn(name + ' cannot be empty');
         $('#' + id).focus();
         $('#' + field).addClass('error');
 
@@ -82,13 +93,13 @@ function validateForm() {
     } else {
         if (data.story.length / Math.pow(1024, 1) > 10) {
             //greater than 10kb
-            window.pqy_notify.warn('Story size cannot be more than 10kb.');
+            pqy_notify.warn('Story size cannot be more than 10kb.');
             $('#projectStory').focus();
             $('#storyField').addClass('error');
             return;
         } else if (data.story == '') {
             //cannot enter empty body
-            window.pqy_notify.warn('Please enter story of your project.');
+            pqy_notify.warn('Please enter story of your project.');
             return false;
         } else {
             return true;
@@ -111,15 +122,17 @@ async function post() {
         window.location.href = '/project/' + status;
     } catch (err) {
         console.log(err);
-        window.pqy_notify.warn('Sorry, an error occured. Please again');
-        window.location.reload();
+        pqy_notify.warn('Sorry, an error occured. Please again');
+
+        $('form').removeClass('loading');
+        $('#createBtn').removeClass('disabled');
     }
 }
 
 $('.limitedText').on('keyup', function() {
     var maxLength = $(this).attr('maxlength');
     if (maxLength == $(this).val().length) {
-        window.pqy_notify.warn(
+        pqy_notify.warn(
             'You can\'t write more than ' + maxLength + ' characters'
         );
     }
