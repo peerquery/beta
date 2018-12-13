@@ -44,14 +44,23 @@ request_project_membership      *set
 new_project_reward_supporter    *pending
 new_project_follow              *pending  
 
+//not used
 project_membership_approved     *set//message first then notification //mongoose message model post save middleware
 project_membership_removed      *set
 project_membership_rejected     *set
 project_membership_left         *set
 
+//used
+user_beneficiary                *set
+project_beneficiary             *set
+
+//used
 create_project                  *set        //message first then notification //mongoose model post save middleware
 transfer_project                *set
 delete_project                  *set
+
+//used
+project_membership_upgrade     *set
 
 sign_up                         *set         //message first then notification //mongoose message model post save middleware
 
