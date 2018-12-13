@@ -1,9 +1,10 @@
 'use strict';
 
-var projects = require('../../models/project'),
+const projects = require('../../models/project'),
     reports = require('../../models/report'),
     queries = require('../../models/query'),
-    peers = require('../../models/peer');
+    peers = require('../../models/peer'),
+    membership = require('../../models/membership');
 
 module.exports = async function(app) {
     app.get('/api/fetch/projects/featured/:last_id', async function(req, res) {
@@ -240,22 +241,15 @@ module.exports = async function(app) {
     //requests of project
     app.get('/api/project/:project_slug_id/requests', async function(req, res) {
         try {
-            let find = { slug_id: req.params.project_slug_id };
+            let query = 'account created -_id';
 
-            let results = await projects.aggregate([
-                { $match: { slug_id: req.params.project_slug_id } },
-                {
-                    $project: {
-                        requests: {
-                            $filter: {
-                                input: '$members',
-                                as: 'requests',
-                                cond: { $eq: ['$$requests.state', 'pending'] },
-                            },
-                        },
-                    },
-                },
-            ]);
+            let options = {
+                slug_id: req.params.project_slug_id,
+                state: 'pending',
+            };
+
+            let results = await membership.find(options).select(query);
+
             res.status(200).json(results);
         } catch (err) {
             console.log(err);
@@ -266,22 +260,15 @@ module.exports = async function(app) {
     //team of project
     app.get('/api/project/:project_slug_id/team', async function(req, res) {
         try {
-            let find = { slug_id: req.params.project_slug_id };
+            let query = 'account created role -_id';
 
-            let results = await projects.aggregate([
-                { $match: { slug_id: req.params.project_slug_id } },
-                {
-                    $project: {
-                        team: {
-                            $filter: {
-                                input: '$members',
-                                as: 'team',
-                                cond: { $eq: ['$$team.type', 'team'] },
-                            },
-                        },
-                    },
-                },
-            ]);
+            let options = {
+                slug_id: req.params.project_slug_id,
+                type: 'team',
+            };
+
+            let results = await membership.find(options).select(query);
+
             res.status(200).json(results);
         } catch (err) {
             console.log(err);
@@ -292,22 +279,15 @@ module.exports = async function(app) {
     //members of project
     app.get('/api/project/:project_slug_id/members', async function(req, res) {
         try {
-            let find = { slug_id: req.params.project_slug_id };
+            let query = 'account created -_id';
 
-            let results = await projects.aggregate([
-                { $match: { slug_id: req.params.project_slug_id } },
-                {
-                    $project: {
-                        members: {
-                            $filter: {
-                                input: '$members',
-                                as: 'members',
-                                cond: { $eq: ['$$members.type', 'member'] },
-                            },
-                        },
-                    },
-                },
-            ]);
+            let options = {
+                slug_id: req.params.project_slug_id,
+                type: 'member',
+            };
+
+            let results = await membership.find(options).select(query);
+
             res.status(200).json(results);
         } catch (err) {
             console.log(err);
@@ -325,47 +305,13 @@ module.exports = async function(app) {
                     report_count: 1,
                     query_count: 1,
                     member_count: 1,
+                    pending_count: 1,
+                    team_count: 1,
                 })
                 .limit(50)
                 .sort({ created: 1 });
 
-            let team = await projects.aggregate([
-                { $match: { slug_id: req.params.project_slug_id } },
-                {
-                    $project: {
-                        team_count: {
-                            $filter: {
-                                input: '$members',
-                                as: 'team_count',
-                                cond: { $eq: ['$$team_count.type', 'team'] },
-                            },
-                        },
-                    },
-                },
-                { $unwind: '$team_count' },
-                { $group: { _id: null, team_count: { $sum: 1 } } },
-            ]);
-
-            let pending = await projects.aggregate([
-                { $match: { slug_id: req.params.project_slug_id } },
-                {
-                    $project: {
-                        pending_count: {
-                            $filter: {
-                                input: '$members',
-                                as: 'pending_count',
-                                cond: {
-                                    $eq: ['$$pending_count.state', 'pending'],
-                                },
-                            },
-                        },
-                    },
-                },
-                { $unwind: '$pending_count' },
-                { $group: { _id: null, pending_count: { $sum: 1 } } },
-            ]);
-
-            res.status(200).json({ overview, team, pending });
+            res.status(200).json({ overview });
         } catch (err) {
             console.log(err);
             res.sendStatus(500);
@@ -378,11 +324,15 @@ module.exports = async function(app) {
         res
     ) {
         try {
-            let find = { slug_id: req.params.project_slug_id };
+            let query = 'role type state created _id';
 
-            let results = await projects.findOne(find, {
-                members: { $elemMatch: { account: req.active_user.account } },
-            });
+            let options = {
+                identifier:
+                    req.active_user.account + '_' + req.params.project_slug_id,
+            };
+
+            let results = await membership.findOne(options).select(query);
+
             res.status(200).json(results);
         } catch (err) {
             console.log(err);
@@ -427,27 +377,16 @@ module.exports = async function(app) {
         }
     });
 
-    app.get('/api/private/projects/list', async function(req, res) {
+    app.get('/api/private/projects/team/list', async function(req, res) {
         try {
-            let query = 'name title slug -_id';
+            let query = 'name title slug_id -_id';
 
-            //the below clause makes sure only the project owner can access this api
-            let results = await peers.aggregate([
-                { $match: { account: req.active_user.account } },
-                {
-                    $project: {
-                        memberships: {
-                            $filter: {
-                                input: '$memberships',
-                                as: 'membership',
-                                cond: { $eq: ['$$membership.type', 'team'] },
-                            },
-                        },
-                    },
-                },
-            ]);
+            let options = {
+                account: req.active_user.account,
+                type: 'team',
+            };
 
-            results = results[0].memberships;
+            let results = await membership.find(options).select(query);
 
             if (!results)
                 return res.status(403).send('Sorry, you have no projects');
